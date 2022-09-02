@@ -32,22 +32,22 @@ class PostRepository {
   getAllPosts = async () => {
     const getAllPosts = await Post.findAll({
       offset: count,
-      limit: 2,
+      limit: 5,
       order: [["createdAt", "DESC"]],
     });
-    count += 2;
+    count += 5;
     return getAllPosts;
   };
   getLikeAllPosts = async () => {
     const getLikeAllPosts = await Post.findAll({
       offset: count,
-      limit: 2,
+      limit: 5,
       order: [
         ["like", "DESC"],
         ["createdAt", "DESC"],
       ],
     });
-    count += 2;
+    count += 5;
     return getLikeAllPosts;
   };
   getPost = async (postId) => {

@@ -37,12 +37,13 @@ class PostController {
   };
   getAllPosts = async (req, res, next) => {
     try {
+      let type = false;
       const getAllPosts = await this.postService.getAllPosts();
 
       if (!getAllPosts.length) {
-        return res.status(400).json({ result: false });
+        type = true;
       }
-      res.status(200).json({ Post: getAllPosts });
+      res.status(200).json({ Post: getAllPosts, isLast: type });
     } catch (error) {
       next(error);
     }
@@ -103,11 +104,12 @@ class PostController {
 
   getLikeAllPosts = async (req, res, next) => {
     try {
+      let type = false;
       const getLikeAllPosts = await this.postService.geLikeAllPosts();
       if (!getLikeAllPosts.length) {
-        return res.status(400).json({ result: false });
+        type = true;
       }
-      res.status(200).json({ Post: getLikeAllPosts });
+      res.status(200).json({ Post: getLikeAllPosts, isLast: type });
     } catch (error) {
       next(error);
     }
