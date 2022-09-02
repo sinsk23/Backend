@@ -2,6 +2,7 @@ const { Post } = require("../models");
 const { Like } = require("../models");
 const { Hashtag } = require("../models");
 const Sequelize = require("sequelize");
+const { findAll } = require("../models/user");
 
 const Op = Sequelize.Op;
 var count = 0;
@@ -30,12 +31,16 @@ class PostRepository {
     return createPost;
   };
   getAllPosts = async () => {
+    const getTest = await Post.findAll({});
+    count++;
+    const postCount = getTest.length;
+    const divied = Math.ceil(postCount / 5);
     const getAllPosts = await Post.findAll({
-      offset: count,
+      offset: 5 * (count % divied),
       limit: 5,
       order: [["createdAt", "DESC"]],
     });
-    count = 5;
+
     return getAllPosts;
   };
   getLikeAllPosts = async () => {
