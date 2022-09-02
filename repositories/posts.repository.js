@@ -35,7 +35,7 @@ class PostRepository {
       limit: 5,
       order: [["createdAt", "DESC"]],
     });
-    count += 5;
+    count = 5;
     return getAllPosts;
   };
   getLikeAllPosts = async () => {
