@@ -23,8 +23,8 @@ class PostService {
     );
     return createPost;
   };
-  getAllPosts = async () => {
-    const getAllPosts = await this.postRepository.getAllPosts();
+  getAllPosts = async (pageNum) => {
+    const getAllPosts = await this.postRepository.getAllPosts(pageNum);
 
     return Promise.all(
       getAllPosts.map(async (post) => {
@@ -34,8 +34,8 @@ class PostService {
       })
     );
   };
-  geLikeAllPosts = async () => {
-    const getLikeAllPosts = await this.postRepository.getLikeAllPosts();
+  geLikeAllPosts = async (pageNum) => {
+    const getLikeAllPosts = await this.postRepository.getLikeAllPosts(pageNum);
 
     return Promise.all(
       getLikeAllPosts.map(async (post) => {
