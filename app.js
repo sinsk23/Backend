@@ -24,7 +24,7 @@ app.use(
   })
 );
 
-
+//
 // app.use("/api/swagger", swaggerUi.serve, swaggerUi.setup(swaggerFile));//swagger app.js 세팅
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // body로 들어오는 json 형태의 데이터를 파싱해준다.
