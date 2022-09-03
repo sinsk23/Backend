@@ -46,8 +46,8 @@ module.exports = class Post extends Sequelize.Model {
         },
 
         image: {
-          type: Sequelize.STRING,
-          allowNull: false,
+          type: Sequelize.JSON,
+          defaultValue: [],
         },
         hashtag: {
           type: Sequelize.JSON,
