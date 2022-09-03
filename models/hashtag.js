@@ -1,16 +1,15 @@
 const Sequelize = require("sequelize");
 
-module.exports = class ReComment extends Sequelize.Model {
+module.exports = class Hashtag extends Sequelize.Model {
   static init(sequelize) {
     return super.init(
       {
-        recommentId: {
+        hashtagId: {
           type: Sequelize.INTEGER,
           primaryKey: true,
           autoIncrement: true,
         },
-
-        comment: {
+        hashtag: {
           type: Sequelize.STRING,
           allowNull: false,
         },
@@ -19,8 +18,8 @@ module.exports = class ReComment extends Sequelize.Model {
         sequelize,
         timestamps: true,
         underscored: false,
-        modelName: "ReComment",
-        tableName: "recomments",
+        modelName: "hastag",
+        tableName: "hashtags",
         paranoid: false,
         charset: "utf8mb4",
         collate: "utf8mb4_general_ci",
@@ -29,12 +28,11 @@ module.exports = class ReComment extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.ReComment.belongsTo(db.Comment, {
-      foreignKey: "userId",
-      foreignKey: "commentId",
+    db.Hashtag.belongsTo(db.Post, {
+      foreignKey: "postId",
 
-      targetKey: "userId",
-      targetKey: "commentId",
+      targetKey: "postId",
+
       onDelete: "CASCADE",
     });
   }

@@ -9,6 +9,10 @@ module.exports = class Post extends Sequelize.Model {
           primaryKey: true,
           autoIncrement: true,
         },
+        userId: {
+          type: Sequelize.INTEGER,
+          primaryKey: true,
+        },
 
         content: {
           type: Sequelize.TEXT,
@@ -68,17 +72,22 @@ module.exports = class Post extends Sequelize.Model {
       sourceKey: "postId",
       onDelete: "CASCADE",
     });
+    db.Post.hasMany(db.Hashtag, {
+      foreignKey: "postId",
+      sourceKey: "postId",
+      onDelete: "CASCADE",
+    });
     db.Post.hasMany(db.Comment, {
       foreignKey: "postId",
       sourceKey: "postId",
       onDelete: "CASCADE",
     });
 
-    db.Post.belongsTo(db.User, {
+    /*db.Post.belongsTo(db.User, {
       foreignKey: "userId",
       targetKey: "userId",
       onDelete: "CASCADE",
       onDelete: "CASCADE",
-    });
+    });*/
   }
 };

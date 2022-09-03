@@ -4,8 +4,11 @@ const { sequelize } = require("./models");
 const rotuer = require("./routes");
 const port = 3000;
 const app = express();
+
 const swaggerUi = require("swagger-ui-express");
 // const swaggerFile = require("./swagger-output");
+
+class BadRequestError extends Error {}
 
 sequelize
   .sync({ force: false })
@@ -32,7 +35,18 @@ app.use("/api", rotuer);
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-
+app.use((err, req, res, next) => {
+  if (BadRequestError) {
+    res.status(400);
+    res.json({
+      statusCode: err.statusCode,
+      result: false,
+      message: err.message,
+    });
+  } else {
+    res.json(`Status Code : ${err.statusCode}, Error Type : ${err.type}`);
+  }
+});
 app.listen(port, () => {
   console.log(port, "포트로 서버가 열렸어요!");
 });
