@@ -5,6 +5,7 @@ const Sequelize = require("sequelize");
 
 const Op = Sequelize.Op;
 var count = 0;
+let arr1 = [];
 class PostRepository {
   createPost = async (
     content,
@@ -40,7 +41,9 @@ class PostRepository {
       order: [["createdAt", "DESC"]],
     });
 
-    return getAllPosts;
+    arr1.push(getAllPosts);
+
+    return arr1;
   };
   ////////////////////////////////////////
   getLikeAllPosts = async (pagenum) => {
@@ -93,7 +96,7 @@ class PostRepository {
         },
       },
     });
-    console.log("테스트", searchPost);
+
     return searchPost;
   };
   autoSearchPost = async (hashtag1) => {

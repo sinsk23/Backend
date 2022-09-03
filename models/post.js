@@ -19,8 +19,9 @@ module.exports = class Post extends Sequelize.Model {
           allowNull: false,
         },
         time: {
-          type: Sequelize.INTEGER,
-          defaultValue: 0,
+          type: Sequelize.JSON,
+          defaultValue: [],
+
           allowNull: true,
         },
         distance: {
@@ -49,8 +50,8 @@ module.exports = class Post extends Sequelize.Model {
           allowNull: false,
         },
         hashtag: {
-          type: Sequelize.STRING(10),
-          allowNull: false,
+          type: Sequelize.JSON,
+          defaultValue: [],
         },
       },
       {

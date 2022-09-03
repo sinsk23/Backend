@@ -1,4 +1,5 @@
 const postRepository = require("../repositories/posts.repository");
+let arry2 = [];
 class PostService {
   postRepository = new postRepository();
   createPost = async (
@@ -23,16 +24,23 @@ class PostService {
     );
     return createPost;
   };
+
   getAllPosts = async (pagenum) => {
     const getAllPosts = await this.postRepository.getAllPosts(pagenum);
+    console.log("렝뜨!!!!!!!!!!!!!!!!!!!!!", getAllPosts.length);
+    for (let i = 0; i < getAllPosts.length; i++) {
+      console.log("찍히냐?", i);
+      return Promise.all(
+        getAllPosts[i].map(async (post) => {
+          const getPosts = await this.postRepository.getPost(post.postId);
 
-    return Promise.all(
-      getAllPosts.map(async (post) => {
-        const getPosts = await this.postRepository.getPost(post.postId);
-
-        return getPosts;
-      })
-    );
+          arry2.push(getPosts);
+          return arry2;
+        })
+      );
+    }
+    console.log("너 왜 안찍히냐고", arry2);
+    return arry2;
   };
   geLikeAllPosts = async (pagenum) => {
     const getLikeAllPosts = await this.postRepository.getLikeAllPosts(pagenum);

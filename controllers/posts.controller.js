@@ -8,8 +8,10 @@ class PostController {
     try {
       const { content, time, distance, path, speed, image, hashtag, userId } =
         req.body;
+
+      console.log("해쉬태그", hashtag);
       if (!content) {
-        throw new BadRequestError("content is require");
+        throw new BadRequestError("content is required");
       }
 
       const createPost = await this.postService.createPost(
@@ -22,7 +24,8 @@ class PostController {
         hashtag,
         userId
       );
-      let arr_hashtag = hashtag.toString().split(" ");
+
+      let arr_hashtag = hashtag.toString().split(",");
       for (let i = 0; i < arr_hashtag.length; i++) {
         const createHashtag = await Hashtag.create({
           hashtag: arr_hashtag[i],
