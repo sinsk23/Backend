@@ -37,10 +37,10 @@ class PostController {
   };
   getAllPosts = async (req, res, next) => {
     try {
-      const { pageNum } = req.body;
-      console.log("찍혀라", pageNum);
+      const { pagenum } = req.params;
+      console.log("찍혀라", pagenum);
       let type = false;
-      const getAllPosts = await this.postService.getAllPosts(pageNum);
+      const getAllPosts = await this.postService.getAllPosts(pagenum);
 
       if (!getAllPosts.length) {
         type = true;
@@ -106,9 +106,9 @@ class PostController {
 
   getLikeAllPosts = async (req, res, next) => {
     try {
-      const { pageNum } = req.body;
+      const { pagenum } = req.params;
       let type = false;
-      const getLikeAllPosts = await this.postService.geLikeAllPosts(pageNum);
+      const getLikeAllPosts = await this.postService.geLikeAllPosts(pagenum);
       if (!getLikeAllPosts.length) {
         type = true;
       }

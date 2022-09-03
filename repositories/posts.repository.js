@@ -29,10 +29,10 @@ class PostRepository {
     });
     return createPost;
   };
-  getAllPosts = async (pageNum) => {
+  getAllPosts = async (pagenum) => {
     let offset = 0;
-    if (pageNum > 1) {
-      offset = 5 * (pageNum - 1);
+    if (pagenum > 1) {
+      offset = 5 * (pagenum - 1);
     }
     const getAllPosts = await Post.findAll({
       offset: offset,
@@ -43,10 +43,10 @@ class PostRepository {
     return getAllPosts;
   };
   ////////////////////////////////////////
-  getLikeAllPosts = async (pageNum) => {
+  getLikeAllPosts = async (pagenum) => {
     let offset = 0;
-    if (pageNum > 1) {
-      offset = 5 * (pageNum - 1);
+    if (pagenum > 1) {
+      offset = 5 * (pagenum - 1);
     }
     const getLikeAllPosts = await Post.findAll({
       offset: count,
