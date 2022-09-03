@@ -14,7 +14,7 @@ const morgan = require("morgan");
 const combined =
   ":method :url :status :response-time ms - :res[content-length]"; //:status 성공, 오류, 클라이언트 오류, 리다이렉션, 정보
 const morganFormat = process.env.NODE_ENV !== "production" ? "dev" : combined; // morgan의 출력 형태 .env에서 NODE_ENV 설정 production : 배포환경 dev : 개발환경
-console.log(morganFormat);
+console.log(morganFormat); //dev인지 production인지 확인
 
 class BadRequestError extends Error {}
 
