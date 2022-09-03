@@ -59,11 +59,11 @@ class PostController {
   getPost = async (req, res, next) => {
     try {
       const { postId } = req.params;
-
+      const { userId } = req.body;
       if (!postId) {
         throw new BadRequestError("postId is required");
       }
-      const getPost = await this.postService.getPost(postId);
+      const getPost = await this.postService.getPost(postId, userId);
 
       if (!getPost) {
         return res.status(400).json({ result: false });

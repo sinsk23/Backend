@@ -47,8 +47,8 @@ class PostService {
       })
     );
   };
-  getPost = async (postId) => {
-    const getPost = await this.postRepository.getPost(postId);
+  getPost = async (postId, userId) => {
+    const getPost = await this.postRepository.getPost(postId, userId);
 
     return getPost;
   };
