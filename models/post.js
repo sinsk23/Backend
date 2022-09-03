@@ -53,6 +53,10 @@ module.exports = class Post extends Sequelize.Model {
           type: Sequelize.JSON,
           defaultValue: [],
         },
+        likeDone: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: false,
+        },
       },
       {
         sequelize,

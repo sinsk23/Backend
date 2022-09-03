@@ -60,7 +60,15 @@ class PostRepository {
 
     return getLikeAllPosts;
   };
-  getPost = async (postId) => {
+  getPost = async (postId, userId) => {
+    const isLike = await Like.findOne({ where: { userId, postId } });
+    console.log("유저아이디", userId);
+    console.log("isLike", isLike);
+    if (isLike) {
+      await Post.update({ likeDone: true }, { where: { postId } });
+    } else {
+      await Post.update({ likeDone: false }, { where: { postId } });
+    }
     const getPost = await Post.findOne({ where: { postId } });
 
     return getPost;

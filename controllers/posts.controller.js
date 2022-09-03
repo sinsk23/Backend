@@ -40,14 +40,18 @@ class PostController {
   getAllPosts = async (req, res, next) => {
     try {
       const { pagenum } = req.params;
-      console.log("찍혀라", pagenum);
+      const { userId } = req.body;
+      console.log("p/c userId", userId);
       let type = false;
-      const getAllPosts = await this.postService.getAllPosts(pagenum);
+      const getAllPosts = await this.postService.getAllPosts(pagenum, userId);
 
       if (!getAllPosts.length) {
         type = true;
       }
-      res.status(200).json({ Post: getAllPosts, isLast: type });
+      res.status(200).json({
+        Post: getAllPosts,
+        isLast: type,
+      });
     } catch (error) {
       next(error);
     }

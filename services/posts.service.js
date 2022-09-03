@@ -25,15 +25,13 @@ class PostService {
     return createPost;
   };
 
-  getAllPosts = async (pagenum) => {
+  getAllPosts = async (pagenum, userId) => {
     const getAllPosts = await this.postRepository.getAllPosts(pagenum);
-    ///console.log("???", getAllPosts[0]);
-    // getAllPosts[1] = 20~10
-
+    console.log("p/s useriD", userId);
     return Promise.all(
       getAllPosts.map(async (post) => {
-        const getPosts = await this.postRepository.getPost(post.postId);
-
+        const getPosts = await this.postRepository.getPost(post.postId, userId);
+        console.log("왜1이지", userId);
         return getPosts;
       })
     );
