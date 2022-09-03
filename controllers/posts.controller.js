@@ -9,7 +9,6 @@ class PostController {
       const { content, time, distance, path, speed, image, hashtag, userId } =
         req.body;
 
-      console.log("해쉬태그", hashtag);
       if (!content) {
         throw new BadRequestError("content is required");
       }
@@ -74,6 +73,22 @@ class PostController {
     try {
       const { postId } = req.params;
       const { content, time, distance, path, speed, image, hashtag } = req.body;
+      let arrayHash = [];
+      let checkHash = false;
+      const checkSameHashTag = await Hashtag.findAll({
+        where: { postId },
+        attributes: ["hashtag"],
+      });
+      for (let i = 0; i < checkSameHashTag.length; i++) {
+        arrayHash.push(checkSameHashTag[i].hashtag);
+      }
+
+      if (hashtag.join("") === arrayHash.join("")) {
+        checkHash = true;
+      } else {
+        checkHash = false;
+      }
+
       const updatePost = await this.postService.updatePost(
         postId,
         content,
@@ -82,7 +97,8 @@ class PostController {
         path,
         speed,
         image,
-        hashtag
+        hashtag,
+        checkHash
       );
 
       if (updatePost[0] === 0) {

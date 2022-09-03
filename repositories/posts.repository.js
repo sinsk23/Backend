@@ -41,9 +41,7 @@ class PostRepository {
       order: [["createdAt", "DESC"]],
     });
 
-    arr1.push(getAllPosts);
-
-    return arr1;
+    return getAllPosts;
   };
   ////////////////////////////////////////
   getLikeAllPosts = async (pagenum) => {
@@ -75,12 +73,23 @@ class PostRepository {
     path,
     speed,
     image,
-    hashtag
+    hashtag,
+    checkHash
   ) => {
+    if (checkHash === false) {
+      const deleteHash = await Hashtag.destroy({ where: { postId } });
+      for (let i = 0; i < hashtag.length; i++) {
+        const createHashtag = await Hashtag.create({
+          hashtag: hashtag[i],
+          postId: postId,
+        });
+      }
+    }
     const updatePost = await Post.update(
       { content, time, distance, path, speed, image, hashtag },
       { where: { postId } }
     );
+
     return updatePost;
   };
   deletePost = async (postId) => {
