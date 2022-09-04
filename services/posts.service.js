@@ -36,12 +36,12 @@ class PostService {
       })
     );
   };
-  geLikeAllPosts = async (pagenum) => {
+  geLikeAllPosts = async (pagenum, userId) => {
     const getLikeAllPosts = await this.postRepository.getLikeAllPosts(pagenum);
 
     return Promise.all(
       getLikeAllPosts.map(async (post) => {
-        const getPosts = await this.postRepository.getPost(post.postId);
+        const getPosts = await this.postRepository.getPost(post.postId, userId);
 
         return getPosts;
       })

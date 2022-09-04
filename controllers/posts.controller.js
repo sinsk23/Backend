@@ -59,7 +59,7 @@ class PostController {
   getPost = async (req, res, next) => {
     try {
       const { postId } = req.params;
-      const { userId } = req.body;
+      const { userId } = req.userId;
       if (!postId) {
         throw new BadRequestError("postId is required");
       }
@@ -130,8 +130,12 @@ class PostController {
   getLikeAllPosts = async (req, res, next) => {
     try {
       const { pagenum } = req.params;
+      const { userId } = req.body;
       let type = false;
-      const getLikeAllPosts = await this.postService.geLikeAllPosts(pagenum);
+      const getLikeAllPosts = await this.postService.geLikeAllPosts(
+        pagenum,
+        userId
+      );
       if (!getLikeAllPosts.length) {
         type = true;
       }
