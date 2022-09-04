@@ -50,7 +50,7 @@ class PostRepository {
       offset = 5 * (pagenum - 1);
     }
     const getLikeAllPosts = await Post.findAll({
-      offset: count,
+      offset: offset,
       limit: 5,
       order: [
         ["like", "DESC"],
