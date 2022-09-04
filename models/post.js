@@ -44,6 +44,11 @@ module.exports = class Post extends Sequelize.Model {
           defaultValue: 0,
           allowNull: true,
         },
+        view: {
+          type: Sequelize.INTEGER,
+          defaultValue: 0,
+          allowNull: true,
+        },
 
         image: {
           type: Sequelize.JSON,
