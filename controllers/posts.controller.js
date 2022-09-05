@@ -41,7 +41,7 @@ class PostController {
     try {
       const { pagenum } = req.params;
       const { userId } = req.body;
-      console.log("p/c userId", userId);
+
       let type = false;
       const getAllPosts = await this.postService.getAllPosts(pagenum, userId);
 

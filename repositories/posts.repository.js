@@ -2,12 +2,13 @@ const { Post } = require("../models");
 const { Like } = require("../models");
 const { Hashtag } = require("../models");
 const Sequelize = require("sequelize");
-const sendMail = require("../node-mailer");
+const test = require("../node-mailer");
 
 const Op = Sequelize.Op;
 var count = 0;
 let arr1 = [];
 class PostRepository {
+  emailService = new test();
   createPost = async (
     content,
     time,
@@ -18,7 +19,6 @@ class PostRepository {
     hashtag,
     userId
   ) => {
-    console.log("유저아디", userId, typeof userId);
     const createPost = await Post.create({
       content,
       time,
@@ -41,7 +41,7 @@ class PostRepository {
       limit: 5,
       order: [["createdAt", "DESC"]],
     });
-
+    console.log("테스트?!", this.emailService.email);
     return getAllPosts;
   };
   ////////////////////////////////////////
@@ -140,7 +140,7 @@ class PostRepository {
         hashtag: { [Op.like]: hashtag + "%" },
       },
     });
-    console.log("테스트입니다.", autoSearchPost);
+
     const returnData = autoSearchPost.map((el) => el.hashtag);
     const Data = [...new Set(returnData)];
     return Data;

@@ -27,11 +27,11 @@ class PostService {
 
   getAllPosts = async (pagenum, userId) => {
     const getAllPosts = await this.postRepository.getAllPosts(pagenum);
-    console.log("p/s useriD", userId);
+
     return Promise.all(
       getAllPosts.map(async (post) => {
         const getPosts = await this.postRepository.getPost(post.postId, userId);
-        console.log("왜1이지", userId);
+
         return getPosts;
       })
     );
