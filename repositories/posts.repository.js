@@ -117,11 +117,14 @@ class PostRepository {
   };
   searchPost = async (hashtag) => {
     let arrayId = [];
-    const findId = await Post.findAll();
-    for (let i = 0; i < findId.length; i++) {
-      if (findId[i].hashtag.includes(hashtag)) {
-        arrayId.push(findId[i].postId);
-      }
+
+    const autoSearchPost = await Hashtag.findAll({
+      where: {
+        hashtag: { [Op.like]: hashtag + "%" },
+      },
+    });
+    for (let i = 0; i < autoSearchPost.length; i++) {
+      arrayId.push(autoSearchPost[i].postId);
     }
 
     const searchPost = await Post.findAll({
@@ -137,6 +140,7 @@ class PostRepository {
         hashtag: { [Op.like]: hashtag + "%" },
       },
     });
+    console.log("테스트입니다.", autoSearchPost);
     const returnData = autoSearchPost.map((el) => el.hashtag);
     const Data = [...new Set(returnData)];
     return Data;
