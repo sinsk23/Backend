@@ -1,5 +1,6 @@
 const PostService = require("../services/posts.service");
 const { Hashtag } = require("../models");
+const log = require("../config/logger");
 let BadRequestError = require("./http-errors").BadRequestError;
 class PostController {
   postService = new PostService();
@@ -10,7 +11,10 @@ class PostController {
         req.body;
 
       if (!content) {
-        throw new BadRequestError("content is required");
+        log.error("PostController.createPost : content is required");
+        throw new BadRequestError(
+          "PostController.createPost : content is required"
+        );
       }
 
       const createPost = await this.postService.createPost(
@@ -61,7 +65,10 @@ class PostController {
       const { postId } = req.params;
       const { userId } = req.userId;
       if (!postId) {
-        throw new BadRequestError("postId is required");
+        log.error("PostController.getPost : postId is required");
+        throw new BadRequestError(
+          "PostController.getPost : postId is required"
+        );
       }
       const getPost = await this.postService.getPost(postId, userId);
 
@@ -148,7 +155,10 @@ class PostController {
     try {
       const { hashtag } = req.query;
       if (!hashtag) {
-        throw new BadRequestError("hashtag is required");
+        log.error("PostController.searchPost : hashtag is required");
+        throw new BadRequestError(
+          "PostController.searchPost : hashtag is required"
+        );
       }
       const searchPost = await this.postService.searchPost(hashtag);
       res.status(200).json({ Post: searchPost });
@@ -159,6 +169,12 @@ class PostController {
   autoSearchPost = async (req, res, next) => {
     try {
       const { hashtag } = req.query;
+      if (!hashtag) {
+        log.error("PostController.autoSearchPost : hashtag is required");
+        throw new BadRequestError(
+          "PostController.autoSearchPost : hashtag is required"
+        );
+      }
       const autoSearchPost = await this.postService.autoSearchPost(hashtag);
 
       res.status(200).json(autoSearchPost);

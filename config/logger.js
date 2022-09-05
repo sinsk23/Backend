@@ -11,7 +11,7 @@ const logFormat = printf(({ level, message, label, timestamp }) => {
   return `${timestamp} [${label}] ${level}: ${message}`; // log 출력 포맷 정의
 });
 
-const Logger = winston.createLogger({
+const logger = winston.createLogger({
   format: combine(
     label({
       label: "System Name",
@@ -53,7 +53,7 @@ const Logger = winston.createLogger({
 
 //production 환경이 아닐 때
 if (process.env.NODE_ENV !== "production") {
-  Logger.add(
+  logger.add(
     new winston.transports.Console({
       format: winston.format.combine(
         winston.format.colorize(), // level에 따라 색깔을 다르게 출력
@@ -63,4 +63,4 @@ if (process.env.NODE_ENV !== "production") {
     })
   );
 }
-module.exports = Logger;
+module.exports = logger;
