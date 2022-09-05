@@ -151,15 +151,15 @@ class PostController {
         throw new BadRequestError("hashtag is required");
       }
       const searchPost = await this.postService.searchPost(hashtag);
-      res.status(200).json({ test: searchPost });
+      res.status(200).json({ Post: searchPost });
     } catch (error) {
       next(error);
     }
   };
   autoSearchPost = async (req, res, next) => {
     try {
-      const { hashtag1 } = req.query;
-      const autoSearchPost = await this.postService.autoSearchPost(hashtag1);
+      const { hashtag } = req.query;
+      const autoSearchPost = await this.postService.autoSearchPost(hashtag);
 
       res.status(200).json(autoSearchPost);
     } catch (error) {

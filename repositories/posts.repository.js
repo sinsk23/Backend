@@ -2,6 +2,7 @@ const { Post } = require("../models");
 const { Like } = require("../models");
 const { Hashtag } = require("../models");
 const Sequelize = require("sequelize");
+const sendMail = require("../node-mailer");
 
 const Op = Sequelize.Op;
 var count = 0;
@@ -114,26 +115,32 @@ class PostRepository {
 
     return deletePost;
   };
-  searchPost = async (hashtag1) => {
-    const searchPost = await Post.findAll({
+  searchPost = async (hashtag) => {
+    const test = await Post.findAll({
       where: {
-        hashtag: {
-          [Op.like]: `%${hashtag1}%`,
+        postId: {
+          [Op.in]: [5, 6, 7, 8],
         },
       },
     });
+    console.log("테스트", test);
+    console.log("해쉬태그", hashtag);
 
+    const searchPost = await Post.findAll({
+      where: { hashtag: "런닝" },
+    });
+    console.log("???", searchPost);
     return searchPost;
   };
-  autoSearchPost = async (hashtag1) => {
+  autoSearchPost = async (hashtag) => {
     const autoSearchPost = await Hashtag.findAll({
       where: {
-        hashtag: { [Op.like]: hashtag1 + "%" },
+        hashtag: { [Op.like]: hashtag + "%" },
       },
     });
     const returnData = autoSearchPost.map((el) => el.hashtag);
-    console.log(returnData);
-    return returnData;
+    const Data = [...new Set(returnData)];
+    return Data;
   };
 }
 module.exports = PostRepository;

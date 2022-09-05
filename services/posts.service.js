@@ -84,8 +84,8 @@ class PostService {
     const searchPost = await this.postRepository.searchPost(hashtag);
     return searchPost;
   };
-  autoSearchPost = async (hashtag1) => {
-    const autoSearchPost = await this.postRepository.autoSearchPost(hashtag1);
+  autoSearchPost = async (hashtag) => {
+    const autoSearchPost = await this.postRepository.autoSearchPost(hashtag);
     return autoSearchPost;
   };
 }
