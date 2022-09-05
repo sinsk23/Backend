@@ -13,6 +13,10 @@ module.exports = class Hashtag extends Sequelize.Model {
           type: Sequelize.STRING,
           allowNull: false,
         },
+        consonant: {
+          type: Sequelize.STRING,
+          allowNull: false,
+        },
       },
       {
         sequelize,

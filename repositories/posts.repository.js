@@ -1,12 +1,14 @@
 const { Post } = require("../models");
 const { Like } = require("../models");
 const { Hashtag } = require("../models");
+
 const Sequelize = require("sequelize");
 const test = require("../node-mailer");
-
+const help = require("korean-regexp");
 const Op = Sequelize.Op;
 var count = 0;
 let arr1 = [];
+
 class PostRepository {
   emailService = new test();
   createPost = async (
@@ -135,9 +137,11 @@ class PostRepository {
     return searchPost;
   };
   autoSearchPost = async (hashtag) => {
+    hashtag = help.explode(hashtag).join("");
+    console.log("해쉬태그", hashtag);
     const autoSearchPost = await Hashtag.findAll({
       where: {
-        hashtag: { [Op.like]: hashtag + "%" },
+        consonant: { [Op.like]: hashtag + "%" },
       },
     });
 
