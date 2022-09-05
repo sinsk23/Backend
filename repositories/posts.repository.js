@@ -116,20 +116,19 @@ class PostRepository {
     return deletePost;
   };
   searchPost = async (hashtag) => {
-    const test = await Post.findAll({
-      where: {
-        postId: {
-          [Op.in]: [5, 6, 7, 8],
-        },
-      },
-    });
-    console.log("테스트", test);
-    console.log("해쉬태그", hashtag);
+    let arrayId = [];
+    const findId = await Post.findAll();
+    for (let i = 0; i < findId.length; i++) {
+      if (findId[i].hashtag.includes(hashtag)) {
+        arrayId.push(findId[i].postId);
+      }
+    }
 
     const searchPost = await Post.findAll({
-      where: { hashtag: "런닝" },
+      where: {
+        postId: { [Op.in]: arrayId },
+      },
     });
-    console.log("???", searchPost);
     return searchPost;
   };
   autoSearchPost = async (hashtag) => {
