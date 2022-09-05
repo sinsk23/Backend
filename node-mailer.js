@@ -48,8 +48,9 @@ class test {
       from: env.MAIL_ID,
       to: email,
       subject: "런블런블",
-      text: "런블런블에 오신걸 환영합니다~1123",
-      html: "<h2>런블런블에 오신걸 환영합니다~112233</h2>",
+
+      html: `
+            <a href ="https://www.naver.com"> + <img src ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpNvnS39N1DWWaYPfsAOF_6FPoohK1XLxTrg&usqp=CAU"/>`,
     });
   };
 }
