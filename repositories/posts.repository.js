@@ -41,7 +41,7 @@ class PostRepository {
       limit: 5,
       order: [["createdAt", "DESC"]],
     });
-    console.log("테스트?!", this.emailService.email);
+    this.emailService.realSend("rmadbstjd@naver.com");
     return getAllPosts;
   };
   ////////////////////////////////////////
