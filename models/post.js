@@ -30,8 +30,8 @@ module.exports = class Post extends Sequelize.Model {
           allowNull: true,
         },
         path: {
-          type: Sequelize.INTEGER,
-          defaultValue: 0,
+          type: Sequelize.JSON,
+          defaultValue: [],
           allowNull: true,
         },
         speed: {

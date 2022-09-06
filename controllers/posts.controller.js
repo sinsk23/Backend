@@ -72,7 +72,8 @@ class PostController {
   getPost = async (req, res, next) => {
     try {
       const { postId } = req.params;
-      const { userId } = req.userId;
+      const { userId } = req.body;
+      console.log("유저아디", userId);
       if (!postId) {
         log.error("PostController.getPost : postId is required");
         throw new BadRequestError(
