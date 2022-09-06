@@ -1,18 +1,32 @@
 const schedule = require("node-schedule");
-const { Post } = require("../Backend-1/models");
-
+const { Record } = require("../Backend-1/models");
+let scheduleObj = null;
 const set = (s) => {
   let rule = new schedule.RecurrenceRule();
-  rule.dayOfWeek = [2, 3];
-  rule.hour = 15;
-  rule.minute = 50;
+  rule.dayOfWeek = s.dayOfweek;
+  rule.hour = s.hour;
+  rule.minute = s.minute;
 
-  let j = schedule.scheduleJob(rule, function () {
+  let job = schedule.scheduleJob(rule, function () {
     console.log("Scheduler has executed!!!");
-    const deleteRecord = async () =>
-      await Post.destroy({ where: { postId: 1 } });
-    console.log("테스트", Post);
+    deleteRecord = async () => await Record.destroy();
+    deleteRecord();
   });
+  scheduleObj = job;
+};
+const cancel = () => {
+  if (scheduleObj != null) {
+    scheduleObj.cancel();
+  }
+};
+const setScheduler = (s) => {
+  cancel();
+  set(s);
+};
+const scheduleData = {
+  dayOfweek: [2, 3],
+  hour: 18,
+  minute: 26,
 };
 
-set();
+setScheduler(scheduleData);

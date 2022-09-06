@@ -99,8 +99,10 @@ class PostRepository {
     if (checkHash === false) {
       const deleteHash = await Hashtag.destroy({ where: { postId } });
       for (let i = 0; i < hashtag.length; i++) {
+        consonant[i] = help.explode(hashtag[i]).join("");
         const createHashtag = await Hashtag.create({
           hashtag: hashtag[i],
+          consonant: consonant[i],
           postId: postId,
         });
       }

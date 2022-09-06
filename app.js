@@ -4,6 +4,7 @@ const { sequelize } = require("./models");
 const rotuer = require("./routes");
 const port = 3000;
 const app = express();
+
 class BadRequestError extends Error {}
 sequelize
   .sync({ force: false })
@@ -43,4 +44,5 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(port, "포트로 서버가 열렸어요!");
 });
+
 module.exports = app;
