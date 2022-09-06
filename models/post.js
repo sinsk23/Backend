@@ -83,11 +83,11 @@ module.exports = class Post extends Sequelize.Model {
       onDelete: "CASCADE",
     });
 
-    /*db.Post.belongsTo(db.User, {
+    db.Post.belongsTo(db.User, {
       foreignKey: "userId",
       targetKey: "userId",
       onDelete: "CASCADE",
       onDelete: "CASCADE",
-    });*/
+    });
   }
 };

@@ -10,19 +10,29 @@ module.exports = class User extends Sequelize.Model {
           autoIncrement: true,
         },
         email: {
-          type: Sequelize.STRING(20),
-          allowNull: false,
+          type: Sequelize.STRING(40),
+          allowNull: true, //카카오 정책 변경으로 인한 false->true로 변경
           unique: true,
         },
+
         nickname: {
           type: Sequelize.STRING(15),
-          allowNull: false,
+          allowNull: true,
           unique: true,
         },
+
         profile: {
           type: Sequelize.STRING(30),
-          allowNull: false,
+          allowNull: true,
         },
+        //sns로그인을 하였을 경우 provider와 snsId를 저장
+        // //provider가 local이면 로컬 로그인을, kakao면 카카오 로그인을 한것
+        provider: {
+          type: Sequelize.STRING(10),
+          allowNull: false,
+          defaultValue: "local",
+        },
+        snsId: { type: Sequelize.STRING(30), allowNull: true },
       },
       {
         sequelize,
@@ -38,6 +48,6 @@ module.exports = class User extends Sequelize.Model {
   }
 
   static associate(db) {
-    //db.User.hasMany(db.Post, { foreignKey: "userId", sourceKey: "userId" });
+    db.User.hasMany(db.Post, { foreignKey: "userId", sourceKey: "userId" });
   }
 };

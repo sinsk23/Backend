@@ -1,11 +1,15 @@
 const express = require("express");
 require("dotenv").config;
 const cors = require("cors");
+
+const passport = require("passport");
 const { sequelize } = require("./models");
+
 const rotuer = require("./routes");
 const port = 3000;
 const app = express();
-
+const passportConfig = require("./passport");
+passportConfig(passport, app);
 const swaggerUi = require("swagger-ui-express");
 // const swaggerFile = require("./swagger-output");
 const logger = require("./winston");
@@ -40,6 +44,7 @@ app.use(morgan(morganFormat, { stream: logger.stream })); // morgan 로그 설�
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // body로 들어오는 json 형태의 데이터를 파싱해준다.
 app.use("/api", rotuer);
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
