@@ -49,13 +49,15 @@ class UserRepository {
     console.log("!!", nickname);
     nickname = help.explode(nickname).join("");
     console.log(nickname);
-    const autoSearchPost = await User.findOne({
+    const autoSearchPost = await User.findAll({
       where: {
         consonant: { [Op.like]: nickname + "%" },
       },
     });
-    console.log("테스트", autoSearchPost);
-    return autoSearchPost;
+    console.log("테스트!!", autoSearchPost);
+    const returnData = autoSearchPost.map((el) => el.nickname);
+    const Data = [...new Set(returnData)];
+    return Data;
   };
   setGoal = async (goal, userId) => {
     const setGoal = await Record.create({ goal, userId });
