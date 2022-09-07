@@ -32,13 +32,16 @@ class UserController {
           "UserController.getUserPost : nickname is required"
         );
       }
-
+      let type = false;
       const getUserPost = await this.userService.getUserPost(
         nickname,
         pagenum,
         userId
       );
-      res.status(200).json({ Post: getUserPost });
+      if (!getUserPost.length) {
+        type = true;
+      }
+      res.status(200).json({ Post: getUserPost, isLast: type });
     } catch (error) {
       next(error);
     }
