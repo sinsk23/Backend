@@ -4,7 +4,17 @@ const { sequelize } = require("./models");
 const rotuer = require("./routes");
 const port = 3000;
 const app = express();
-
+const test = require("./node-mailer");
+const schedules = require("./node-scheduler");
+const scheduleData = {
+  dayOfweek: [3],
+  hour: 00,
+  minute: 05,
+};
+emailService = new test();
+//emailService.realSend("rmadbstjd@naver.com");
+scheduleService = new schedules();
+scheduleService.set(scheduleData);
 class BadRequestError extends Error {}
 sequelize
   .sync({ force: false })
@@ -41,6 +51,7 @@ app.use((err, req, res, next) => {
     res.json(`Status Code : ${err.statusCode}, Error Type : ${err.type}`);
   }
 });
+
 app.listen(port, () => {
   console.log(port, "포트로 서버가 열렸어요!");
 });

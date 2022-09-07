@@ -13,6 +13,11 @@ module.exports = class Record extends Sequelize.Model {
           type: Sequelize.INTEGER,
           primaryKey: true,
         },
+        goal: {
+          type: Sequelize.INTEGER,
+          defaultValue: 0,
+          allowNull: true,
+        },
         time: {
           type: Sequelize.JSON,
           defaultValue: [],
