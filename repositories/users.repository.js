@@ -56,8 +56,13 @@ class UserRepository {
     });
     console.log("테스트!!", autoSearchPost);
     const returnData = autoSearchPost.map((el) => el.nickname);
-    const Data = [...new Set(returnData)];
-    return Data;
+    const test = await User.findAll({
+      where: {
+        nickname: { [Op.in]: returnData },
+      },
+      attributes: ["nickname", "profile"],
+    });
+    return test;
   };
   setGoal = async (goal, userId) => {
     const setGoal = await Record.create({ goal, userId });
