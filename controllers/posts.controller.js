@@ -8,8 +8,17 @@ class PostController {
 
   createPost = async (req, res, next) => {
     try {
-      const { content, time, distance, path, speed, image, hashtag, userId } =
-        req.body;
+      const {
+        content,
+        time,
+        distance,
+        path,
+        speed,
+        image,
+        hashtag,
+        userId,
+        nickname,
+      } = req.body;
 
       if (!content) {
         log.error("PostController.createPost : content is required");
@@ -26,7 +35,8 @@ class PostController {
         speed,
         image,
         hashtag,
-        userId
+        userId,
+        nickname
       );
 
       if (hashtag) {

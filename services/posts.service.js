@@ -10,7 +10,8 @@ class PostService {
     speed,
     image,
     hashtag,
-    userId
+    userId,
+    nickname
   ) => {
     const createPost = await this.postRepository.createPost(
       content,
@@ -20,7 +21,8 @@ class PostService {
       speed,
       image,
       hashtag,
-      userId
+      userId,
+      nickname
     );
     return createPost;
   };

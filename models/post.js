@@ -13,6 +13,10 @@ module.exports = class Post extends Sequelize.Model {
           type: Sequelize.INTEGER,
           primaryKey: true,
         },
+        nickname: {
+          type: Sequelize.TEXT,
+          allowNull: false,
+        },
 
         content: {
           type: Sequelize.TEXT,

@@ -25,13 +25,13 @@ class UserController {
   getUserPost = async (req, res, next) => {
     try {
       const { nickname, pagenum } = req.params;
+      const { userId } = req.body;
       if (!nickname) {
         log.error("UserController.getUserPost : nickname is required");
         throw new BadRequestError(
           "UserController.getUserPost : nickname is required"
         );
       }
-      const { userId } = req.body;
 
       const getUserPost = await this.userService.getUserPost(
         nickname,

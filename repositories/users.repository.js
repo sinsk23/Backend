@@ -8,16 +8,19 @@ class UserRepository {
     const addDistance = await Record.create({ userId, distance });
     return addDistance;
   };
-  getUserPost = async (pagenum) => {
+  getUserPost = async (nickname, pagenum) => {
     let offset = 0;
+    console.log("테스트", nickname);
     if (pagenum > 1) {
       offset = 5 * (pagenum - 1);
     }
     const getAllPosts = await Post.findAll({
+      where: { nickname },
       offset: offset,
       limit: 5,
       order: [["createdAt", "DESC"]],
     });
+    console.log("테스트", getAllPosts);
 
     return getAllPosts;
     N;

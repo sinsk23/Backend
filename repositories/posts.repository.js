@@ -19,7 +19,8 @@ class PostRepository {
     speed,
     image,
     hashtag,
-    userId
+    userId,
+    nickname
   ) => {
     const createPost = await Post.create({
       content,
@@ -30,6 +31,7 @@ class PostRepository {
       image,
       hashtag,
       userId,
+      nickname,
     });
     return createPost;
   };
