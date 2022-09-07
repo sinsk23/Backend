@@ -6,6 +6,7 @@ const port = 3000;
 const app = express();
 const test = require("./node-mailer");
 const schedules = require("./node-scheduler");
+const helmet = require("helmet");
 const scheduleData = {
   dayOfweek: [3],
   hour: 00,
@@ -32,7 +33,7 @@ app.use(
     origin: "http://localhost:3000",
   })
 );
-
+app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // body로 들어오는 json 형태의 데이터를 파싱해준다.
 app.use("/api", rotuer);
