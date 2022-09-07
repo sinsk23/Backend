@@ -49,13 +49,13 @@ class UserRepository {
     console.log("!!", nickname);
     nickname = help.explode(nickname).join("");
     console.log(nickname);
-    const autoSearchPost = await User.findAll({
+    const autoSearchUser = await User.findAll({
       where: {
         consonant: { [Op.like]: nickname + "%" },
       },
     });
-    console.log("테스트!!", autoSearchPost);
-    const returnData = autoSearchPost.map((el) => el.nickname);
+
+    const returnData = autoSearchUser.map((el) => el.nickname);
     const test = await User.findAll({
       where: {
         nickname: { [Op.in]: returnData },

@@ -28,8 +28,9 @@ class PostController {
         hashtag,
         userId
       );
-      let consonant = [];
+
       if (hashtag) {
+        let consonant = [];
         //유저가 Hashtag를 입력했을 때 Hashtag table에 Hashtag를 생성
         for (let i = 0; i < hashtag.length; i++) {
           consonant[i] = help.explode(hashtag[i]).join("");

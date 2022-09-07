@@ -8,6 +8,12 @@ class UserController {
   addDistance = async (req, res, next) => {
     try {
       const { distance } = req.body;
+      if (!distance) {
+        log.error("UserController.addDistance : distance is required");
+        throw new BadRequestError(
+          "UserController.addDistance : distance is required"
+        );
+      }
       const { userId } = req.body;
       console.log(distance, userId);
       const addDistance = await this.userService.addDistance(userId, distance);
@@ -19,8 +25,14 @@ class UserController {
   getUserPost = async (req, res, next) => {
     try {
       const { nickname, pagenum } = req.params;
+      if (!nickname) {
+        log.error("UserController.getUserPost : nickname is required");
+        throw new BadRequestError(
+          "UserController.getUserPost : nickname is required"
+        );
+      }
       const { userId } = req.body;
-      console.log("테스트", nickname, pagenum);
+
       const getUserPost = await this.userService.getUserPost(
         nickname,
         pagenum,
@@ -34,7 +46,13 @@ class UserController {
   searchUser = async (req, res, next) => {
     try {
       const { nickname } = req.query;
-      console.log("닉네임", nickname);
+      if (!nickname) {
+        log.error("UserController.searchUser : nickname is required");
+        throw new BadRequestError(
+          "UserController.searchUser : nickname is required"
+        );
+      }
+
       const searchUser = await this.userService.searchUser(nickname);
       res.status(200).json(searchUser);
     } catch (error) {
