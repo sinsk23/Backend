@@ -95,9 +95,7 @@ class CommentController {
   getRecomment = async (req, res, next) => {
     const { commentId, recommentId } = req.params;
     const getCommentid = await this.commentService.findCommentid(commentId);
-    const inRecommentid = await this.commentService.findinCommentid(
-      recommentId
-    );
+    const inRecommentid = await this.commentService.findinCommentid(commentId);
 
     return res
       .status(200)

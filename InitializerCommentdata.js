@@ -13,5 +13,8 @@ InitializerCommentdata = async () => {
     commentRepository.createComment("내용" + i, 1, 1);
     //   .then((e) => console.log(e));
   }
+  for (let i = 0; i < 21; i++) {
+    commentRepository.createRecomment("내용" + i, 1, 1);
+  }
 };
 module.exports = InitializerCommentdata;

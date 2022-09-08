@@ -61,7 +61,7 @@ app.use((err, req, res, next) => {
   }
 });
 
-// //comment db 데이터 삽입
+//comment db 임시 데이터 삽입
 // const InitializerCommentdata = require("./InitializerCommentdata");
 // InitializerCommentdata();
 
