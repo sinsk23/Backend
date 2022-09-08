@@ -1,5 +1,6 @@
 const UserRepository = require("../repositories/users.repository");
-
+const log = require("../winston");
+let BadRequestError = require("./http-errors").BadRequestError;
 class UserService {
   userRepository = new UserRepository();
   addDistance = async (userId, distance) => {
@@ -7,6 +8,12 @@ class UserService {
     return addDistance;
   };
   getUserPost = async (nickname, pagenum, userId) => {
+    if (!nickname) {
+      log.error("UserController.getUserPost : nickname is required");
+      throw new BadRequestError(
+        "UserController.getUserPost : nickname is required"
+      );
+    }
     const getUserPost = await this.userRepository.getUserPost(
       nickname,
       pagenum
@@ -20,6 +27,12 @@ class UserService {
     );
   };
   searchUser = async (nickname) => {
+    if (!nickname) {
+      log.error("UserController.searchUser : nickname is required");
+      throw new BadRequestError(
+        "UserController.searchUser : nickname is required"
+      );
+    }
     const searchUser = await this.userRepository.searchUser(nickname);
     return searchUser;
   };

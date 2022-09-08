@@ -3,6 +3,9 @@ const UserService = require("../services/users.sevice");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const { User } = require("../models");
+const log = require("../winston");
+let BadRequestError = require("./http-errors").BadRequestError;
+const help = require("korean-regexp");
 class SocialuserController {
   userService = new UserService();
   kakaologin = (req, res, next) => {
@@ -50,12 +53,7 @@ class SocialuserController {
     try {
       const { nickname, pagenum } = req.params;
       const { userId } = req.body;
-      if (!nickname) {
-        log.error("UserController.getUserPost : nickname is required");
-        throw new BadRequestError(
-          "UserController.getUserPost : nickname is required"
-        );
-      }
+
       let type = false;
       const getUserPost = await this.userService.getUserPost(
         nickname,
@@ -73,12 +71,6 @@ class SocialuserController {
   searchUser = async (req, res, next) => {
     try {
       const { nickname } = req.query;
-      if (!nickname) {
-        log.error("UserController.searchUser : nickname is required");
-        throw new BadRequestError(
-          "UserController.searchUser : nickname is required"
-        );
-      }
 
       const searchUser = await this.userService.searchUser(nickname);
       res.status(200).json(searchUser);
@@ -88,8 +80,8 @@ class SocialuserController {
   };
   signUp = async (req, res, next) => {
     try {
-      let consonant = [];
       const { email, nickname, profile } = req.body;
+      let consonant = [];
       consonant = help.explode(nickname).join("");
       const signUp = await User.create({ email, nickname, consonant, profile });
 

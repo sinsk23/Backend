@@ -6,8 +6,6 @@ const Sequelize = require("sequelize");
 const test = require("../node-mailer");
 
 const Op = Sequelize.Op;
-var count = 0;
-let arr1 = [];
 
 class PostRepository {
   emailService = new test();
