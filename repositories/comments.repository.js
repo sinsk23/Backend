@@ -43,9 +43,9 @@ class CommentRepository {
     return await ReComment.create({ comment, userId, commentId, recommentId });
   };
   //Repo 특정 댓글의 전체 대댓글 조회
-  findinCommentid = async (commentId) => {
+  findinCommentid = async (recommentId) => {
     const inRecommentid = await ReComment.findAll({
-      where: { commentId },
+      where: { recommentId },
       order: [["createdAt", "ASC"]],
       limit: 2,
       offset: count,
