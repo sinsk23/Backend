@@ -21,13 +21,6 @@ module.exports = class User extends Sequelize.Model {
           unique: true,
         },
 
-        consonant: {
-          type: Sequelize.STRING,
-          allowNull: false,
-        },
-
-
-
         profile: {
           type: Sequelize.STRING(30),
           allowNull: true,
@@ -55,9 +48,6 @@ module.exports = class User extends Sequelize.Model {
   }
 
   static associate(db) {
-
-    //db.User.hasMany(db.Post, { foreignKey: "userId", sourceKey: "userId" });
-    //db.User.hasMany(db.Record, { foreignKey: "userId", sourceKey: "userId" });
-
+    db.User.hasMany(db.Post, { foreignKey: "userId", sourceKey: "userId" });
   }
 };
