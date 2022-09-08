@@ -1,10 +1,38 @@
+
 const UserService = require("../services/users.sevice");
 const { User } = require("../models");
 const { Hashtag } = require("../models");
 const help = require("korean-regexp");
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
+const passport = require("passport");
 class UserController {
   userService = new UserService();
+ kakaologin = (req, res, next) => {
+    passport.authenticate(
+      "kakao",
+      { failureRedirect: "/" },
+      (err, user, info) => {
+        if (err) return next(err);
+        const { userId, nickname } = user;
 
+        const token = jwt.sign({ userId, nickname }, process.env.MYSECRET_KEY, {
+          expiresIn: "2d",
+        });
+        res.status(200).json({
+          token,
+          message: "success",
+        });
+      }
+    )(req, res, next);
+  };
+
+  createAccount = async (req, res, next) => {
+    const { nickname, profile } = req.body;
+    const createUser = await User.create(nickname, profile);
+    return res.status(201).json({ createUser });
+  };
+}
   addDistance = async (req, res, next) => {
     try {
       const { distance } = req.body;
@@ -98,3 +126,4 @@ class UserController {
 }
 
 module.exports = UserController;
+
