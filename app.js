@@ -60,7 +60,9 @@ app.use((err, req, res, next) => {
     res.json(`Status Code : ${err.statusCode}, Error Type : ${err.type}`);
   }
 });
-
+//comment db 임시 데이터 삽입
+// const InitializerCommentdata = require("./InitializerCommentdata");
+// InitializerCommentdata();
 app.listen(port, () => {
   console.log(port, "포트로 서버가 열렸어요!");
 });

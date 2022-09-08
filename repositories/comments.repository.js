@@ -15,14 +15,18 @@ class CommentRepository {
     });
   };
   //Repo 특정 게시글의 전체댓글 postId조회 //페이지네이션연습
-  findinPostid = async (postId) => {
+  findinPostid = async (postId,pagenum) => {
+    let offset = 0;
+    if (pagenum > 1) {
+      offset = 5 * (pagenum - 1);
+    }
     const inPostid = await Comment.findAll({
       where: { postId },
       order: [["createdAt", "ASC"]],
-      limit: 2,
-      offset: count,
+      limit: 5,
+      offset: offset,
     });
-    count += 2;
+    
     return inPostid;
   };
 
@@ -43,14 +47,19 @@ class CommentRepository {
     return await ReComment.create({ comment, userId, commentId, recommentId });
   };
   //Repo 특정 댓글의 전체 대댓글 조회
-  findinCommentid = async (commentId) => {
+  findinCommentid = async (commentId,pagenum) => {
+    let offset = 0;
+    if (pagenum > 1) {
+      offset = 5 * (pagenum - 1);
+    }
     const inRecommentid = await ReComment.findAll({
       where: { commentId },
+      // include:{model : User, attributes:["nickname","profile"]},
       order: [["createdAt", "ASC"]],
-      limit: 2,
-      offset: count,
+      limit: 5,
+      offset: offset,
     });
-    count += 2;
+    
     return inRecommentid;
   };
   //Repo 특정 대댓글 수정
