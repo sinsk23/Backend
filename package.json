@@ -1,7 +1,7 @@
 {
   "name": "myblog",
   "version": "1.0.0",
-  "description": "",
+  "description": "\"# Backend\"",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app",
@@ -49,5 +49,16 @@
     "prettier": "^2.7.1",
     "sequelize-cli": "^6.4.1",
     "supertest": "^6.2.4"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sinsk23/Backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sinsk23/Backend/issues"
+  },
+  "homepage": "https://github.com/sinsk23/Backend#readme"
 }
