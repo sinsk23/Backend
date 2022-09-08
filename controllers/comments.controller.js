@@ -2,6 +2,7 @@ const CommentService = require("../services/comments.service");
 const { Comment } = require("../models");
 const { Op } = require("sequelize");
 let count = 0;
+
 class CommentController {
   commentService = new CommentService();
   // router.get('/users/:id', function(req, res) {
@@ -32,8 +33,9 @@ class CommentController {
 
   //댓글 작성 /api/comment/:postId
   insertComment = async (req, res, next) => {
+    const { userId } = res.locals.userId;
     const { postId } = req.params;
-    const { comment, userId } = req.body;
+    const { comment } = req.body;
 
     const commentData = await this.commentService.createComment(
       comment,
@@ -56,6 +58,7 @@ class CommentController {
 
   //댓글 수정 /api/comment/:commentId
   editComment = async (req, res, next) => {
+    const { userId } = res.locals.userId;
     const { commentId } = req.params;
     const { comment } = req.body;
 
@@ -65,6 +68,7 @@ class CommentController {
   };
   //댓글 삭제 /api/comment/:commentId
   deleteComment = async (req, res, next) => {
+    const { userId } = res.locals.userId;
     const { commentId } = req.params;
 
     await this.commentService.deleteComment(commentId);
@@ -75,8 +79,9 @@ class CommentController {
   //대 ~ 댓글 ~~~
   //대댓글 작성 /api/comment/:commentId/:recommentId
   insertRecomment = async (req, res, next) => {
+    const { userId } = res.locals.userId;
     const { commentId, recommentId } = req.params;
-    const { comment, userId } = req.body;
+    const { comment } = req.body;
 
     const recommentData = await this.commentService.createRecomment(
       comment,
@@ -90,9 +95,7 @@ class CommentController {
   getRecomment = async (req, res, next) => {
     const { commentId, recommentId } = req.params;
     const getCommentid = await this.commentService.findCommentid(commentId);
-    const inRecommentid = await this.commentService.findinCommentid(
-      recommentId
-    );
+    const inRecommentid = await this.commentService.findinCommentid(commentId);
 
     return res
       .status(200)
@@ -100,6 +103,7 @@ class CommentController {
   };
   //대댓글 수정 /api/comment/:commentId/:recommentId
   editRecomment = async (req, res, next) => {
+    const { userId } = res.locals.userId;
     const { commentId, recommentId } = req.params;
     const { comment } = req.body;
 
@@ -109,6 +113,7 @@ class CommentController {
   };
   //대댓글 삭제 /api/comment/:commentId/:recommentId
   deleteRecomment = async (req, res, next) => {
+    const { userId } = res.locals.userId;
     const { commentId, recommentId } = req.params;
     await this.commentService.deleteRecomment(commentId, recommentId);
     return res.status(200).json({ result: true });
