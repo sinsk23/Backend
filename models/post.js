@@ -13,14 +13,19 @@ module.exports = class Post extends Sequelize.Model {
           type: Sequelize.INTEGER,
           primaryKey: true,
         },
+        nickname: {
+          type: Sequelize.TEXT,
+          allowNull: false,
+        },
 
         content: {
           type: Sequelize.TEXT,
           allowNull: false,
         },
         time: {
-          type: Sequelize.INTEGER,
-          defaultValue: 0,
+          type: Sequelize.JSON,
+          defaultValue: [],
+
           allowNull: true,
         },
         distance: {
@@ -29,8 +34,8 @@ module.exports = class Post extends Sequelize.Model {
           allowNull: true,
         },
         path: {
-          type: Sequelize.INTEGER,
-          defaultValue: 0,
+          type: Sequelize.JSON,
+          defaultValue: [],
           allowNull: true,
         },
         speed: {
@@ -43,14 +48,23 @@ module.exports = class Post extends Sequelize.Model {
           defaultValue: 0,
           allowNull: true,
         },
+        view: {
+          type: Sequelize.INTEGER,
+          defaultValue: 0,
+          allowNull: true,
+        },
 
         image: {
-          type: Sequelize.STRING,
-          allowNull: false,
+          type: Sequelize.JSON,
+          defaultValue: [],
         },
         hashtag: {
-          type: Sequelize.STRING(10),
-          allowNull: false,
+          type: Sequelize.JSON,
+          defaultValue: [],
+        },
+        likeDone: {
+          type: Sequelize.BOOLEAN,
+          defaultValue: false,
         },
       },
       {

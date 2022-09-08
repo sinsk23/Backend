@@ -11,5 +11,6 @@ router.use("/comment", Reviews);
 router.use("/", [Posts]);
 
 router.use("/", [Likes]);
+router.use("/", [Users]);
 
 module.exports = router;

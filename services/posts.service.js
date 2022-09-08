@@ -1,4 +1,5 @@
 const postRepository = require("../repositories/posts.repository");
+let arry2 = [];
 class PostService {
   postRepository = new postRepository();
   createPost = async (
@@ -9,7 +10,8 @@ class PostService {
     speed,
     image,
     hashtag,
-    userId
+    userId,
+    nickname
   ) => {
     const createPost = await this.postRepository.createPost(
       content,
@@ -19,34 +21,36 @@ class PostService {
       speed,
       image,
       hashtag,
-      userId
+      userId,
+      nickname
     );
     return createPost;
   };
-  getAllPosts = async () => {
-    const getAllPosts = await this.postRepository.getAllPosts();
+
+  getAllPosts = async (pagenum, userId) => {
+    const getAllPosts = await this.postRepository.getAllPosts(pagenum);
 
     return Promise.all(
       getAllPosts.map(async (post) => {
-        const getPosts = await this.postRepository.getPost(post.postId);
+        const getPosts = await this.postRepository.getPost(post.postId, userId);
 
         return getPosts;
       })
     );
   };
-  geLikeAllPosts = async () => {
-    const getLikeAllPosts = await this.postRepository.getLikeAllPosts();
+  geLikeAllPosts = async (pagenum, userId) => {
+    const getLikeAllPosts = await this.postRepository.getLikeAllPosts(pagenum);
 
     return Promise.all(
       getLikeAllPosts.map(async (post) => {
-        const getPosts = await this.postRepository.getPost(post.postId);
+        const getPosts = await this.postRepository.getPost(post.postId, userId);
 
         return getPosts;
       })
     );
   };
-  getPost = async (postId) => {
-    const getPost = await this.postRepository.getPost(postId);
+  getPost = async (postId, userId) => {
+    const getPost = await this.postRepository.getPost(postId, userId);
 
     return getPost;
   };
@@ -58,7 +62,8 @@ class PostService {
     path,
     speed,
     image,
-    hashtag
+    hashtag,
+    checkHash
   ) => {
     const updatePost = await this.postRepository.updatePost(
       postId,
@@ -68,7 +73,8 @@ class PostService {
       path,
       speed,
       image,
-      hashtag
+      hashtag,
+      checkHash
     );
     return updatePost;
   };
@@ -80,8 +86,8 @@ class PostService {
     const searchPost = await this.postRepository.searchPost(hashtag);
     return searchPost;
   };
-  autoSearchPost = async (hashtag1) => {
-    const autoSearchPost = await this.postRepository.autoSearchPost(hashtag1);
+  autoSearchPost = async (hashtag) => {
+    const autoSearchPost = await this.postRepository.autoSearchPost(hashtag);
     return autoSearchPost;
   };
 }

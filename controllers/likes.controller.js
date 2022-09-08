@@ -8,7 +8,6 @@ class LikeController {
       const { userId } = req.body;
 
       if (!postId) {
-        console.log("테스트!!");
         throw BadRequestError("postId is required");
       }
       const pushLike = await this.likeService.pushLike(postId, userId);
