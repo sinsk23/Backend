@@ -26,7 +26,7 @@ class LikeRepository {
     }
   };
   isLike = async (postId, userId) => {
-    const isLike = await Like.findOne({ where: { postId, userId } });
+    const isLike = await Like.findOne({ where: { userId, postId } });
     if (isLike) {
       return true;
     } else {
