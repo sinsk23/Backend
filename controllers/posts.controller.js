@@ -16,7 +16,7 @@ class PostController {
         userId,
         nickname,
       } = req.body;
-
+      console.log("1");
       const createPost = await this.postService.createPost(
         content,
         time,
@@ -28,7 +28,7 @@ class PostController {
         userId,
         nickname
       );
-
+      console.log("2");
       res.status(201).json(createPost);
     } catch (error) {
       next(error);
@@ -129,8 +129,14 @@ class PostController {
   searchPost = async (req, res, next) => {
     try {
       const { hashtag } = req.query;
-      const searchPost = await this.postService.searchPost(hashtag);
-      res.status(200).json({ Post: searchPost });
+      const { pagenum } = req.params;
+      let type = false;
+      console.log("페이지넘버", pagenum);
+      const searchPost = await this.postService.searchPost(hashtag, pagenum);
+      if (!searchPost.length) {
+        type = true;
+      }
+      res.status(200).json({ Post: searchPost, isLast: type });
     } catch (error) {
       next(error);
     }

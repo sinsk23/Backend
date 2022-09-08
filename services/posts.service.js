@@ -16,24 +16,16 @@ class PostService {
     userId,
     nickname
   ) => {
+    console.log("2");
+    console.log("3", content);
     if (!content) {
       log.error("PostController.createPost : content is required");
       throw new BadRequestError(
         "PostController.createPost : content is required"
       );
     }
-    if (hashtag) {
-      let consonant = [];
-      //유저가 Hashtag를 입력했을 때 Hashtag table에 Hashtag를 생성
-      for (let i = 0; i < hashtag.length; i++) {
-        consonant[i] = help.explode(hashtag[i]).join("");
-        await Hashtag.create({
-          hashtag: hashtag[i],
-          consonant: consonant[i],
-          postId: createPost.postId,
-        });
-      }
-    }
+
+    console.log("5");
     const createPost = await this.postRepository.createPost(
       content,
       time,
@@ -45,6 +37,21 @@ class PostService {
       userId,
       nickname
     );
+    if (hashtag) {
+      console.log("4");
+      let consonant = [];
+      //유저가 Hashtag를 입력했을 때 Hashtag table에 Hashtag를 생성
+      for (let i = 0; i < hashtag.length; i++) {
+        console.log("5");
+        consonant[i] = help.explode(hashtag[i]).join("");
+        await Hashtag.create({
+          hashtag: hashtag[i],
+          consonant: consonant[i],
+          postId: createPost.postId,
+        });
+        console.log("6");
+      }
+    }
     return createPost;
   };
 
@@ -147,14 +154,15 @@ class PostService {
     const deletePost = await this.postRepository.deletePost(postId);
     return deletePost;
   };
-  searchPost = async (hashtag) => {
+  searchPost = async (hashtag, pagenum) => {
+    console.log("테스트", hashtag);
     if (!hashtag) {
       log.error("PostController.searchPost : hashtag is required");
       throw new BadRequestError(
         "PostController.searchPost : hashtag is required"
       );
     }
-    const searchPost = await this.postRepository.searchPost(hashtag);
+    const searchPost = await this.postRepository.searchPost(hashtag, pagenum);
     return searchPost;
   };
   autoSearchPost = async (hashtag) => {
