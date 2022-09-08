@@ -6,8 +6,6 @@ const Sequelize = require("sequelize");
 const test = require("../node-mailer");
 
 const Op = Sequelize.Op;
-var count = 0;
-let arr1 = [];
 
 class PostRepository {
   emailService = new test();
@@ -22,6 +20,7 @@ class PostRepository {
     userId,
     nickname
   ) => {
+    console.log("3");
     const createPost = await Post.create({
       content,
       time,
@@ -122,14 +121,22 @@ class PostRepository {
 
     return deletePost;
   };
-  searchPost = async (hashtag) => {
+  searchPost = async (hashtag, pagenum) => {
+    let offset = 0;
+    if (pagenum > 1) {
+      offset = 5 * (pagenum - 1);
+    }
     let arrayId = [];
 
     const autoSearchPost = await Hashtag.findAll({
+      offset: offset,
+      limit: 5,
+      order: [["createdAt", "DESC"]],
       where: {
         hashtag: { [Op.like]: hashtag + "%" },
       },
     });
+
     for (let i = 0; i < autoSearchPost.length; i++) {
       arrayId.push(autoSearchPost[i].postId);
     }

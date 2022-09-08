@@ -1,5 +1,5 @@
 const LikeService = require("../services/likes.service");
-let BadRequestError = require("./http-errors").BadRequestError;
+
 class LikeController {
   likeService = new LikeService();
   pushLike = async (req, res, next) => {
@@ -7,10 +7,6 @@ class LikeController {
       const { postId } = req.params;
       const { userId } = req.body;
 
-      if (!postId) {
-        console.log("테스트!!");
-        throw BadRequestError("postId is required");
-      }
       const pushLike = await this.likeService.pushLike(postId, userId);
       res.status(200).json(pushLike);
     } catch (error) {
