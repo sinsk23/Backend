@@ -4,8 +4,18 @@ const commentRepository = new CommentRepository();
 const PostRepository = new postRepository();
 InitializerCommentdata = async () => {
   //post 2개생성
+  /*content,1
+  time,2
+  distance,3
+  path,4
+  speed,5
+  image,6
+  hashtag,7
+  userId,8
+  nickname,9
+  */
   for (let i = 0; i < 2; i++) {
-    PostRepository.createPost("내용" + i, 10, 10, 10, 10, "img", "hashtag", 1);
+    PostRepository.createPost("내용" + i, 10, 10, 10, 10, "img", "hashtag", 1,"닉네임"+i);
     // .then((e) => console.log(e));
   }
   //comment 21개 생성

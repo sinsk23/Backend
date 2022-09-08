@@ -25,8 +25,8 @@ class CommentService {
     return await this.commentRepository.createComment(comment, postId, userId);
   };
   //Serv 특정 게시글의 전체댓글 postId조회
-  findinPostid = async (postId) => {
-    const findinPostid = await this.commentRepository.findinPostid(postId);
+  findinPostid = async (postId,pagenum) => {
+    const findinPostid = await this.commentRepository.findinPostid(postId,pagenum);
     //게시글에 댓글이 없으면
     if (!findinPostid) {
       return { success: false, message: "게시글에 댓글이 없습니다." };
@@ -89,9 +89,9 @@ class CommentService {
     );
   };
   //Serv 특정 댓글의 전체 대댓글 조회
-  findinCommentid = async (commentId) => {
+  findinCommentid = async (commentId,pagenum) => {
     const findinCommentid = await this.commentRepository.findinCommentid(
-      commentId
+      commentId,pagenum
     );
     //대댓글이 없으면~
     if (!findinCommentid) {

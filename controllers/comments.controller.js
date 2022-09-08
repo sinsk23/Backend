@@ -48,10 +48,10 @@ class CommentController {
 
   //댓글 조회 /api/comment/:postId
   getComment = async (req, res, next) => {
-    const { postId } = req.params;
+    const { postId ,pagenum} = req.params;
     const getPostid = await this.commentService.findPostid(postId);
 
-    const inPostid = await this.commentService.findinPostid(postId);
+    const inPostid = await this.commentService.findinPostid(postId,pagenum);
 
     return res.status(200).json({ Post: [getPostid], Comment: [inPostid] });
   };
@@ -93,9 +93,9 @@ class CommentController {
   };
   //대댓글 조회 /api/comment/:commentId/:recommentId
   getRecomment = async (req, res, next) => {
-    const { commentId, recommentId } = req.params;
+    const { commentId, recommentId,pagenum} = req.params;
     const getCommentid = await this.commentService.findCommentid(commentId);
-    const inRecommentid = await this.commentService.findinCommentid(commentId);
+    const inRecommentid = await this.commentService.findinCommentid(commentId,pagenum);
 
     return res
       .status(200)

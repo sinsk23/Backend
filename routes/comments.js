@@ -11,6 +11,8 @@ const CommentController = new Comment();
 router
   .route("/:postId")
   .post(CommentController.insertComment)
+router
+  .route("/:postId/:pagenum")
   .get(CommentController.getComment);
 router
   .route("/:commentId")
@@ -22,6 +24,8 @@ router
 router
   .route("/:commentId/:recommentId")
   .post(CommentController.insertRecomment)
+router
+  .route("/:commentId/:recommentId/:pagenum")  
   .get(CommentController.getRecomment);
 router
   .route("/:commentId/:recommentId")
