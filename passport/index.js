@@ -21,19 +21,23 @@ module.exports = (app) => {
         try {
           // 카카오 플랫폼에서 로그인 했고 & 회원 DB(사용자)에 이미 있는 이메일 경우
           const emailCheck = await User.findOne({
-            where: { email: profile._json.kakao_account.email, provider: "kakao" },
+            where: {
+              email: profile._json.kakao_account.email,
+              provider: "kakao",
+            },
           });
           // 이미 가입된 카카오 프로필이면 성공
           if (emailCheck) {
-            done(null, {emailCheck, accessToken}); 
+            done(null, { emailCheck, accessToken });
           } else {
             // 가입되어 있지 않으면 로그인 정보만 전달
             const newUser = {
               email: profile._json && profile._json.kakao_account.email,
               provider: "kakao",
-              accessToken
-            }
-            done(null, newUser); 
+              nickname: profile.displayName,
+              accessToken,
+            };
+            done(null, newUser);
           }
         } catch (err) {
           console.error(err);
