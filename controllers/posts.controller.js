@@ -141,6 +141,24 @@ class PostController {
       next(error);
     }
   };
+  searchLikePost = async (req, res, next) => {
+    try {
+      const { hashtag } = req.query;
+      const { pagenum } = req.params;
+      let type = false;
+      console.log("페이지넘버", pagenum);
+      const searchLikePost = await this.postService.searchLikePost(
+        hashtag,
+        pagenum
+      );
+      if (!searchLikePost.length) {
+        type = true;
+      }
+      res.status(200).json({ Post: searchLikePost, isLast: type });
+    } catch (error) {
+      next(error);
+    }
+  };
   autoSearchPost = async (req, res, next) => {
     try {
       const { hashtag } = req.query;

@@ -165,6 +165,19 @@ class PostService {
     const searchPost = await this.postRepository.searchPost(hashtag, pagenum);
     return searchPost;
   };
+  searchLikePost = async (hashtag, pagenum) => {
+    if (!hashtag) {
+      log.error("PostController.searchLikePost : hashtag is required");
+      throw new BadRequestError(
+        "PostController.searchLikePost : hashtag is required"
+      );
+    }
+    const searchLikePost = await this.postRepository.searchLikePost(
+      hashtag,
+      pagenum
+    );
+    return searchLikePost;
+  };
   autoSearchPost = async (hashtag) => {
     if (!hashtag) {
       log.error("PostController.autoSearchPost : hashtag is required");
