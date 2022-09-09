@@ -131,6 +131,36 @@ class PostRepository {
     const autoSearchPost = await Hashtag.findAll({
       offset: offset,
       limit: 5,
+      order: [
+        ["like", "DESC"],
+        ["createdAt", "DESC"],
+      ],
+      where: {
+        hashtag: { [Op.like]: hashtag + "%" },
+      },
+    });
+
+    for (let i = 0; i < autoSearchPost.length; i++) {
+      arrayId.push(autoSearchPost[i].postId);
+    }
+
+    const searchPost = await Post.findAll({
+      where: {
+        postId: { [Op.in]: arrayId },
+      },
+    });
+    return searchPost;
+  };
+  searchLikePost = async (hashtag, pagenum) => {
+    let offset = 0;
+    if (pagenum > 1) {
+      offset = 5 * (pagenum - 1);
+    }
+    let arrayId = [];
+
+    const autoSearchPost = await Hashtag.findAll({
+      offset: offset,
+      limit: 5,
       order: [["createdAt", "DESC"]],
       where: {
         hashtag: { [Op.like]: hashtag + "%" },

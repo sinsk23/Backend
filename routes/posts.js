@@ -3,6 +3,7 @@ const router = express.Router();
 const PostController = require("../controllers/posts.controller");
 const postController = new PostController();
 router.get("/post/search/:pagenum", postController.searchPost);
+router.get("/post/likesearch/:pagenum", postController.searchLikePost);
 router.post("/post/likeorder/:pagenum", postController.getLikeAllPosts);
 router.get("/post/autoSearch", postController.autoSearchPost);
 router.post("/post", postController.createPost);

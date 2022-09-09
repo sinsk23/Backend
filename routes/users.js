@@ -4,19 +4,15 @@ const router = express.Router();
 const UserController = require("../controllers/users.controller");
 const AuthMiddleware = require("../middlewares/auth-middleware");
 
-const socialuserController = new SocialuserController();
-/**/
-router.get("/kakao", passport.authenticate("kakao"));
-router.get("/auth/kakao/callback", socialuserController.kakaologin);
-router.post("/join", socialuserController.createAccount);
-router.post("/user/signup", socialuserController.signUp);
-router.post("/user/distance", socialuserController.addDistance);
-router.post("/user/post/:nickname/:pagenum", socialuserController.getUserPost);
-router.get("/user/search", socialuserController.searchUser);
-router.post("/user/goal", socialuserController.setGoal);
-router.put("/user/profile", socialuserController.changeProfile);
-
 const userController = new UserController();
+/**/
+
+router.post("/user/signup", userController.signUp);
+router.post("/user/distance", userController.addDistance);
+router.post("/user/post/:nickname/:pagenum", userController.getUserPost);
+router.get("/user/search", userController.searchUser);
+router.post("/user/goal", userController.setGoal);
+router.put("/user/profile", userController.changeProfile);
 
 // POST : /api/user 회원가입
 router.post("/", userController.createUser);
