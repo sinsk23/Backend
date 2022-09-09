@@ -131,10 +131,7 @@ class PostRepository {
     const autoSearchPost = await Hashtag.findAll({
       offset: offset,
       limit: 5,
-      order: [
-        ["like", "DESC"],
-        ["createdAt", "DESC"],
-      ],
+      order: [["createdAt", "DESC"]],
       where: {
         hashtag: { [Op.like]: hashtag + "%" },
       },
@@ -161,7 +158,10 @@ class PostRepository {
     const autoSearchPost = await Hashtag.findAll({
       offset: offset,
       limit: 5,
-      order: [["createdAt", "DESC"]],
+      order: [
+        ["createdAt", "DESC"],
+        ["like", "DESC"],
+      ],
       where: {
         hashtag: { [Op.like]: hashtag + "%" },
       },
