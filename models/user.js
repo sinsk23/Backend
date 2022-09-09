@@ -21,8 +21,8 @@ module.exports = class User extends Sequelize.Model {
           unique: true,
         },
 
-        profile: {
-          type: Sequelize.STRING(30),
+        image: {
+          type: Sequelize.STRING,
           allowNull: true,
         },
         //sns로그인을 하였을 경우 provider와 snsId를 저장
@@ -31,8 +31,7 @@ module.exports = class User extends Sequelize.Model {
           type: Sequelize.STRING(10),
           allowNull: false,
           defaultValue: "local",
-        },
-        snsId: { type: Sequelize.STRING(30), allowNull: true },
+        }
       },
       {
         sequelize,
