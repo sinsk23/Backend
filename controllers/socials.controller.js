@@ -1,5 +1,6 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const log = require("../winston");
 const passport = require("passport");
 const { User } = require("../models");
 class SocialController {
@@ -10,19 +11,7 @@ class SocialController {
       (err, user, info) => {
         if (err) return next(err);
         const { email, nickname, accessToken, provider } = user;
-
-        if (!nickname) {
-          return res.status(200).json({
-            email,
-            provider,
-            accessToken,
-            member: false,
-            message: "success",
-          });
-        }
-
-        console.log(user);
-
+        console.log("닉네임!!", nickname);
         const jwtToken = jwt.sign(
           { email, nickname, provider },
           process.env.MYSECRET_KEY,
@@ -30,9 +19,13 @@ class SocialController {
             expiresIn: "2d",
           }
         );
+
         res.status(200).json({
           jwtToken,
           accessToken,
+          email,
+          provider,
+          nickname,
           member: true,
           message: "success",
         });

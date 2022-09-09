@@ -12,13 +12,7 @@ class UserController {
   createUser = async (req, res, next) => {
     const { email, nickname, image, provider } = req.body;
 
-    if (
-      email === "" ||
-      email === "" ||
-      nickname === "" ||
-      image === "" ||
-      provider === ""
-    ) {
+    if (email === "" || nickname === "" || image === "" || provider === "") {
       return res.status(400).json({
         result: false,
         errorMessage: "빈 값이 존제합니다.",
