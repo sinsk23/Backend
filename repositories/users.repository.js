@@ -1,9 +1,27 @@
 const { Record, Post, Like, User } = require("../models");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-const { Hashtag } = require("../models");
+
 const help = require("korean-regexp");
-class UserRepository {
+
+class UserRepositiory {
+  createUser = async (email, nickname, image, provider) => {
+    const users = await User.create({ email, nickname, image, provider });
+    return users;
+  };
+
+  duplicateCheck = async (nickname) => {
+    const users = await User.findOne({ where: { nickname } });
+    return users;
+  };
+
+  updateUser = async (email, nickname, image, provider) => {
+    const users = await User.update(
+      { nickname, image },
+      { where: { email, provider } }
+    );
+    return users;
+  };
   addDistance = async (userId, distance) => {
     const addDistance = await Record.create({ userId, distance });
     return addDistance;
@@ -23,7 +41,6 @@ class UserRepository {
     console.log("테스트", getAllPosts);
 
     return getAllPosts;
-    N;
   };
   getPost = async (postId, userId) => {
     let isLike;
@@ -77,4 +94,4 @@ class UserRepository {
   };
 }
 
-module.exports = UserRepository;
+module.exports = UserRepositiory;
