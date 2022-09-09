@@ -4,7 +4,6 @@ const router = express.Router();
 const UserController = require("../controllers/users.controller");
 const AuthMiddleware = require("../middlewares/auth-middleware");
 
-<<<<<<< HEAD
 const socialuserController = new SocialuserController();
 /**/
 router.get("/kakao", passport.authenticate("kakao"));
@@ -16,8 +15,7 @@ router.post("/user/post/:nickname/:pagenum", socialuserController.getUserPost);
 router.get("/user/search", socialuserController.searchUser);
 router.post("/user/goal", socialuserController.setGoal);
 router.put("/user/profile", socialuserController.changeProfile);
-module.exports = router;
-=======
+
 const userController = new UserController();
 
 // POST : /api/user 회원가입
@@ -28,4 +26,3 @@ router.put("/", AuthMiddleware, userController.updateUser);
 router.post("/check", userController.duplicateCheck);
 
 module.exports = router;
->>>>>>> 소셜로그인제작
