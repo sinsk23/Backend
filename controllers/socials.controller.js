@@ -30,6 +30,7 @@ class SocialController {
             expiresIn: "2d",
           }
         );
+        console.log("토큰", jwtToken);
         res.status(200).json({
           jwtToken,
           accessToken,
