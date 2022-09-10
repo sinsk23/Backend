@@ -10,10 +10,10 @@ class SocialController {
       { failureRedirect: "/" },
       (err, user, info) => {
         if (err) return next(err);
-        const { email, nickname, accessToken, provider } = user;
-        console.log("닉네임!!", nickname);
+        const { email, nickname, accessToken, provider ,image} = user;
+        
         const jwtToken = jwt.sign(
-          { email, nickname, provider },
+          { email, nickname, provider ,image},
           process.env.MYSECRET_KEY,
           {
             expiresIn: "2d",
@@ -21,12 +21,13 @@ class SocialController {
         );
 
         res.status(200).json({
+          image,
           jwtToken,
           accessToken,
           email,
           provider,
           nickname,
-          member: true,
+          
           message: "success",
         });
       }

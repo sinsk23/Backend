@@ -5,23 +5,7 @@ const Op = Sequelize.Op;
 const help = require("korean-regexp");
 
 class UserRepositiory {
-  createUser = async (email, nickname, image, provider) => {
-    const users = await User.create({ email, nickname, image, provider });
-    return users;
-  };
-
-  duplicateCheck = async (nickname) => {
-    const users = await User.findOne({ where: { nickname } });
-    return users;
-  };
-
-  updateUser = async (email, nickname, image, provider) => {
-    const users = await User.update(
-      { nickname, image },
-      { where: { email, provider } }
-    );
-    return users;
-  };
+  
   addDistance = async (userId, distance) => {
     const addDistance = await Record.create({ userId, distance });
     return addDistance;

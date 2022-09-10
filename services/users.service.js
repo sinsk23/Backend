@@ -4,35 +4,6 @@ let BadRequestError = require("./http-errors").BadRequestError;
 class UserService {
   userRepository = new UserRepositiory();
 
-  createUser = async (email, nickname, image, provider) => {
-    const createUserData = await this.userRepository.createUser(
-      email,
-      nickname,
-      image,
-      provider
-    );
-
-    return createUserData;
-  };
-
-  duplicateCheck = async (nickname) => {
-    const duplicateCheckData = await this.userRepository.duplicateCheck(
-      nickname
-    );
-
-    return duplicateCheckData;
-  };
-
-  updateUser = async (email, nickname, image, provider) => {
-    const updateUserData = await this.userRepository.updateUser(
-      email,
-      nickname,
-      image,
-      provider
-    );
-
-    return updateUserData;
-  };
   addDistance = async (userId, distance) => {
     const addDistance = await this.userRepository.addDistance(userId, distance);
     return addDistance;
