@@ -10,15 +10,18 @@ class SocialController {
       { failureRedirect: "/" },
       (err, user, info) => {
         if (err) return next(err);
-        const { email, nickname, accessToken, provider ,image} = user;
-        
+
+        const { email, nickname, accessToken, image, provider } = user;
+
         const jwtToken = jwt.sign(
-          { email, nickname, provider ,image},
+          { email, nickname, image, provider },
+
           process.env.MYSECRET_KEY,
           {
             expiresIn: "2d",
           }
         );
+
 
         res.status(200).json({
           image,
@@ -30,21 +33,36 @@ class SocialController {
           
           message: "success",
         });
+
+        const emailCheck = async (email) => {
+          const emailCheck = await User.findOne({ email });
+          console.log("테스트", emailCheck);
+          if (emailCheck) {
+            return res.status(200).json({
+              jwtToken,
+              accessToken,
+              image,
+              email,
+              provider,
+              nickname,
+              member: true,
+              message: "success",
+            });
+          } else {
+            return res.status(200).json({
+              image,
+              email,
+              provider,
+              nickname,
+              member: false,
+            });
+          }
+        };
+        emailCheck(email);
+
       }
     )(req, res, next);
   };
-
-  kakaologout = (req, res, next) => {
-    req.session.destroy((err) => {
-      req.logout();
-      res.redirect("/");
-    });
-  };
-  // createAccount = async (req, res, next) => {
-  //   const { nickname, profile } = req.body;
-  //   const createUser = await User.create(nickname, profile);
-  //   return res.status(201).json({ createUser });
-  // };
 }
 
 module.exports = SocialController;

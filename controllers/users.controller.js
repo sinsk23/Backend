@@ -8,8 +8,7 @@ const help = require("korean-regexp");
 
 class UserController {
   userService = new UserService();
-
-
+  
   addDistance = async (req, res, next) => {
     try {
       const { distance } = req.body;
@@ -58,10 +57,10 @@ class UserController {
   };
   signUp = async (req, res, next) => {
     try {
-      const { email, nickname, profile } = req.body;
+      const { email, nickname, image } = req.body;
       let consonant = [];
       consonant = help.explode(nickname).join("");
-      const signUp = await User.create({ email, nickname, consonant, profile });
+      const signUp = await User.create({ email, nickname, consonant, image });
 
       res.status(200).json(signUp);
     } catch (error) {
