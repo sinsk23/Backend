@@ -23,17 +23,9 @@ class SocialController {
         );
 
 
-        res.status(200).json({
-          image,
-          jwtToken,
-          accessToken,
-          email,
-          provider,
-          nickname,
-          
-          message: "success",
-        });
 
+
+        
         const emailCheck = async (email) => {
           const emailCheck = await User.findOne({ email });
           console.log("테스트", emailCheck);
