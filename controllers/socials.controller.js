@@ -13,13 +13,13 @@ class SocialController {
         const { email, nickname, accessToken, image, provider } = user;
 
         const emailCheck = async (email) => {
-          const emailCheck = await User.findOne({ email });
+          const emailCheck = await User.findOne({ where: { email } });
 
           if (emailCheck) {
             const token = jwt.sign(
               {
                 email: email,
-                nickname: nickname,
+                nickname: emailCheck.nickname,
                 image: image,
                 provider: provider,
                 userId: emailCheck.userId,
@@ -35,7 +35,7 @@ class SocialController {
               image,
               email,
               provider,
-              nickname,
+              nickname: emailCheck.nickname,
 
               member: true,
               message: "success",
