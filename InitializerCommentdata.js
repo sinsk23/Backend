@@ -20,11 +20,11 @@ InitializerCommentdata = async () => {
   }
   //comment 21개 생성
   for (let i = 0; i < 21; i++) {
-    commentRepository.createComment("내용" + i, 1, 1);
+    commentRepository.createComment("댓글내용" + i, 1, 1);
     //   .then((e) => console.log(e));
   }
   for (let i = 0; i < 21; i++) {
-    commentRepository.createRecomment("내용" + i, 1, 1);
+    commentRepository.createRecomment("대댓글내용" + i, 1, 1);
   }
 };
 module.exports = InitializerCommentdata;

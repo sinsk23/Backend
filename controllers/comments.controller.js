@@ -33,66 +33,90 @@ class CommentController {
 
   //댓글 작성 /api/comment/:postId
   insertComment = async (req, res, next) => {
-    const { userId } = res.locals.userId;
+    try{
+    const { user } = res.locals;
+    console.log(res.locals);
+    console.log(user.userId);  
     const { postId } = req.params;
     const { comment } = req.body;
-
+    const userId = user.userId;
     const commentData = await this.commentService.createComment(
       comment,
       postId,
       userId
     );
-
+    
     return res.status(201).json({ data: commentData });
+    }catch (error) {
+      next(error);
+    }
   };
 
   //댓글 조회 /api/comment/:postId
   getComment = async (req, res, next) => {
+    try{
     const { postId ,pagenum} = req.params;
     const getPostid = await this.commentService.findPostid(postId);
 
     const inPostid = await this.commentService.findinPostid(postId,pagenum);
 
     return res.status(200).json({ Post: [getPostid], Comment: [inPostid] });
+    }
+    catch (error) {
+      next(error);
+    }
   };
 
   //댓글 수정 /api/comment/:commentId
   editComment = async (req, res, next) => {
-    const { userId } = res.locals.userId;
+    try{
+    const { user } = res.locals;
     const { commentId } = req.params;
     const { comment } = req.body;
 
-    await this.commentService.editComment(commentId, comment);
+    await this.commentService.editComment(user.userId,commentId, comment);
 
     return res.status(201).json({ result: true });
+    }catch (error) {
+      next(error);
+    }
   };
   //댓글 삭제 /api/comment/:commentId
   deleteComment = async (req, res, next) => {
-    const { userId } = res.locals.userId;
+    try{
+    const { user } = res.locals;
     const { commentId } = req.params;
 
-    await this.commentService.deleteComment(commentId);
-
+    await this.commentService.deleteComment(user.userId,commentId);
+    
     return res.status(200).json({ result: true });
+    }catch (error) {
+      next(error);
+    }
   };
 
   //대 ~ 댓글 ~~~
   //대댓글 작성 /api/comment/:commentId/:recommentId
   insertRecomment = async (req, res, next) => {
-    const { userId } = res.locals.userId;
+    try{
+    const { user } = res.locals;
     const { commentId, recommentId } = req.params;
     const { comment } = req.body;
 
     const recommentData = await this.commentService.createRecomment(
       comment,
-      userId,
+      user.userId,
       commentId,
       recommentId
     );
     return res.status(201).json({ data: recommentData });
+    }catch (error) {
+      next(error);
+    }
   };
   //대댓글 조회 /api/comment/:commentId/:recommentId
   getRecomment = async (req, res, next) => {
+    try{
     const { commentId, recommentId,pagenum} = req.params;
     const getCommentid = await this.commentService.findCommentid(commentId);
     const inRecommentid = await this.commentService.findinCommentid(commentId,pagenum);
@@ -100,24 +124,36 @@ class CommentController {
     return res
       .status(200)
       .json({ Comment: [getCommentid], ReComment: [inRecommentid] });
+    }catch (error) {
+      next(error);
+    }
   };
   //대댓글 수정 /api/comment/:commentId/:recommentId
   editRecomment = async (req, res, next) => {
-    const { userId } = res.locals.userId;
+    try{
+    const { user } = res.locals;
+    console.log("대댓글 수정쪽 :",user);
     const { commentId, recommentId } = req.params;
     const { comment } = req.body;
 
-    await this.commentService.editRecomment(commentId, recommentId, comment);
+    await this.commentService.editRecomment(user.userId,commentId, recommentId, comment);
 
     return res.status(201).json({ result: true });
+    }catch (error) {
+      next(error);
+    }
   };
   //대댓글 삭제 /api/comment/:commentId/:recommentId
   deleteRecomment = async (req, res, next) => {
-    const { userId } = res.locals.userId;
+    try{
+    const { user } = res.locals;
     const { commentId, recommentId } = req.params;
-    await this.commentService.deleteRecomment(commentId, recommentId);
+    await this.commentService.deleteRecomment(user.userId,commentId, recommentId);
     return res.status(200).json({ result: true });
-  };
+  }catch (error) {
+    next(error);
+  }
 }
 
+}
 module.exports = CommentController;

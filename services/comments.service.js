@@ -34,12 +34,13 @@ class CommentService {
     return findinPostid;
   };
   //Serv 특정 게시글에 댓글 수정
-  editComment = async (commentId, comment) => {
+  editComment = async (userId, commentId, comment) => {
     //댓글 내용이 없으면~
     if (comment === "" || null) {
       return { success: false, message: "댓글을 입력해주세요" };
     }
     const editComment = await this.commentRepository.editComment(
+      userId,
       commentId,
       comment
     );
@@ -50,8 +51,8 @@ class CommentService {
     return editComment;
   };
   //Serv 특정 게시글에 댓글 삭제
-  deleteComment = async (commentId) => {
-    const deleteComment = await this.commentRepository.deleteComment(commentId);
+  deleteComment = async (userId, commentId) => {
+    const deleteComment = await this.commentRepository.deleteComment(userId, commentId);
     if (!deleteComment) {
       return { success: false, message: "삭제 할 댓글이 존재하지 않습니다." };
     }
@@ -100,8 +101,9 @@ class CommentService {
     return findinCommentid;
   };
   //Serv 특정 대댓글 수정
-  editRecomment = async (commentId, recommentId, comment) => {
+  editRecomment = async (userId, commentId, recommentId, comment) => {
     const editRecomment = await this.commentRepository.editRecomment(
+      userId,
       commentId,
       recommentId,
       comment
@@ -116,8 +118,9 @@ class CommentService {
     return editRecomment;
   };
   //Serv 특정 대댓글 삭제
-  deleteRecomment = async (commentId, recommentId) => {
+  deleteRecomment = async (userId, commentId, recommentId) => {
     const deleteRecomment = await this.commentRepository.deleteRecomment(
+      userId,
       commentId,
       recommentId
     );

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Comment = require("../controllers/comments.controller");
-
+const authMiddleware = require("../middlewares/auth-middleware");
 const CommentController = new Comment();
 //나중에 유저에서 include 찾아서 nickname이랑 profile 넣어줘야함
 //댓글 개수도 표현해줘야함 comment.length??or findandCountAll
@@ -10,26 +10,26 @@ const CommentController = new Comment();
 // query로 받을때 주소는 "/?"
 router
   .route("/:postId")
-  .post(CommentController.insertComment)
+  .post(authMiddleware,CommentController.insertComment)
 router
   .route("/:postId/:pagenum")
   .get(CommentController.getComment);
 router
   .route("/:commentId")
-  .put(CommentController.editComment)
-  .delete(CommentController.deleteComment);
+  .put(authMiddleware,CommentController.editComment)
+  .delete(authMiddleware,CommentController.deleteComment);
 
 // router.route("/?").get(CommentController.getCommentT);
 
 router
   .route("/:commentId/:recommentId")
-  .post(CommentController.insertRecomment)
+  .post(authMiddleware,CommentController.insertRecomment)
 router
   .route("/:commentId/:recommentId/:pagenum")  
   .get(CommentController.getRecomment);
 router
   .route("/:commentId/:recommentId")
-  .put(CommentController.editRecomment)
-  .delete(CommentController.deleteRecomment);
+  .put(authMiddleware,CommentController.editRecomment)
+  .delete(authMiddleware,CommentController.deleteRecomment);
 
 module.exports = router;
