@@ -48,6 +48,10 @@ class UserService {
     );
     return changeProfile;
   };
+  checkNick = async (nickname) => {
+    const checkNick = await this.userRepository.checkNick(nickname);
+    return checkNick;
+  };
 }
 
 module.exports = UserService;
