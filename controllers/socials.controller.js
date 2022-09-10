@@ -19,7 +19,7 @@ class SocialController {
             const token = jwt.sign(
               {
                 email: email,
-                nickname: nickname,
+                nickname: emailCheck.nickname,
                 image: image,
                 provider: provider,
                 userId: emailCheck.userId,
@@ -35,7 +35,7 @@ class SocialController {
               image,
               email,
               provider,
-              nickname,
+              nickname: emailCheck.nickname,
 
               member: true,
               message: "success",
