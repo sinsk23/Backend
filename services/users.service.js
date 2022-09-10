@@ -41,12 +41,9 @@ class UserService {
     const setGoal = await this.userRepository.setGoal(goal, userId);
     return setGoal;
   };
-  changeProfile = async (profile, userId) => {
-    const changeProfile = await this.userRepository.changeProfile(
-      profile,
-      userId
-    );
-    return changeProfile;
+  changeImage = async (image, userId) => {
+    const changeImage = await this.userRepository.changeImage(image, userId);
+    return changeImage;
   };
   checkNick = async (nickname) => {
     const checkNick = await this.userRepository.checkNick(nickname);

@@ -18,9 +18,12 @@ class UserController {
           "UserController.addDistance : distance is required"
         );
       }
-      const { userId } = req.body;
+      const { user } = res.locals;
 
-      const addDistance = await this.userService.addDistance(userId, distance);
+      const addDistance = await this.userService.addDistance(
+        user.userId,
+        distance
+      );
       res.status(201).json(addDistance);
     } catch (error) {
       next(error);
@@ -29,13 +32,13 @@ class UserController {
   getUserPost = async (req, res, next) => {
     try {
       const { nickname, pagenum } = req.params;
-      const { userId } = req.body;
+      const { user } = res.locals;
 
       let type = false;
       const getUserPost = await this.userService.getUserPost(
         nickname,
         pagenum,
-        userId
+        user.userId
       );
       if (!getUserPost.length) {
         type = true;
@@ -81,14 +84,15 @@ class UserController {
       next(error);
     }
   };
-  changeProfile = async (req, res, next) => {
+  changeImage = async (req, res, next) => {
     try {
-      const { profile, userId } = req.body;
-      const changeProfile = await this.userService.changeProfile(
-        profile,
-        userId
+      const { image } = req.body;
+      const { user } = res.locals;
+      const changeImage = await this.userService.changeImage(
+        image,
+        user.userId
       );
-      res.status(200).json(changeProfile);
+      res.status(200).json(changeImage);
     } catch (error) {
       next(error);
     }

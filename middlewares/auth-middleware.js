@@ -12,9 +12,11 @@ module.exports = (req, res, next) => {
   }
 
   try {
+    console.log("!!!!", jwt.verify(token, process.env.MYSECRET_KEY));
     const { userId } = jwt.verify(token, process.env.MYSECRET_KEY); // userId 는 jwt.sign(userId : user._id)의 user._id가 할당된다.
-
+    console.log("유저ㅏ읻", userId);
     User.findByPk(userId).then((user) => {
+      console.log("텟트ㅡ입니다", user);
       res.locals.user = user;
 
       next();
