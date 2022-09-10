@@ -8,7 +8,7 @@ const help = require("korean-regexp");
 
 class UserController {
   userService = new UserService();
-
+  
   addDistance = async (req, res, next) => {
     try {
       const { distance } = req.body;

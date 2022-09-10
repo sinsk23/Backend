@@ -31,12 +31,12 @@ class CommentRepository {
   };
 
   //Repo 특정 게시글에 댓글 수정
-  editComment = async (commentId, comment) => {
-    return await Comment.update({ comment }, { where: { commentId } });
+  editComment = async (userId, commentId, comment) => {
+    return await Comment.update({ comment }, { where: { userId, commentId } });
   };
   //Repo 특정 게시글에 댓글 삭제
-  deleteComment = async (commentId) => {
-    return await Comment.destroy({ where: { commentId } });
+  deleteComment = async (userId,commentId) => {
+    return await Comment.destroy({ where: { userId,commentId } });
   };
   //Repo 특정 댓글 조회
   findCommentid = async (commentId) => {
@@ -63,12 +63,12 @@ class CommentRepository {
     return inRecommentid;
   };
   //Repo 특정 대댓글 수정
-  editRecomment = async (commentId, recommentId, comment) => {
-    return await ReComment.update({ comment }, { where: { recommentId } });
+  editRecomment = async (userId, commentId,recommentId, comment) => {
+    return await ReComment.update({ comment }, { where: { userId, commentId,recommentId } });
   };
   //Repo 특정 대댓글 삭제
-  deleteRecomment = async (commentId, recommentId) => {
-    return await ReComment.destroy({ where: { recommentId } });
+  deleteRecomment = async (userId, commentId, recommentId) => {
+    return await ReComment.destroy({ where: { userId, commentId, recommentId } });
   };
 }
 module.exports = CommentRepository;
