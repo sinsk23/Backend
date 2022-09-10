@@ -75,6 +75,16 @@ class UserRepositiory {
     const changeProfile = await User.update({ profile }, { where: { userId } });
     return changeProfile;
   };
+  checkNick = async (nickname) => {
+    console.log("닉네임", nickname);
+    const checkNick = await User.findOne({ where: { nickname } });
+    console.log("@@@@@@@@@", checkNick);
+    if (checkNick) {
+      return "중복된 닉네임입니다.";
+    } else {
+      return "사용가능한 닉네임입니다.";
+    }
+  };
 }
 
 module.exports = UserRepositiory;
