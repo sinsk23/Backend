@@ -5,17 +5,8 @@ class PostController {
 
   createPost = async (req, res, next) => {
     try {
-      const {
-        content,
-        time,
-        distance,
-        path,
-        speed,
-        image,
-        hashtag,
-        userId,
-        nickname,
-      } = req.body;
+      const { user } = res.locals;
+      const { content, time, distance, path, speed, image, hashtag } = req.body;
 
       const createPost = await this.postService.createPost(
         content,
@@ -25,8 +16,8 @@ class PostController {
         speed,
         image,
         hashtag,
-        userId,
-        nickname
+        user.userId,
+        user.nickname
       );
 
       res.status(201).json(createPost);
@@ -36,11 +27,14 @@ class PostController {
   };
   getAllPosts = async (req, res, next) => {
     try {
+      const { user } = res.locals;
       const { pagenum } = req.params;
-      const { userId } = req.body;
 
       let type = false;
-      const getAllPosts = await this.postService.getAllPosts(pagenum, userId);
+      const getAllPosts = await this.postService.getAllPosts(
+        pagenum,
+        user.userId
+      );
 
       if (!getAllPosts.length) {
         type = true;
@@ -57,7 +51,7 @@ class PostController {
     try {
       const { postId } = req.params;
       const { user } = res.locals;
-      console.log("유저아이디!", user.userId);
+
       const getPost = await this.postService.getPost(postId, user.userId);
 
       if (!getPost) {
@@ -110,12 +104,12 @@ class PostController {
   getLikeAllPosts = async (req, res, next) => {
     try {
       const { pagenum } = req.params;
-      const { userId } = req.body;
+      const { user } = res.locals;
 
       let type = false;
       const getLikeAllPosts = await this.postService.geLikeAllPosts(
         pagenum,
-        userId
+        user.userId
       );
       if (!getLikeAllPosts.length) {
         type = true;

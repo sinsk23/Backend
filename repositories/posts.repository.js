@@ -128,9 +128,6 @@ class PostRepository {
     let arrayId = [];
 
     const autoSearchPost = await Hashtag.findAll({
-      offset: offset,
-      limit: 5,
-      order: [["createdAt", "DESC"]],
       where: {
         hashtag: { [Op.like]: hashtag + "%" },
       },
@@ -141,6 +138,9 @@ class PostRepository {
     }
 
     const searchPost = await Post.findAll({
+      offset: offset,
+      limit: 5,
+      order: [["createdAt", "DESC"]],
       where: {
         postId: { [Op.in]: arrayId },
       },
@@ -155,12 +155,6 @@ class PostRepository {
     let arrayId = [];
 
     const autoSearchPost = await Hashtag.findAll({
-      offset: offset,
-      limit: 5,
-      order: [
-        ["createdAt", "DESC"],
-        ["like", "DESC"],
-      ],
       where: {
         hashtag: { [Op.like]: hashtag + "%" },
       },
@@ -171,6 +165,12 @@ class PostRepository {
     }
 
     const searchPost = await Post.findAll({
+      offset: offset,
+      limit: 5,
+      order: [
+        ["createdAt", "DESC"],
+        ["like", "DESC"],
+      ],
       where: {
         postId: { [Op.in]: arrayId },
       },

@@ -4,10 +4,10 @@ class LikeController {
   likeService = new LikeService();
   pushLike = async (req, res, next) => {
     try {
+      const { user } = res.locals;
       const { postId } = req.params;
-      const { userId } = req.body;
 
-      const pushLike = await this.likeService.pushLike(postId, userId);
+      const pushLike = await this.likeService.pushLike(postId, user.userId);
       res.status(200).json(pushLike);
     } catch (error) {
       console.log(error);
@@ -17,8 +17,8 @@ class LikeController {
   isLike = async (req, res, next) => {
     try {
       const { postId } = req.params;
-      const { userId } = req.body;
-      const isLike = await this.likeService.isLike(postId, userId);
+      const { user } = res.locals;
+      const isLike = await this.likeService.isLike(postId, user.userId);
       res.status(200).json(isLike);
     } catch (error) {
       next(error);

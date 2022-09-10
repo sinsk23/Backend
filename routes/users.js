@@ -8,10 +8,14 @@ const userController = new UserController();
 
 router.post("/user/signup", userController.signUp);
 router.post("/user/checknick", userController.checkNick);
-router.post("/user/distance", userController.addDistance);
-router.post("/user/post/:nickname/:pagenum", userController.getUserPost);
-router.get("/user/search", userController.searchUser);
-router.post("/user/goal", userController.setGoal);
-router.put("/user/profile", userController.changeProfile);
+router.post("/user/distance", AuthMiddleware, userController.addDistance);
+router.get(
+  "/user/post/:nickname/:pagenum",
+  AuthMiddleware,
+  userController.getUserPost
+);
+router.get("/user/search", AuthMiddleware, userController.searchUser);
+router.post("/user/goal", AuthMiddleware, userController.setGoal);
+router.put("/user/image", AuthMiddleware, userController.changeImage);
 
 module.exports = router;

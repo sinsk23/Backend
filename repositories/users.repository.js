@@ -61,7 +61,7 @@ class UserRepositiory {
       where: {
         nickname: { [Op.in]: returnData },
       },
-      attributes: ["nickname", "profile"],
+      attributes: ["nickname", "image"],
     });
     return test;
   };
@@ -69,9 +69,9 @@ class UserRepositiory {
     const setGoal = await Record.create({ goal, userId });
     return setGoal;
   };
-  changeProfile = async (profile, userId) => {
-    const changeProfile = await User.update({ profile }, { where: { userId } });
-    return changeProfile;
+  changeImage = async (image, userId) => {
+    const changeImage = await User.update({ image }, { where: { userId } });
+    return changeImage;
   };
   checkNick = async (nickname) => {
     const checkNick = await User.findOne({ where: { nickname } });
