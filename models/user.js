@@ -25,13 +25,17 @@ module.exports = class User extends Sequelize.Model {
           type: Sequelize.STRING,
           allowNull: true,
         },
+        consonant: {
+          type: Sequelize.STRING,
+          allowNull: true,
+        },
         //sns로그인을 하였을 경우 provider와 snsId를 저장
         // //provider가 local이면 로컬 로그인을, kakao면 카카오 로그인을 한것
         provider: {
           type: Sequelize.STRING(10),
           allowNull: false,
           defaultValue: "local",
-        }
+        },
       },
       {
         sequelize,

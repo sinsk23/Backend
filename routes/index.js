@@ -5,7 +5,7 @@ const Social = require("./socials");
 const Users = require("./users");
 const Likes = require("./likes");
 const router = express.Router();
-router.use("/user", Users);
+router.use("/", Users);
 
 router.use("/comment", Reviews);
 
