@@ -5,7 +5,6 @@ class LikeService {
 
   pushLike = async (postId, userId) => {
     if (!postId) {
-      console.log("테스트!!");
       throw BadRequestError("postId is required");
     }
     const pushLike = await this.likeRepository.pushLike(postId, userId);

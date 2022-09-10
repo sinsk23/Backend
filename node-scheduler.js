@@ -12,7 +12,6 @@ class schedules {
       console.log("Scheduler has executed!!!");
       const deleteRecord = async () => await Record.destroy({ where: {} });
       deleteRecord();
-      console.log("테스트", deleteRecord);
     });
   };
 }

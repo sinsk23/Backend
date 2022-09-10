@@ -12,7 +12,7 @@ class UserRepositiory {
   };
   getUserPost = async (nickname, pagenum) => {
     let offset = 0;
-    console.log("테스트", nickname);
+
     if (pagenum > 1) {
       offset = 5 * (pagenum - 1);
     }
@@ -22,7 +22,6 @@ class UserRepositiory {
       limit: 5,
       order: [["createdAt", "DESC"]],
     });
-    console.log("테스트", getAllPosts);
 
     return getAllPosts;
   };
@@ -50,9 +49,8 @@ class UserRepositiory {
   };
 
   searchUser = async (nickname) => {
-    console.log("!!", nickname);
     nickname = help.explode(nickname).join("");
-    console.log(nickname);
+
     const autoSearchUser = await User.findAll({
       where: {
         consonant: { [Op.like]: nickname + "%" },
@@ -77,9 +75,8 @@ class UserRepositiory {
     return changeProfile;
   };
   checkNick = async (nickname) => {
-    console.log("닉네임", nickname);
     const checkNick = await User.findOne({ where: { nickname } });
-    console.log("@@@@@@@@@", checkNick);
+
     if (checkNick) {
       return "중복된 닉네임입니다.";
     } else {
