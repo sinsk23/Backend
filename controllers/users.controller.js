@@ -19,7 +19,7 @@ class UserController {
         );
       }
       const { userId } = req.body;
-      console.log(distance, userId);
+
       const addDistance = await this.userService.addDistance(userId, distance);
       res.status(201).json(addDistance);
     } catch (error) {

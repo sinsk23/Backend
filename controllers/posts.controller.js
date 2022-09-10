@@ -16,7 +16,7 @@ class PostController {
         userId,
         nickname,
       } = req.body;
-      console.log("1");
+
       const createPost = await this.postService.createPost(
         content,
         time,
@@ -28,7 +28,7 @@ class PostController {
         userId,
         nickname
       );
-      console.log("2");
+
       res.status(201).json(createPost);
     } catch (error) {
       next(error);
@@ -56,10 +56,9 @@ class PostController {
   getPost = async (req, res, next) => {
     try {
       const { postId } = req.params;
-      const { userId } = req.body;
-      console.log("유저아디", userId);
-
-      const getPost = await this.postService.getPost(postId, userId);
+      const { user } = res.locals;
+      console.log("유저아이디!", user.userId);
+      const getPost = await this.postService.getPost(postId, user.userId);
 
       if (!getPost) {
         return res.status(400).json({ result: false });
@@ -131,7 +130,7 @@ class PostController {
       const { hashtag } = req.query;
       const { pagenum } = req.params;
       let type = false;
-      console.log("페이지넘버", pagenum);
+
       const searchPost = await this.postService.searchPost(hashtag, pagenum);
       if (!searchPost.length) {
         type = true;
@@ -146,7 +145,7 @@ class PostController {
       const { hashtag } = req.query;
       const { pagenum } = req.params;
       let type = false;
-      console.log("페이지넘버", pagenum);
+
       const searchLikePost = await this.postService.searchLikePost(
         hashtag,
         pagenum

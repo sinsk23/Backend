@@ -16,8 +16,6 @@ class PostService {
     userId,
     nickname
   ) => {
-    console.log("2");
-    console.log("3", content);
     if (!content) {
       log.error("PostController.createPost : content is required");
       throw new BadRequestError(
@@ -25,7 +23,6 @@ class PostService {
       );
     }
 
-    console.log("5");
     const createPost = await this.postRepository.createPost(
       content,
       time,
@@ -38,18 +35,15 @@ class PostService {
       nickname
     );
     if (hashtag) {
-      console.log("4");
       let consonant = [];
       //유저가 Hashtag를 입력했을 때 Hashtag table에 Hashtag를 생성
       for (let i = 0; i < hashtag.length; i++) {
-        console.log("5");
         consonant[i] = help.explode(hashtag[i]).join("");
         await Hashtag.create({
           hashtag: hashtag[i],
           consonant: consonant[i],
           postId: createPost.postId,
         });
-        console.log("6");
       }
     }
     return createPost;
@@ -155,7 +149,6 @@ class PostService {
     return deletePost;
   };
   searchPost = async (hashtag, pagenum) => {
-    console.log("테스트", hashtag);
     if (!hashtag) {
       log.error("PostController.searchPost : hashtag is required");
       throw new BadRequestError(

@@ -3,36 +3,25 @@ const { User } = require("../models");
 require("dotenv").config();
 
 module.exports = (req, res, next) => {
-  try {
-    const { authorization } = req.headers;
-    const [tokenType, tokenValue] = authorization.split(" ");
+  const token = req.headers.authorization;
 
-    if (tokenType !== "Bearer") {
-      res.status(401).json({
-        result: false,
-        errormessage: "토큰 타입이 맞지 않습니다.",
-      });
-      return;
-    }
-    try {
-      const privatekey = jwt.verify(tokenValue, process.env.MYSECRET_KEY);
-      // console.log(privatekey);
-      User.findByPk(privatekey.userkey).then((email, nickname, provider) => {
-        res.locals.user = { email, nickname, provider };
-        next();
-      });
-    } catch (err) {
-      res.status(401).json({
-        result: false,
-        errormessage: "토큰 유효성 검사에 실패했습니다.",
-      });
-      return;
-    }
-  } catch (error) {
-    res.status(401).json({
-      result: false,
-      errormessage: "로그인 후 사용 가능합니다.",
+  if (!token) {
+    res.status(401).json({ result: false, error: "로그인이 필요합니다1." });
+
+    return;
+  }
+
+  try {
+    const { userId } = jwt.verify(token, process.env.MYSECRET_KEY); // userId 는 jwt.sign(userId : user._id)의 user._id가 할당된다.
+
+    User.findByPk(userId).then((user) => {
+      res.locals.user = user;
+
+      next();
     });
+  } catch (error) {
+    res.status(401).json({ result: false, error: "로그인이 필요합니다2." });
+
     return;
   }
 };

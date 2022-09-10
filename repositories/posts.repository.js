@@ -20,7 +20,6 @@ class PostRepository {
     userId,
     nickname
   ) => {
-    console.log("3");
     const createPost = await Post.create({
       content,
       time,
@@ -180,7 +179,7 @@ class PostRepository {
   };
   autoSearchPost = async (hashtag) => {
     hashtag = help.explode(hashtag).join("");
-    console.log("해쉬태그", hashtag);
+
     const autoSearchPost = await Hashtag.findAll({
       where: {
         consonant: { [Op.like]: hashtag + "%" },
