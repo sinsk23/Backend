@@ -67,6 +67,11 @@ class UserController {
       next(error);
     }
   };
+  checkNick = async (req, res, next) => {
+    const { nickname } = req.body;
+    const checkNick = await this.userService.checkNick(nickname);
+    res.status(200).json(checkNick);
+  };
   setGoal = async (req, res, next) => {
     try {
       const { goal, userId } = req.body;
