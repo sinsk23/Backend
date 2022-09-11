@@ -9,16 +9,10 @@ module.exports = class Record extends Sequelize.Model {
           primaryKey: true,
           autoIncrement: true,
         },
-        
+
         goal: {
           type: Sequelize.INTEGER,
           defaultValue: 0,
-          allowNull: true,
-        },
-        time: {
-          type: Sequelize.JSON,
-          defaultValue: [],
-
           allowNull: true,
         },
         distance: {
@@ -26,7 +20,7 @@ module.exports = class Record extends Sequelize.Model {
           defaultValue: 0,
           allowNull: true,
         },
-        speed: {
+        percent: {
           type: Sequelize.INTEGER,
           defaultValue: 0,
           allowNull: true,

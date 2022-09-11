@@ -1,6 +1,7 @@
 const UserRepositiory = require("../repositories/users.repository");
 const log = require("../winston");
 const help = require("korean-regexp");
+const { User } = require("../models");
 let BadRequestError = require("./http-errors").BadRequestError;
 class UserService {
   userRepository = new UserRepositiory();
@@ -51,8 +52,36 @@ class UserService {
     return checkNick;
   };
   signUp = async (email, nickname, image) => {
+    if (!email || !nickname || !image) {
+      log.error("UserService.signUp : email or nickname or image is required");
+      throw new BadRequestError(
+        "UserService.signUp : email or nickname or image is required"
+      );
+    }
+
+    const checkEmail = await User.findOne({ where: { email } });
+
+    const checkNick = await User.findOne({ where: { nickname } });
+
+    if (checkEmail && email === checkEmail.email) {
+      log.error("UserService.signUp : email is duplicated");
+      throw new BadRequestError("UserService.signUp : email is duplicated");
+    }
+
+    if (checkNick && nickname === checkNick.nickname) {
+      log.error("UserService.signUp : nickname is duplicated");
+      return { nickCheck: false };
+    }
+
     let consonant = [];
     consonant = help.explode(nickname).join("");
+    const signUp = await this.userRepository.signUp(
+      email,
+      nickname,
+      image,
+      consonant
+    );
+    return signUp;
   };
 }
 

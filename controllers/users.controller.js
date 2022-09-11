@@ -12,13 +12,13 @@ class UserController {
   addDistance = async (req, res, next) => {
     try {
       const { distance } = req.body;
+      const { user } = res.locals;
       if (!distance) {
         log.error("UserController.addDistance : distance is required");
         throw new BadRequestError(
           "UserController.addDistance : distance is required"
         );
       }
-      const { user } = res.locals;
 
       const addDistance = await this.userService.addDistance(
         user.userId,
@@ -61,13 +61,11 @@ class UserController {
   signUp = async (req, res, next) => {
     try {
       const { email, nickname, image } = req.body;
-      let consonant = [];
-      consonant = help.explode(nickname).join("");
-      const signUp = await User.create({ email, nickname, consonant, image });
+
+      const signUp = await this.userService.signUp(email, nickname, image);
 
       res.status(200).json(signUp);
     } catch (error) {
-      log.error("signUp error");
       next(error);
     }
   };

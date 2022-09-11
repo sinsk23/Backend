@@ -5,10 +5,19 @@ const Op = Sequelize.Op;
 const help = require("korean-regexp");
 
 class UserRepositiory {
-
   addDistance = async (userId, distance) => {
-    const addDistance = await Record.create({ userId, distance });
-    return addDistance;
+    const getUserRecord = await Record.findOne({ where: { userId } });
+    if (!getUserRecord) {
+      const createdRecord = await Record.create({ userId, distance });
+      return createdRecord;
+    } else {
+      const userDistance = getUserRecord.distance;
+      const updatedRecord = await Record.update(
+        { distance: distance + userDistance },
+        { where: { userId } }
+      );
+      return updatedRecord;
+    }
   };
   getUserPost = async (nickname, pagenum) => {
     let offset = 0;
@@ -82,6 +91,10 @@ class UserRepositiory {
     } else {
       return "사용가능한 닉네임입니다.";
     }
+  };
+  signUp = async (email, nickname, image, consonant) => {
+    const signUp = await User.create({ email, nickname, consonant, image });
+    return signUp;
   };
 }
 

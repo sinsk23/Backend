@@ -9,7 +9,7 @@ module.exports = class Post extends Sequelize.Model {
           primaryKey: true,
           autoIncrement: true,
         },
-        
+
         nickname: {
           type: Sequelize.TEXT,
           allowNull: false,
@@ -90,15 +90,11 @@ module.exports = class Post extends Sequelize.Model {
     });
     db.Post.hasMany(db.Comment, {
       foreignKey: "postId",
-      
       sourceKey: "postId",
-      
       onDelete: "CASCADE",
     });
     db.Post.hasMany(db.Comment, {
-      
       foreignKey: "userId",
-      
       sourceKey: "userId",
       onDelete: "CASCADE",
     });
