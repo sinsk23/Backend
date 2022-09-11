@@ -101,9 +101,9 @@ class CommentRepository {
     
   };
   //Repo 특정 대댓글 수정
-  editRecomment = async (userId, commentId, recommentId, comment) => {
-    console.log("REPO : ",userId);
-    return await ReComment.update({ comment }, { where: { userId, commentId, recommentId } });
+  editRecomment = async (userId, commentId,recommentId, comment) => {
+    return await ReComment.update({ comment }, { where: { userId, commentId,recommentId } });
+
   };
   //Repo 특정 대댓글 삭제
   deleteRecomment = async (userId, commentId, recommentId) => {
