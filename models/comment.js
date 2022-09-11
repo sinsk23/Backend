@@ -37,5 +37,9 @@ module.exports = class Comment extends Sequelize.Model {
       targetKey: "userId",
       onDelete: "CASCADE",
     });
+    db.Comment.hasMany(db.ReComment, {
+      foreingKey: "userId",
+      foreignKey: "commentId",
+    });
   }
 };

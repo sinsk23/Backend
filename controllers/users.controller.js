@@ -3,12 +3,12 @@ const UserService = require("../services/users.service");
 
 const { User } = require("../models");
 const log = require("../winston");
+
 let BadRequestError = require("./http-errors").BadRequestError;
-const help = require("korean-regexp");
 
 class UserController {
   userService = new UserService();
-  
+
   addDistance = async (req, res, next) => {
     try {
       const { distance } = req.body;
