@@ -10,7 +10,9 @@ class SocialController {
       { failureRedirect: "/" },
       (err, user, info) => {
         if (err) return next(err);
+
         const { email, nickname, accessToken, image, provider } = user;
+
 
         const emailCheck = async (email) => {
           const emailCheck = await User.findOne({ where: { email } });
@@ -51,6 +53,7 @@ class SocialController {
           }
         };
         emailCheck(email);
+
       }
     )(req, res, next);
   };

@@ -34,7 +34,9 @@ module.exports = (app) => {
               provider: "kakao",
               nickname: profile.displayName,
               accessToken,
+
               image: profile._json.properties.profile_image,
+
             };
             done(null, newUser);
           }

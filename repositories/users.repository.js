@@ -5,6 +5,7 @@ const Op = Sequelize.Op;
 const help = require("korean-regexp");
 
 class UserRepositiory {
+
   addDistance = async (userId, distance) => {
     const addDistance = await Record.create({ userId, distance });
     return addDistance;
