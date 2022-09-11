@@ -6,8 +6,17 @@ const help = require("korean-regexp");
 
 class UserRepositiory {
   addDistance = async (userId, distance) => {
-    const addDistance = await Record.create({ userId, distance });
-    return addDistance;
+    const getUserRecord = await Record.findOne({ where: { userId } });
+    if (!getUserRecord) {
+      const createdRecord = await Record.create({ userId, distance });
+      return createdRecord;
+    } else {
+      const updatedRecord = await Record.update(
+        { distance },
+        { where: { userId } }
+      );
+      return updatedRecord;
+    }
   };
   getUserPost = async (nickname, pagenum) => {
     let offset = 0;

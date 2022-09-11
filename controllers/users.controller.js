@@ -12,13 +12,13 @@ class UserController {
   addDistance = async (req, res, next) => {
     try {
       const { distance } = req.body;
+      const { user } = res.locals;
       if (!distance) {
         log.error("UserController.addDistance : distance is required");
         throw new BadRequestError(
           "UserController.addDistance : distance is required"
         );
       }
-      const { user } = res.locals;
 
       const addDistance = await this.userService.addDistance(
         user.userId,
