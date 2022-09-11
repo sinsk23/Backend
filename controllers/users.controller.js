@@ -67,6 +67,7 @@ class UserController {
 
       res.status(200).json(signUp);
     } catch (error) {
+      log.error("signUp error");
       next(error);
     }
   };
