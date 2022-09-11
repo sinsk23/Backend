@@ -24,7 +24,9 @@ InitializerCommentdata = async () => {
     //   .then((e) => console.log(e));
   }
   for (let i = 0; i < 21; i++) {
-    commentRepository.createRecomment("대댓글내용" + i, 1, 1);
+
+    commentRepository.createRecomment("대댓글내용" + i, 1, 1, 1+i);
+
   }
 };
 module.exports = InitializerCommentdata;
