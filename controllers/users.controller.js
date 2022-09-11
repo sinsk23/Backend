@@ -61,13 +61,11 @@ class UserController {
   signUp = async (req, res, next) => {
     try {
       const { email, nickname, image } = req.body;
-      let consonant = [];
-      consonant = help.explode(nickname).join("");
-      const signUp = await User.create({ email, nickname, consonant, image });
+
+      const signUp = await this.userService.signUp(email, nickname, image);
 
       res.status(200).json(signUp);
     } catch (error) {
-      log.error("signUp error");
       next(error);
     }
   };

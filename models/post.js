@@ -95,7 +95,7 @@ module.exports = class Post extends Sequelize.Model {
       foreignKey: "postId",
       foreignKey: "userId",
       sourceKey: "postId",
-      soureKey: "userId",
+      sourceKey: "userId",
       onDelete: "CASCADE",
     });
 

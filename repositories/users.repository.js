@@ -5,7 +5,6 @@ const Op = Sequelize.Op;
 const help = require("korean-regexp");
 
 class UserRepositiory {
-
   addDistance = async (userId, distance) => {
     const addDistance = await Record.create({ userId, distance });
     return addDistance;
@@ -82,6 +81,10 @@ class UserRepositiory {
     } else {
       return "사용가능한 닉네임입니다.";
     }
+  };
+  signUp = async (email, nickname, image, consonant) => {
+    const signUp = await User.create({ email, nickname, consonant, image });
+    return signUp;
   };
 }
 
