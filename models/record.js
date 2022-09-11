@@ -49,12 +49,12 @@ module.exports = class Record extends Sequelize.Model {
   }
 
   static associate(db) {
-    /*db.Hashtag.belongsTo(db.User, {
+    db.Record.belongsTo(db.User, {
       foreignKey: "userId",
 
       targetKey: "userId",
 
       onDelete: "CASCADE",
-    });*/
+    });
   }
 };
