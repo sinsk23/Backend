@@ -1,5 +1,6 @@
 const UserRepositiory = require("../repositories/users.repository");
 const log = require("../winston");
+const help = require("korean-regexp");
 let BadRequestError = require("./http-errors").BadRequestError;
 class UserService {
   userRepository = new UserRepositiory();
@@ -48,6 +49,10 @@ class UserService {
   checkNick = async (nickname) => {
     const checkNick = await this.userRepository.checkNick(nickname);
     return checkNick;
+  };
+  signUp = async (email, nickname, image) => {
+    let consonant = [];
+    consonant = help.explode(nickname).join("");
   };
 }
 
