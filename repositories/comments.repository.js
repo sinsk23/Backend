@@ -1,10 +1,12 @@
 const { Comment, Post, User, ReComment } = require("../models");
 const { Op } = require("sequelize");
-let count = 0;
+// let count = 0;
 class CommentRepository {
   //Repo 특정 게시글 postId 조회
   findPostid = async (postId) => {
+    
     return await Post.findOne({ where: { postId } });
+    
   };
   //Repo 특정 게시글에 댓글 작성
   createComment = async (comment, postId, userId) => {
@@ -16,7 +18,7 @@ class CommentRepository {
   };
   //Repo 특정 게시글의 전체댓글 postId조회
   /**
-   * @todo 유저와 연결 후 nickname,image,count 추가해주기
+   * @todo 유저와 연결 후 nickname,image,count 추가해주기 2가지 경우로~ 1. 매서드findAndCountAll 그러면 프론트 불편, 2. count매서드?
    * 
    * @param {integer}postId 게시글 아이디 번호 넣기 
    * @param {number}pagenum 페이지 끊어 보여주기 ex)offset = 5 * (pagenum - 1);
@@ -31,11 +33,12 @@ class CommentRepository {
     }
     const inPostid = await Comment.findAll({
       where: { postId },
-      include:{ model : User, attributes:["nickname","image"]},
+      include:{ model : User, attributes:["nickname","image"] , required: true},
       order: [["createdAt", "ASC"]],
       limit: 5,
       offset: offset,
     });
+    const count = await Comment.count({where : {postId}});
     const commentData = inPostid.map((e)=>{
       return{
         commentId: e.commentId,
@@ -45,12 +48,12 @@ class CommentRepository {
         postId: e.postId,
         userId: e.User.userId,
         nickname: e.User.nickname,
-        image: e.User.image
+        image: e.User.image,
         
       }
     })
     // return inPostid;
-    return commentData;
+    return {commentData,count};
   };
 
   //Repo 특정 게시글에 댓글 수정
@@ -77,7 +80,7 @@ class CommentRepository {
     }
     const inRecommentid = await ReComment.findAndCountAll({
       where: { commentId },
-      // include:{model : User, attributes:["nickname","image"]},
+      include:{model : User, attributes:["nickname","image"]},
       order: [["createdAt", "ASC"]],
       limit: 5,
       offset: offset,
