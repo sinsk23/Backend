@@ -14,6 +14,7 @@ router.get(
   AuthMiddleware,
   userController.getUserPost
 );
+router.delete("/user", AuthMiddleware, userController.deleteUser);
 router.get("/user/search", AuthMiddleware, userController.searchUser);
 router.post("/user/goal", AuthMiddleware, userController.setGoal);
 router.put("/user/image", AuthMiddleware, userController.changeImage);

@@ -83,6 +83,10 @@ class UserService {
     );
     return signUp;
   };
+  deleteUser = async (userId) => {
+    const deleteUser = await this.userRepository.deleteUser(userId);
+    return deleteUser;
+  };
 }
 
 module.exports = UserService;

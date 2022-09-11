@@ -10,7 +10,8 @@ module.exports = (req, res, next) => {
 
     return;
   }
-
+  console.log("토큰", token);
+  console.log("테스트", jwt.verify(token, process.env.MYSECRET_KEY));
   try {
     const { userId } = jwt.verify(token, process.env.MYSECRET_KEY); // userId 는 jwt.sign(userId : user._id)의 user._id가 할당된다.
 

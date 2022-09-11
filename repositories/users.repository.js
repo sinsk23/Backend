@@ -96,6 +96,11 @@ class UserRepositiory {
     const signUp = await User.create({ email, nickname, consonant, image });
     return signUp;
   };
+  deleteUser = async (userId) => {
+    console.log("유저아디", userId);
+    const deleteUser = await User.destroy({ where: { userId } });
+    return deleteUser;
+  };
 }
 
 module.exports = UserRepositiory;
