@@ -9,10 +9,7 @@ module.exports = class Record extends Sequelize.Model {
           primaryKey: true,
           autoIncrement: true,
         },
-        userId: {
-          type: Sequelize.INTEGER,
-          primaryKey: true,
-        },
+
         goal: {
           type: Sequelize.INTEGER,
           defaultValue: 0,

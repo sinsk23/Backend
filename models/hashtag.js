@@ -22,7 +22,7 @@ module.exports = class Hashtag extends Sequelize.Model {
         sequelize,
         timestamps: true,
         underscored: false,
-        modelName: "hastag",
+        modelName: "Hashtag",
         tableName: "hashtags",
         paranoid: false,
         charset: "utf8mb4",

@@ -11,8 +11,9 @@ class UserRepositiory {
       const createdRecord = await Record.create({ userId, distance });
       return createdRecord;
     } else {
+      const userDistance = getUserRecord.distance;
       const updatedRecord = await Record.update(
-        { distance },
+        { distance: distance + userDistance },
         { where: { userId } }
       );
       return updatedRecord;
