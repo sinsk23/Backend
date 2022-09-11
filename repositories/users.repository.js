@@ -112,10 +112,12 @@ class UserRepositiory {
     return deleteUser;
   };
   getUserInfo = async (userId) => {
+    console.log("유저아이디", userId);
     const getUserInfo = await Record.findOne(
-      { attributes: ["distance", "goal", "percent"] },
-      { where: { userId } }
+      { where: { userId } },
+      { attributes: ["distance", "goal", "percent"] }
     );
+    console.log("테스트", getUserInfo);
     return getUserInfo;
   };
 }

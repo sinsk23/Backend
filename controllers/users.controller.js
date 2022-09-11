@@ -109,8 +109,12 @@ class UserController {
   };
   getUserInfo = async (req, res, next) => {
     try {
-      const { user } = res.locals;
-      const getUserInfo = await this.userService.getUserInfo(user.userId);
+      const { userId } = req.params;
+
+      const getUserInfo = await this.userService.getUserInfo(userId);
+      if (!getUserInfo) {
+        res.status(200).json({ result: false });
+      }
       res.status(200).json(getUserInfo);
     } catch (error) {
       next(error);
