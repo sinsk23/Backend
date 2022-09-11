@@ -30,11 +30,19 @@ module.exports = class ReComment extends Sequelize.Model {
 
   static associate(db) {
     db.ReComment.belongsTo(db.Comment, {
-      foreignKey: "userId",
+      
       foreignKey: "commentId",
 
-      targetKey: "userId",
+      
       targetKey: "commentId",
+      onDelete: "CASCADE",
+    });
+    db.ReComment.belongsTo(db.User, {
+      foreignKey: "userId",
+      
+
+      targetKey: "userId",
+      
       onDelete: "CASCADE",
     });
   }

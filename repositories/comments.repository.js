@@ -29,28 +29,28 @@ class CommentRepository {
     if (pagenum > 1) {
       offset = 5 * (pagenum - 1);
     }
-    const inPostid = await Comment.findAndCountAll({
+    const inPostid = await Comment.findAll({
       where: { postId },
-      include:{model : User, attributes:["nickname","image"]},
+      include:{ model : User, attributes:["nickname","image"]},
       order: [["createdAt", "ASC"]],
       limit: 5,
       offset: offset,
     });
-    // const commentData = inPostid.map((e)=>{
-    //   return{
-    //     commentId: e.commentId,
-    //     comment: e.comment,
-    //     createdAt: e.createdAt,
-    //     updatedAt: e.updatedAt,
-    //     postId: e.postId,
-    //     userId: e.User.userId,
-    //     nickname: e.User.nickname,
-    //     image: e.User.image
+    const commentData = inPostid.map((e)=>{
+      return{
+        commentId: e.commentId,
+        comment: e.comment,
+        createdAt: e.createdAt,
+        updatedAt: e.updatedAt,
+        postId: e.postId,
+        userId: e.User.userId,
+        nickname: e.User.nickname,
+        image: e.User.image
         
-    //   }
-    // })
-    return inPostid;
-    // return commentData;
+      }
+    })
+    // return inPostid;
+    return commentData;
   };
 
   //Repo 특정 게시글에 댓글 수정
