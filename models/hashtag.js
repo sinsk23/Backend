@@ -9,6 +9,7 @@ module.exports = class Hashtag extends Sequelize.Model {
           primaryKey: true,
           autoIncrement: true,
         },
+
         hashtag: {
           type: Sequelize.STRING,
           allowNull: false,

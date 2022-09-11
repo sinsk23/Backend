@@ -26,9 +26,11 @@ module.exports = class Like extends Sequelize.Model {
   static associate(db) {
     db.Like.belongsTo(db.Post, {
       foreignKey: "postId",
-      foreignKey: "userId",
-
       targetKey: "postId",
+      onDelete: "CASCADE",
+    });
+    db.Like.belongsTo(db.Post, {
+      foreignKey: "userId",
       targetKey: "userId",
       onDelete: "CASCADE",
     });

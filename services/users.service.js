@@ -1,7 +1,7 @@
 const UserRepositiory = require("../repositories/users.repository");
 const log = require("../winston");
 const help = require("korean-regexp");
-const { User } = require("../models");
+const { User, Record } = require("../models");
 let BadRequestError = require("./http-errors").BadRequestError;
 class UserService {
   userRepository = new UserRepositiory();
@@ -40,6 +40,13 @@ class UserService {
     return searchUser;
   };
   setGoal = async (goal, userId) => {
+    const checkUser = await Record.findOne({ where: { userId } });
+    if (checkUser) {
+      log.error("UserService.setGoal : goal is already declared");
+      throw new BadRequestError(
+        "UserService.setGoal : goal is already declared"
+      );
+    }
     const setGoal = await this.userRepository.setGoal(goal, userId);
     return setGoal;
   };
@@ -82,6 +89,14 @@ class UserService {
       consonant
     );
     return signUp;
+  };
+  deleteUser = async (userId) => {
+    const deleteUser = await this.userRepository.deleteUser(userId);
+    return deleteUser;
+  };
+  getUserInfo = async (userId) => {
+    const getUserInfo = await this.userRepository.getUserInfo(userId);
+    return getUserInfo;
   };
 }
 
