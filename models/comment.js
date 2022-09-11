@@ -32,13 +32,11 @@ module.exports = class Comment extends Sequelize.Model {
     db.Comment.belongsTo(db.Post, {
       foreignKey: "postId",
       targetKey: "postId",
-  
+
       onDelete: "CASCADE",
     });
     db.Comment.belongsTo(db.User, {
-      
       foreignKey: "userId",
-
 
       targetKey: "userId",
 

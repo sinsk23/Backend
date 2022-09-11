@@ -7,13 +7,22 @@ const help = require("korean-regexp");
 class UserRepositiory {
   addDistance = async (userId, distance) => {
     const getUserRecord = await Record.findOne({ where: { userId } });
+    console.log("추가distance", distance);
+    console.log("현재distance", getUserRecord.distance);
+    console.log("goal", getUserRecord.goal);
+    let percent = 0;
+    console.log(typeof percent);
+    let getDistance = Number(getUserRecord.distance + distance);
+    percent = getDistance / 100;
+
+    console.log("퍼센트", percent);
     if (!getUserRecord) {
       const createdRecord = await Record.create({ userId, distance });
       return createdRecord;
     } else {
       const userDistance = getUserRecord.distance;
       const updatedRecord = await Record.update(
-        { distance: distance + userDistance },
+        { distance: distance + userDistance, percent: percent * 100 },
         { where: { userId } }
       );
       return updatedRecord;
@@ -79,6 +88,7 @@ class UserRepositiory {
     const setGoal = await Record.create({ goal, userId });
     return setGoal;
   };
+
   changeImage = async (image, userId) => {
     const changeImage = await User.update({ image }, { where: { userId } });
     return changeImage;
@@ -100,6 +110,13 @@ class UserRepositiory {
     console.log("유저아디", userId);
     const deleteUser = await User.destroy({ where: { userId } });
     return deleteUser;
+  };
+  getUserInfo = async (userId) => {
+    const getUserInfo = await Record.findOne(
+      { attributes: ["distance", "goal", "percent"] },
+      { where: { userId } }
+    );
+    return getUserInfo;
   };
 }
 

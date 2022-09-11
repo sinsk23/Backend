@@ -76,8 +76,10 @@ class UserController {
   };
   setGoal = async (req, res, next) => {
     try {
-      const { goal, userId } = req.body;
-      const setGoal = await this.userService.setGoal(goal, userId);
+      const { goal } = req.body;
+      const { user } = res.locals;
+
+      const setGoal = await this.userService.setGoal(goal, user.userId);
       res.status(200).json(setGoal);
     } catch (error) {
       next(error);
@@ -101,6 +103,15 @@ class UserController {
       const { user } = res.locals;
       const deleteUser = await this.userService.deleteUser(user.userId);
       res.status(200).json(deleteUser);
+    } catch (error) {
+      next(error);
+    }
+  };
+  getUserInfo = async (req, res, next) => {
+    try {
+      const { user } = res.locals;
+      const getUserInfo = await this.userService.getUserInfo(user.userId);
+      res.status(200).json(getUserInfo);
     } catch (error) {
       next(error);
     }
