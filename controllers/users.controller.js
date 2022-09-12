@@ -73,9 +73,9 @@ class UserController {
     const { nickname } = req.body;
     const checkNick = await this.userService.checkNick(nickname);
     if (!checkNick) {
-      res.status(400).json({ result: false });
+      res.status(400).json({ duplicate: false });
     }
-    res.status(200).json({ result: true });
+    res.status(200).json({ duplicate: true });
   };
   setGoal = async (req, res, next) => {
     try {
