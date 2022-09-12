@@ -14,7 +14,7 @@ router.get(
   authMiddleware,
   postController.getLikeAllPosts
 );
-router.get("/post/autoSearch", authMiddleware, postController.autoSearchPost);
+router.get("/post/autocomplete", authMiddleware, postController.autoSearchPost);
 router.post("/post", authMiddleware, postController.createPost);
 router.get("/post/new/:pagenum", authMiddleware, postController.getAllPosts);
 router.get(
