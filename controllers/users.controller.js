@@ -115,7 +115,7 @@ class UserController {
       if (!getUserInfo) {
         res.status(200).json({ result: false });
       }
-      res.status(200).json(getUserInfo);
+      res.status(200).json({ getUserInfo, result: true });
     } catch (error) {
       next(error);
     }

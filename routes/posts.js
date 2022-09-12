@@ -20,7 +20,7 @@ router.get("/post/scroll/:pagenum", authMiddleware, postController.getAllPosts);
 router.get(
   "/post/:postId",
   authMiddleware,
-  authMiddleware,
+
   postController.getPost
 );
 router.put("/post/:postId", authMiddleware, postController.updatePost);
