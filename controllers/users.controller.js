@@ -70,10 +70,10 @@ class UserController {
     }
   };
   checkNick = async (req, res, next) => {
-    const { nickname } = req.body;
+    const { nickname } = req.query;
     const checkNick = await this.userService.checkNick(nickname);
     if (!checkNick) {
-      res.status(200).json({ duplicate: false });
+      return res.status(200).json({ duplicate: false });
     }
     res.status(200).json({ duplicate: true });
   };
