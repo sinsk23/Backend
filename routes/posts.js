@@ -3,9 +3,13 @@ const router = express.Router();
 const PostController = require("../controllers/posts.controller");
 const postController = new PostController();
 const authMiddleware = require("../middlewares/auth-middleware");
-router.get("/post/search/:pagenum", authMiddleware, postController.searchPost);
 router.get(
-  "/post/likesearch/:pagenum",
+  "/post/search/new/:pagenum",
+  authMiddleware,
+  postController.searchPost
+);
+router.get(
+  "/post/search/popular/:pagenum",
   authMiddleware,
   postController.searchLikePost
 );
