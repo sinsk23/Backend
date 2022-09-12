@@ -10,13 +10,13 @@ router.get(
   postController.searchLikePost
 );
 router.get(
-  "/post/likeorder/:pagenum",
+  "/post/popular/:pagenum",
   authMiddleware,
   postController.getLikeAllPosts
 );
 router.get("/post/autoSearch", authMiddleware, postController.autoSearchPost);
 router.post("/post", authMiddleware, postController.createPost);
-router.get("/post/scroll/:pagenum", authMiddleware, postController.getAllPosts);
+router.get("/post/new/:pagenum", authMiddleware, postController.getAllPosts);
 router.get(
   "/post/:postId",
   authMiddleware,
