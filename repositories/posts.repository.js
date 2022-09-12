@@ -1,6 +1,7 @@
 const { Post } = require("../models");
 const { Like } = require("../models");
 const { Hashtag } = require("../models");
+const { Comment } = require("../models");
 const help = require("korean-regexp");
 const Sequelize = require("sequelize");
 const test = require("../node-mailer");
@@ -44,6 +45,7 @@ class PostRepository {
       order: [["createdAt", "DESC"]],
     });
     //this.emailService.realSend("rmadbstjd@naver.com");
+    console.log("테스트", typeof getAllPosts);
     return getAllPosts;
   };
   ////////////////////////////////////////
@@ -75,13 +77,12 @@ class PostRepository {
     } else {
       const countView = await Post.findOne({ where: { postId } });
 
-      const updateView = await Post.update(
-        { view: countView.view + 1 },
-        { where: { postId } }
-      );
+      await Post.update({ view: countView.view + 1 }, { where: { postId } });
     }
 
-    const getPost = await Post.findOne({ where: { postId } });
+    const getPost = await Post.findOne({
+      where: { postId },
+    });
 
     return getPost;
   };

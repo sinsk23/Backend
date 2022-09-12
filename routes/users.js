@@ -7,7 +7,7 @@ const AuthMiddleware = require("../middlewares/auth-middleware");
 const userController = new UserController();
 
 router.post("/user/signup", userController.signUp);
-router.post("/user/checknick", userController.checkNick);
+router.post("/user/check", userController.checkNick);
 router.post("/user/distance", AuthMiddleware, userController.addDistance);
 router.get(
   "/user/post/:nickname/:pagenum",

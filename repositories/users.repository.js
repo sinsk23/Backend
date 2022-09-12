@@ -96,11 +96,7 @@ class UserRepositiory {
   checkNick = async (nickname) => {
     const checkNick = await User.findOne({ where: { nickname } });
 
-    if (checkNick) {
-      return "중복된 닉네임입니다.";
-    } else {
-      return "사용가능한 닉네임입니다.";
-    }
+    return checkNick;
   };
   signUp = async (email, nickname, image, consonant) => {
     const signUp = await User.create({ email, nickname, consonant, image });
@@ -112,10 +108,12 @@ class UserRepositiory {
     return deleteUser;
   };
   getUserInfo = async (userId) => {
+    console.log("유저아이디", userId);
     const getUserInfo = await Record.findOne(
-      { attributes: ["distance", "goal", "percent"] },
-      { where: { userId } }
+      { where: { userId } },
+      { attributes: ["distance", "goal", "percent"] }
     );
+    console.log("테스트", getUserInfo);
     return getUserInfo;
   };
 }

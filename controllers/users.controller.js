@@ -70,9 +70,12 @@ class UserController {
     }
   };
   checkNick = async (req, res, next) => {
-    const { nickname } = req.body;
+    const { nickname } = req.query;
     const checkNick = await this.userService.checkNick(nickname);
-    res.status(200).json(checkNick);
+    if (!checkNick) {
+      return res.status(200).json({ duplicate: false });
+    }
+    res.status(200).json({ duplicate: true });
   };
   setGoal = async (req, res, next) => {
     try {
@@ -109,9 +112,13 @@ class UserController {
   };
   getUserInfo = async (req, res, next) => {
     try {
-      const { user } = res.locals;
-      const getUserInfo = await this.userService.getUserInfo(user.userId);
-      res.status(200).json(getUserInfo);
+      const { userId } = req.params;
+
+      const getUserInfo = await this.userService.getUserInfo(userId);
+      if (!getUserInfo) {
+        res.status(200).json({ result: false });
+      }
+      res.status(200).json({ getUserInfo, result: true });
     } catch (error) {
       next(error);
     }
