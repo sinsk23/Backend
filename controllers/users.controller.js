@@ -1,6 +1,6 @@
 require("dotenv").config();
 const UserService = require("../services/users.service");
-
+const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 const log = require("../winston");
 
@@ -63,8 +63,32 @@ class UserController {
       const { email, nickname, image } = req.body;
 
       const signUp = await this.userService.signUp(email, nickname, image);
+      if (signUp) {
+        const token = jwt.sign(
+          {
+            email,
+            nickname,
+            image,
 
-      res.status(200).json(signUp);
+            userId: signUp.userId,
+          },
+          process.env.MYSECRET_KEY,
+          {
+            expiresIn: "2d",
+          }
+        );
+        return res.status(200).json({
+          token,
+
+          image,
+          email,
+
+          nickname,
+          userId: signUp.userId,
+          member: true,
+          message: "success",
+        });
+      }
     } catch (error) {
       next(error);
     }

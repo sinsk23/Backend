@@ -55,10 +55,7 @@ class UserRepositiory {
     } else {
       const countView = await Post.findOne({ where: { postId } });
 
-      const updateView = await Post.update(
-        { view: countView.view + 1 },
-        { where: { postId } }
-      );
+      await Post.update({ view: countView.view + 1 }, { where: { postId } });
     }
 
     const getPost = await Post.findOne({ where: { postId } });
