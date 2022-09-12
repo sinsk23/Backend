@@ -73,7 +73,7 @@ class UserController {
     const { nickname } = req.body;
     const checkNick = await this.userService.checkNick(nickname);
     if (!checkNick) {
-      res.status(400).json({ duplicate: false });
+      res.status(200).json({ duplicate: false });
     }
     res.status(200).json({ duplicate: true });
   };
