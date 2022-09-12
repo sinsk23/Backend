@@ -45,6 +45,7 @@ class PostRepository {
       order: [["createdAt", "DESC"]],
     });
     //this.emailService.realSend("rmadbstjd@naver.com");
+    console.log("테스트", typeof getAllPosts);
     return getAllPosts;
   };
   ////////////////////////////////////////
@@ -79,9 +80,8 @@ class PostRepository {
       await Post.update({ view: countView.view + 1 }, { where: { postId } });
     }
 
-    const getPost = await Post.findAll({
+    const getPost = await Post.findOne({
       where: { postId },
-      include: [{ model: Comment, attributes: ["comment"] }],
     });
 
     return getPost;
