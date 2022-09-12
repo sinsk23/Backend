@@ -59,10 +59,10 @@ class UserService {
     return checkNick;
   };
   signUp = async (email, nickname, image) => {
-    if (!email || !nickname || !image) {
-      log.error("UserService.signUp : email or nickname or image is required");
+    if (!email || !nickname) {
+      log.error("UserService.signUp : email or nickname is required");
       throw new BadRequestError(
-        "UserService.signUp : email or nickname or image is required"
+        "UserService.signUp : email or nickname is required"
       );
     }
 
