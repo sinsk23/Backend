@@ -23,7 +23,7 @@ module.exports = class User extends Sequelize.Model {
 
         image: {
           type: Sequelize.STRING,
-          allowNull: true,
+          allowNull: false,
         },
         consonant: {
           type: Sequelize.STRING,
