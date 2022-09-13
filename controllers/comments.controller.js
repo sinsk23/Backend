@@ -60,7 +60,7 @@ class CommentController {
 
       const inPostid = await this.commentService.findinPostid(postId, pagenum);
 
-      return res.status(200).json({ Post: [getPostid], Comment: [inPostid] });
+      return res.status(200).json({ Comment: inPostid });
     } catch (error) {
       next(error);
     }
@@ -125,7 +125,7 @@ class CommentController {
 
       return res
         .status(200)
-        .json({ Comment: [getCommentid], ReComment: [inRecommentid] });
+        .json({ ReComment: inRecommentid });
     } catch (error) {
       next(error);
     }
