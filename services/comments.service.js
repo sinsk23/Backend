@@ -8,7 +8,7 @@ class CommentService {
   };
 
   //Serv 특정 게시글에 댓글 작성
-  createComment = async (comment, postId, userId) => {
+  createComment = async (comment, postId, userId, nickname, image) => {
     //댓글 내용이 없으면~
     if (comment === "" || null) {
       return { success: false, message: "댓글을 입력해주세요" };
@@ -22,7 +22,7 @@ class CommentService {
       };
     }
 
-    return await this.commentRepository.createComment(comment, postId, userId);
+    return await this.commentRepository.createComment(comment, postId, userId, nickname, image);
   };
   //Serv 특정 게시글의 전체댓글 postId조회
   findinPostid = async (postId,pagenum) => {
@@ -68,7 +68,7 @@ class CommentService {
     return findCommentid;
   };
   //Serv 댓글에 대댓글 작성
-  createRecomment = async (comment, userId, commentId, recommentId) => {
+  createRecomment = async (comment, commentId, recommentId,userId,nickname,image) => {
     //댓글 내용이 없으면~
     if (comment === "" || null) {
       return { success: false, message: "댓글을 입력해주세요" };
@@ -84,9 +84,11 @@ class CommentService {
 
     return await this.commentRepository.createRecomment(
       comment,
-      userId,
       commentId,
-      recommentId
+      recommentId,
+      userId,
+      nickname,
+      image
     );
   };
   //Serv 특정 댓글의 전체 대댓글 조회
