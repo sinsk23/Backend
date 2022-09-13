@@ -90,9 +90,9 @@ class CommentService {
     );
   };
   //Serv 특정 댓글의 전체 대댓글 조회
-  findinCommentid = async (commentId,pagenum) => {
+  findinCommentid = async (recommentId,commentId,pagenum) => {
     const findinCommentid = await this.commentRepository.findinCommentid(
-      commentId,pagenum
+      recommentId,commentId,pagenum
     );
     //대댓글이 없으면~
     if (!findinCommentid) {
