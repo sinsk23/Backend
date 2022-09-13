@@ -58,36 +58,43 @@ class UserService {
     const checkNick = await this.userRepository.checkNick(nickname);
     return checkNick;
   };
-  signUp = async (email, nickname, image) => {
-    if (!email || !nickname || !image) {
-      log.error("UserService.signUp : email or nickname or image is required");
+  signUp = async (email, nickname, image, provider) => {
+    if (!email || !nickname) {
+      log.error("UserService.signUp : email or nickname is required");
       throw new BadRequestError(
-        "UserService.signUp : email or nickname or image is required"
+        "UserService.signUp : email or nickname is required"
       );
     }
 
-    const checkEmail = await User.findOne({ where: { email } });
-
+    const checkEmail = await User.findAll({ where: { email } });
     const checkNick = await User.findOne({ where: { nickname } });
-
-    if (checkEmail && email === checkEmail.email) {
-      log.error("UserService.signUp : email is duplicated");
-      throw new BadRequestError("UserService.signUp : email is duplicated");
+    const checkProvider = await User.findOne({ where: { provider } });
+    for (let i = 0; i < checkEmail.length; i++) {
+      if (checkEmail && email === checkEmail[i].email) {
+        if (checkProvider && provider === checkEmail[i].provider) {
+          log.error("UserService.signUp : provider is duplicated");
+          throw new BadRequestError(
+            "UserService.signUp : provider is duplicated"
+          );
+        }
+      }
     }
-
     if (checkNick && nickname === checkNick.nickname) {
       log.error("UserService.signUp : nickname is duplicated");
       return { nickCheck: false };
     }
 
+    console.log("333");
     let consonant = [];
     consonant = help.explode(nickname).join("");
     const signUp = await this.userRepository.signUp(
       email,
       nickname,
       image,
+      provider,
       consonant
     );
+    console.log("444");
     return signUp;
   };
   deleteUser = async (userId) => {

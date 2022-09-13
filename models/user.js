@@ -12,7 +12,7 @@ module.exports = class User extends Sequelize.Model {
         email: {
           type: Sequelize.STRING(40),
           allowNull: true, //카카오 정책 변경으로 인한 false->true로 변경
-          unique: true,
+          unique: false,
         },
 
         nickname: {

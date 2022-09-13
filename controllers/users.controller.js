@@ -1,6 +1,6 @@
 require("dotenv").config();
 const UserService = require("../services/users.service");
-
+const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 const log = require("../winston");
 
@@ -24,7 +24,7 @@ class UserController {
         user.userId,
         distance
       );
-      res.status(201).json(addDistance);
+      res.status(200).json({ result: true, message: "거리를 등록하였습니다." });
     } catch (error) {
       next(error);
     }
@@ -60,11 +60,39 @@ class UserController {
   };
   signUp = async (req, res, next) => {
     try {
-      const { email, nickname, image } = req.body;
+      const { email, nickname, image, provider } = req.body;
 
-      const signUp = await this.userService.signUp(email, nickname, image);
-
-      res.status(200).json(signUp);
+      const signUp = await this.userService.signUp(
+        email,
+        nickname,
+        image,
+        provider
+      );
+      if (signUp) {
+        const token = jwt.sign(
+          {
+            email,
+            nickname,
+            image,
+            provider,
+            userId: signUp.userId,
+          },
+          process.env.MYSECRET_KEY,
+          {
+            expiresIn: "2d",
+          }
+        );
+        return res.status(200).json({
+          token,
+          image,
+          email,
+          provider,
+          nickname,
+          userId: signUp.userId,
+          member: true,
+          message: "success",
+        });
+      }
     } catch (error) {
       next(error);
     }
