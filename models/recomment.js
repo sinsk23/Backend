@@ -9,11 +9,19 @@ module.exports = class ReComment extends Sequelize.Model {
           primaryKey: true,
           autoIncrement: true,
         },
-
+        nickname: {
+          type: Sequelize.TEXT,
+          allowNull: false,
+        },
+        image: {
+          type: Sequelize.JSON,
+          defaultValue: [],
+        },
         comment: {
           type: Sequelize.STRING,
           allowNull: false,
         },
+        
       },
       {
         sequelize,

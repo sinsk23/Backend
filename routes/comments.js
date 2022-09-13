@@ -14,7 +14,7 @@ router
   .post(authMiddleware,CommentController.insertComment)
 router
   .route("/:postId/:pagenum")
-  .get(CommentController.getComment);
+  .get(authMiddleware,CommentController.getComment);
 router
   .route("/:commentId")
   .put(authMiddleware,CommentController.editComment)
@@ -27,7 +27,7 @@ router
   .post(authMiddleware,CommentController.insertRecomment)
 router
   .route("/:commentId/:recommentId/:pagenum")  
-  .get(CommentController.getRecomment);
+  .get(authMiddleware,CommentController.getRecomment);
 router
   .route("/:commentId/:recommentId")
   .put(authMiddleware,CommentController.editRecomment)
