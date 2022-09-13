@@ -58,7 +58,7 @@ class UserService {
     const checkNick = await this.userRepository.checkNick(nickname);
     return checkNick;
   };
-  signUp = async (email, nickname, image) => {
+  signUp = async (email, nickname, image, provider) => {
     if (!email || !nickname) {
       log.error("UserService.signUp : email or nickname is required");
       throw new BadRequestError(
@@ -67,12 +67,16 @@ class UserService {
     }
 
     const checkEmail = await User.findOne({ where: { email } });
-
     const checkNick = await User.findOne({ where: { nickname } });
+    const checkProvider = await User.findOne({ where: { provider } });
 
     if (checkEmail && email === checkEmail.email) {
-      log.error("UserService.signUp : email is duplicated");
-      throw new BadRequestError("UserService.signUp : email is duplicated");
+      if (checkProvider && provider === checkEmail.provider) {
+        log.error("UserService.signUp : provider is duplicated");
+        throw new BadRequestError(
+          "UserService.signUp : provider is duplicated"
+        );
+      }
     }
 
     if (checkNick && nickname === checkNick.nickname) {
@@ -86,6 +90,7 @@ class UserService {
       email,
       nickname,
       image,
+      provider,
       consonant
     );
     return signUp;

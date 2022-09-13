@@ -24,7 +24,7 @@ class UserController {
         user.userId,
         distance
       );
-      res.status(201).json(addDistance);
+      res.status(200).json({ result: true, message: "거리를 등록하였습니다." });
     } catch (error) {
       next(error);
     }
@@ -60,16 +60,21 @@ class UserController {
   };
   signUp = async (req, res, next) => {
     try {
-      const { email, nickname, image } = req.body;
+      const { email, nickname, image, provider } = req.body;
 
-      const signUp = await this.userService.signUp(email, nickname, image);
+      const signUp = await this.userService.signUp(
+        email,
+        nickname,
+        image,
+        provider
+      );
       if (signUp) {
         const token = jwt.sign(
           {
             email,
             nickname,
             image,
-
+            provider,
             userId: signUp.userId,
           },
           process.env.MYSECRET_KEY,
@@ -79,10 +84,9 @@ class UserController {
         );
         return res.status(200).json({
           token,
-
           image,
           email,
-
+          provider,
           nickname,
           userId: signUp.userId,
           member: true,

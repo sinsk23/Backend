@@ -95,8 +95,14 @@ class UserRepositiory {
 
     return checkNick;
   };
-  signUp = async (email, nickname, image, consonant) => {
-    const signUp = await User.create({ email, nickname, consonant, image });
+  signUp = async (email, nickname, image, provider, consonant) => {
+    const signUp = await User.create({
+      email,
+      nickname,
+      consonant,
+      provider,
+      image,
+    });
     return signUp;
   };
   deleteUser = async (userId) => {
