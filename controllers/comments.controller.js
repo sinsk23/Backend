@@ -71,7 +71,7 @@ class CommentController {
         
       );
 
-      return res.status(200).json({ Comment : {inPostid,count} });
+      return res.status(200).json({ Comment : inPostid ,count});
     } catch (error) {
       next(error);
     }
@@ -117,7 +117,7 @@ class CommentController {
       const { commentId, recommentId } = req.params;
       const { comment } = req.body;
 
-      const recommentData = await this.commentService.createRecomment(
+      await this.commentService.createRecomment(
         comment,
         commentId,
         recommentId,
@@ -125,7 +125,7 @@ class CommentController {
         user.nickname,
         user.image
       );
-      return res.status(201).json({ recommentData });
+      return res.status(201).json({ result : true });
     } catch (error) {
       next(error);
     }
@@ -148,7 +148,7 @@ class CommentController {
 
       return res
         .status(200)
-        .json({ Recomment : {inRecommentid,count} });
+        .json({ Recomment : inRecommentid,count });
     } catch (error) {
       next(error);
     }
