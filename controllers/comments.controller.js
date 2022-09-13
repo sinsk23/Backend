@@ -119,6 +119,7 @@ class CommentController {
       const { commentId, recommentId, pagenum } = req.params;
       const getCommentid = await this.commentService.findCommentid(commentId);
       const inRecommentid = await this.commentService.findinCommentid(
+        recommentId,
         commentId,
         pagenum
       );
