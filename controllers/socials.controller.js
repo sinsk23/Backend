@@ -11,7 +11,7 @@ class SocialController {
         if (err) return next(err);
 
         const { email, nickname, accessToken, image, provider } = user;
-
+        console.log("이메일", email, nickname);
         const emailCheck = async (email) => {
           const emailCheck = await User.findOne({ where: { email } });
 
