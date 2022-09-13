@@ -1,5 +1,5 @@
 const CommentService = require("../services/comments.service");
-const { Comment } = require("../models");
+const { Comment ,ReComment ,Post} = require("../models");
 const { Op } = require("sequelize");
 let count = 0;
 
@@ -35,18 +35,21 @@ class CommentController {
   insertComment = async (req, res, next) => {
     try {
       const { user } = res.locals;
-      console.log(res.locals);
-      console.log(user.userId);
+      // console.log(res.locals);
+      // console.log(user.userId);
       const { postId } = req.params;
       const { comment } = req.body;
-      const userId = user.userId;
-      const commentData = await this.commentService.createComment(
+      
+      await this.commentService.createComment(
         comment,
         postId,
-        userId
+        user.userId,
+        user.nickname,
+        user.image
+
       );
 
-      return res.status(201).json({ data: commentData });
+      return res.status(201).json({ result : true });
     } catch (error) {
       next(error);
     }
@@ -55,12 +58,20 @@ class CommentController {
   //댓글 조회 /api/comment/:postId
   getComment = async (req, res, next) => {
     try {
+      const { user } = res.locals;
       const { postId, pagenum } = req.params;
       const getPostid = await this.commentService.findPostid(postId);
+      const count = await Comment.count({where : {postId}});
+      const inPostid = await this.commentService.findinPostid(
+        postId, 
+        pagenum, 
+        user.userId,
+        user.nickname,
+        user.image,
+        
+      );
 
-      const inPostid = await this.commentService.findinPostid(postId, pagenum);
-
-      return res.status(200).json({ Comment: inPostid });
+      return res.status(200).json({ Comment : {inPostid,count} });
     } catch (error) {
       next(error);
     }
@@ -73,7 +84,11 @@ class CommentController {
       const { commentId } = req.params;
       const { comment } = req.body;
 
-      await this.commentService.editComment(user.userId, commentId, comment);
+      await this.commentService.editComment(
+        user.userId,
+        commentId,
+        comment,
+        );
 
       return res.status(201).json({ result: true });
     } catch (error) {
@@ -104,11 +119,13 @@ class CommentController {
 
       const recommentData = await this.commentService.createRecomment(
         comment,
-        user.userId,
         commentId,
-        recommentId
+        recommentId,
+        user.userId,
+        user.nickname,
+        user.image
       );
-      return res.status(201).json({ data: recommentData });
+      return res.status(201).json({ recommentData });
     } catch (error) {
       next(error);
     }
@@ -116,17 +133,22 @@ class CommentController {
   //대댓글 조회 /api/comment/:commentId/:recommentId
   getRecomment = async (req, res, next) => {
     try {
+      const { user } = res.locals;
       const { commentId, recommentId, pagenum } = req.params;
       const getCommentid = await this.commentService.findCommentid(commentId);
       const inRecommentid = await this.commentService.findinCommentid(
         recommentId,
         commentId,
-        pagenum
+        pagenum,
+        user.userId,
+        user.nickname,
+        user.image
       );
+      const count = await ReComment.count({where : {commentId}});
 
       return res
         .status(200)
-        .json({ ReComment: inRecommentid });
+        .json({ Recomment : {inRecommentid,count} });
     } catch (error) {
       next(error);
     }

@@ -9,11 +9,13 @@ class CommentRepository {
     
   };
   //Repo 특정 게시글에 댓글 작성
-  createComment = async (comment, postId, userId) => {
+  createComment = async (comment, postId, userId, nickname, image) => {
     return await Comment.create({
       comment,
       postId,
       userId,
+      nickname,
+      image,
     });
   };
   //Repo 특정 게시글의 전체댓글 postId조회
@@ -33,27 +35,27 @@ class CommentRepository {
     }
     const inPostid = await Comment.findAll({
       where: { postId },
-      include:{ model : User, attributes:["nickname","image"] , required: true},
+      // include:{ model : User, attributes:["nickname","image"] , required: true},
       order: [["createdAt", "ASC"]],
       limit: 5,
       offset: offset,
     });
-    const count = await Comment.count({where : {postId}});
-    const commentData = inPostid.map((e)=>{
-      return{
-        commentId: e.commentId,
-        comment: e.comment,
-        createdAt: e.createdAt,
-        updatedAt: e.updatedAt,
-        postId: e.postId,
-        userId: e.User.userId,
-        nickname: e.User.nickname,
-        image: e.User.image,
+    // const count = await Comment.count({where : {postId}});
+    // const commentData = inPostid.map((e)=>{
+    //   return{
+    //     commentId: e.commentId,
+    //     comment: e.comment,
+    //     createdAt: e.createdAt,
+    //     updatedAt: e.updatedAt,
+    //     postId: e.postId,
+    //     userId: e.User.userId,
+    //     nickname: e.User.nickname,
+    //     image: e.User.image,
         
-      }
-    })
-    // return inPostid;
-    return {commentData,count};
+    //   }
+    // })
+    return inPostid;
+    // return {commentData,count};
   };
 
   //Repo 특정 게시글에 댓글 수정
@@ -69,8 +71,8 @@ class CommentRepository {
     return await Comment.findOne({ where: { commentId } });
   };
   //Repo 댓글에 대댓글 작성
-  createRecomment = async (comment, userId, commentId, recommentId) => {
-    return await ReComment.create({ comment, userId, commentId, recommentId });
+  createRecomment = async (comment, commentId, recommentId, userId,nickname,image) => {
+    return await ReComment.create({ comment,commentId, recommentId ,userId, nickname,image});
   };
   //Repo 특정 댓글의 전체 대댓글 조회
   findinCommentid = async (recommentId,commentId,pagenum) => {
@@ -80,28 +82,29 @@ class CommentRepository {
     }
     const inRecommentid = await ReComment.findAll({
       where: { commentId },
-      include:{model : User, attributes:["nickname","image"]},
+      // include:{model : User, attributes:["nickname","image"]},
       order: [["createdAt", "ASC"]],
       limit: 5,
       offset: offset,
       
     });
-    const count = await ReComment.count({where : {commentId}});
-    const recommentData = inRecommentid.map((e)=>{
-      return{recommentId:e.recommentId,
-        comment: e.comment,
-        createdAt: e.createdAt,
-        updatedAt: e.updatedAt,
-        commentId: e.commentId,
-        userId: e.User.userId,
-        nickname: e.User.nickname,
-        image: e.User.image
+    // const count = await ReComment.count({where : {commentId}});
+    // const recommentData = inRecommentid.map((e)=>{
+    //   return{
+    //     recommentId:e.recommentId,
+    //     comment: e.comment,
+    //     createdAt: e.createdAt,
+    //     updatedAt: e.updatedAt,
+    //     commentId: e.commentId,
+    //     userId: e.User.userId,
+    //     nickname: e.User.nickname,
+    //     image: e.User.image
         
-      }
-    })
+    //   }
+    // })
     
-    // return inRecommentid;
-    return {recommentData,count};
+    return inRecommentid;
+    // return {recommentData,count};
     
   };
   //Repo 특정 대댓글 수정
