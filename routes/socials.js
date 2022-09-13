@@ -10,7 +10,10 @@ const socialController = new SocialController();
 router.get("/kakao/login", passport.authenticate("kakao"));
 // GET: /api/kakao/callback 카카오 로그인 이후 콜백
 router.get("/kakao/callback", socialController.kakaologin);
-// GET: /api/kakao/logout
+// GET: /api/naver/login 네이버 로그인
+router.get("/naver/login", passport.authenticate("naver"));
+// GET: /api/naver/callback 네이버 로그인 이후 콜백
+router.get("/naver/callback", socialController.naverlogin);
 
 // router.post("/join", socialController.createAccount);
 
