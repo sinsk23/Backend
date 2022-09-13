@@ -1,5 +1,4 @@
 const passport = require("passport");
-const { profile } = require("winston");
 const KakaoStrategy = require("passport-kakao").Strategy;
 const NaverStrategy = require("passport-naver").Strategy;
 const { User } = require("../models");
@@ -50,7 +49,6 @@ module.exports = (app) => {
     )
   );
   // 네이버 소셜 로그인
-  // 약관에 동의 하지 않아도 로그인이 가능하기 때문에 해당 상황에 대응하는걸 구현해야함
   passport.use(
     new NaverStrategy(
       {
@@ -62,7 +60,7 @@ module.exports = (app) => {
         try{
           const emailCheck = await User.findOne({
             where: {
-              email: profile._json.naver_account.email,
+              email: profile._json.email,
               provider: "naver",
             },
           });
@@ -70,12 +68,12 @@ module.exports = (app) => {
             done(null, { emailCheck, accessToken });
           } else {
             const newUser = {
-              email: profile._json && profile._json.naver_account.email,
+              email: profile._json && profile._json.email,
               provider: "naver",
-              nickname: profile.nickname,
+              nickname: profile._json.nickname,
               accessToken,
 
-              image: profile._json.properties.profile_image,
+              image: profile._json.profile_image,
 
             };
             done(null, newUser);

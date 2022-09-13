@@ -1,6 +1,5 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const log = require("../winston");
 const passport = require("passport");
 const { User } = require("../models");
 class SocialController {
