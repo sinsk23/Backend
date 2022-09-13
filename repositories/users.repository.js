@@ -96,6 +96,7 @@ class UserRepositiory {
     return checkNick;
   };
   signUp = async (email, nickname, image, provider, consonant) => {
+    console.log("테스트", email, nickname, image, provider, consonant);
     const signUp = await User.create({
       email,
       nickname,
@@ -103,6 +104,7 @@ class UserRepositiory {
       provider,
       image,
     });
+    console.log("왜안돼", signUp);
     return signUp;
   };
   deleteUser = async (userId) => {

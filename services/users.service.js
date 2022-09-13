@@ -66,24 +66,25 @@ class UserService {
       );
     }
 
-    const checkEmail = await User.findOne({ where: { email } });
+    const checkEmail = await User.findAll({ where: { email } });
     const checkNick = await User.findOne({ where: { nickname } });
     const checkProvider = await User.findOne({ where: { provider } });
-
-    if (checkEmail && email === checkEmail.email) {
-      if (checkProvider && provider === checkEmail.provider) {
-        log.error("UserService.signUp : provider is duplicated");
-        throw new BadRequestError(
-          "UserService.signUp : provider is duplicated"
-        );
+    for (let i = 0; i < checkEmail.length; i++) {
+      if (checkEmail && email === checkEmail[i].email) {
+        if (checkProvider && provider === checkEmail[i].provider) {
+          log.error("UserService.signUp : provider is duplicated");
+          throw new BadRequestError(
+            "UserService.signUp : provider is duplicated"
+          );
+        }
       }
     }
-
     if (checkNick && nickname === checkNick.nickname) {
       log.error("UserService.signUp : nickname is duplicated");
       return { nickCheck: false };
     }
 
+    console.log("333");
     let consonant = [];
     consonant = help.explode(nickname).join("");
     const signUp = await this.userRepository.signUp(
@@ -93,6 +94,7 @@ class UserService {
       provider,
       consonant
     );
+    console.log("444");
     return signUp;
   };
   deleteUser = async (userId) => {
