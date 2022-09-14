@@ -4,8 +4,8 @@ const { Hashtag } = require("../models");
 const { Comment } = require("../models");
 const help = require("korean-regexp");
 const Sequelize = require("sequelize");
-const test = require("../node-mailer");
 const Op = Sequelize.Op;
+const test = require("../node-mailer");
 
 class PostRepository {
   emailService = new test();

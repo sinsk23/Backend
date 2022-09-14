@@ -7,24 +7,29 @@ const help = require("korean-regexp");
 const day = require("../node-scheduler");
 console.log("테스트123", day);
 class UserRepositiory {
-  addDistance = async (userId, distance) => {
+  addDistance = async (userId, distance, time) => {
     const getUserRecord = await Record.findOne({ where: { userId } });
     let percent = 0;
     let getDistance = Number(getUserRecord.distance + distance);
     percent = getDistance / 100;
 
-    let array = getUserRecord.array;
-    array[day.day] += distance;
+    let weekOfDistance = getUserRecord.weekOfDistance;
+    let weekOfTime = getUserRecord.weekOfTime;
+    weekOfDistance[day.day] += distance;
+    weekOfTime[day.day] += time;
     if (!getUserRecord) {
-      const createdRecord = await Record.create({ userId, distance });
+      const createdRecord = await Record.create({ userId, distance, time });
       return createdRecord;
     } else {
       const userDistance = getUserRecord.distance;
+      const userTime = getUserRecord.time;
       const updatedRecord = await Record.update(
         {
           distance: distance + userDistance,
           percent: percent * 100,
-          array: array,
+          weekOfDistance: weekOfDistance,
+          weekOfTime: weekOfTime,
+          time: time + userTime,
         },
         { where: { userId } }
       );
@@ -137,6 +142,35 @@ class UserRepositiory {
     );
     console.log("테스트", getUserInfo);
     return getUserInfo;
+  };
+  getRank = async () => {
+    const getRank = await Record.findAll({
+      limit: 5,
+      order: [["distance", "DESC"]],
+    });
+    const userArr = [];
+    for (let i = 0; i < getRank.length; i++) {
+      userArr.push(getRank[i].userId);
+    }
+
+    const userInfo = await User.findAll({
+      where: {
+        userId: { [Op.in]: userArr },
+      },
+      attributes: ["nickname", "image"],
+    });
+
+    let i = -1;
+    return getRank.map((test) => {
+      i++;
+      return {
+        distance: test.distance,
+        time: test.time,
+        userId: test.userId,
+        nickname: userInfo[i].nickname,
+        profile: userInfo[i].image,
+      };
+    });
   };
 }
 

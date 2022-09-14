@@ -20,12 +20,23 @@ module.exports = class Record extends Sequelize.Model {
           defaultValue: 0,
           allowNull: true,
         },
+        time: {
+          type: Sequelize.INTEGER,
+          defaultValue: 0,
+          allowNull: true,
+        },
         percent: {
           type: Sequelize.INTEGER,
           defaultValue: 0,
           allowNull: true,
         },
-        array: {
+        weekOfDistance: {
+          type: Sequelize.JSON,
+          defaultValue: [0, 0, 0, 0, 0, 0, 0],
+
+          allowNull: true,
+        },
+        weekOfTime: {
           type: Sequelize.JSON,
           defaultValue: [0, 0, 0, 0, 0, 0, 0],
 

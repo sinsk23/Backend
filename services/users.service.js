@@ -6,8 +6,12 @@ let BadRequestError = require("./http-errors").BadRequestError;
 class UserService {
   userRepository = new UserRepositiory();
 
-  addDistance = async (userId, distance) => {
-    const addDistance = await this.userRepository.addDistance(userId, distance);
+  addDistance = async (userId, distance, time) => {
+    const addDistance = await this.userRepository.addDistance(
+      userId,
+      distance,
+      time
+    );
     return addDistance;
   };
   getUserPost = async (nickname, pagenum, userId) => {
@@ -104,6 +108,10 @@ class UserService {
   getUserInfo = async (userId) => {
     const getUserInfo = await this.userRepository.getUserInfo(userId);
     return getUserInfo;
+  };
+  getRank = async () => {
+    const getRank = await this.userRepository.getRank();
+    return getRank;
   };
 }
 
