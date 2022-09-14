@@ -25,9 +25,10 @@ module.exports = (app) => {
               provider: "kakao",
             },
           });
+          console.log("체크", emailCheck);
           // 이미 가입된 카카오 프로필이면 성공
           if (emailCheck) {
-            done(null, { emailCheck, accessToken });
+            done(null, emailCheck);
           } else {
             // 가입되어 있지 않으면 로그인 정보만 전달
             const newUser = {
@@ -37,7 +38,6 @@ module.exports = (app) => {
               accessToken,
 
               image: profile._json.properties.profile_image,
-
             };
             done(null, newUser);
           }
@@ -52,12 +52,12 @@ module.exports = (app) => {
   passport.use(
     new NaverStrategy(
       {
-      clientID: process.env.NAVER_ID, 
-      clientSecret: process.env.NAVER_SECRET, 
-      callbackURL: process.env.NAVER_URL
+        clientID: process.env.NAVER_ID,
+        clientSecret: process.env.NAVER_SECRET,
+        callbackURL: process.env.NAVER_URL,
       },
       async (accessToken, refreshToken, profile, done) => {
-        try{
+        try {
           const emailCheck = await User.findOne({
             where: {
               email: profile._json.email,
@@ -65,7 +65,7 @@ module.exports = (app) => {
             },
           });
           if (emailCheck) {
-            done(null, { emailCheck, accessToken });
+            done(null, emailCheck);
           } else {
             const newUser = {
               email: profile._json && profile._json.email,
@@ -74,7 +74,6 @@ module.exports = (app) => {
               accessToken,
 
               image: profile._json.profile_image,
-
             };
             done(null, newUser);
           }
@@ -84,7 +83,7 @@ module.exports = (app) => {
         }
       }
     )
-  )
+  );
 };
 
 passport.serializeUser((user, done) => {

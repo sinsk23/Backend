@@ -2,10 +2,8 @@ const { Post } = require("../models");
 const { Like } = require("../models");
 const Sequelize = require("sequelize");
 
-const Op = Sequelize.Op;
 class LikeRepository {
   pushLike = async (postId, userId) => {
-    const post = await Post.findOne({ where: { postId } });
     const test = await Like.findAll({ where: { userId } });
     const pushLike = await Like.create({ userId, postId });
     let likeDone = true;

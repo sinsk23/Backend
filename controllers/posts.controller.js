@@ -17,7 +17,8 @@ class PostController {
         image,
         hashtag,
         user.userId,
-        user.nickname
+        user.nickname,
+        user.image
       );
 
       res.status(201).json(createPost);

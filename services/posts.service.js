@@ -14,7 +14,8 @@ class PostService {
     image,
     hashtag,
     userId,
-    nickname
+    nickname,
+    profile
   ) => {
     if (!content) {
       log.error("PostController.createPost : content is required");
@@ -32,7 +33,8 @@ class PostService {
       image,
       hashtag,
       userId,
-      nickname
+      nickname,
+      profile
     );
     if (hashtag) {
       let consonant = [];

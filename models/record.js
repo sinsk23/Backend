@@ -25,6 +25,12 @@ module.exports = class Record extends Sequelize.Model {
           defaultValue: 0,
           allowNull: true,
         },
+        array: {
+          type: Sequelize.JSON,
+          defaultValue: [0, 0, 0, 0, 0, 0, 0],
+
+          allowNull: true,
+        },
       },
       {
         sequelize,

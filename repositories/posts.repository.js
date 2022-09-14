@@ -1,11 +1,10 @@
-const { Post } = require("../models");
+const { Post, User } = require("../models");
 const { Like } = require("../models");
 const { Hashtag } = require("../models");
 const { Comment } = require("../models");
 const help = require("korean-regexp");
 const Sequelize = require("sequelize");
 const test = require("../node-mailer");
-
 const Op = Sequelize.Op;
 
 class PostRepository {
@@ -19,7 +18,8 @@ class PostRepository {
     image,
     hashtag,
     userId,
-    nickname
+    nickname,
+    profile
   ) => {
     const createPost = await Post.create({
       content,
@@ -31,6 +31,7 @@ class PostRepository {
       hashtag,
       userId,
       nickname,
+      profile,
     });
     return createPost;
   };
@@ -98,11 +99,11 @@ class PostRepository {
     checkHash
   ) => {
     if (checkHash === false) {
-      const deleteHash = await Hashtag.destroy({ where: { postId } });
+      await Hashtag.destroy({ where: { postId } });
       const consonant = [];
       for (let i = 0; i < hashtag.length; i++) {
         consonant[i] = help.explode(hashtag[i]).join("");
-        const createHashtag = await Hashtag.create({
+        await Hashtag.create({
           hashtag: hashtag[i],
           consonant: consonant[i],
           postId: postId,

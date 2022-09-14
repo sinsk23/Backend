@@ -5,7 +5,7 @@ const UserController = require("../controllers/users.controller");
 const AuthMiddleware = require("../middlewares/auth-middleware");
 
 const userController = new UserController();
-
+router.get("/user/search", AuthMiddleware, userController.searchUser);
 router.post("/user/signup", userController.signUp);
 router.post("/user/check", userController.checkNick);
 router.post("/user/distance", AuthMiddleware, userController.addDistance);
@@ -16,7 +16,7 @@ router.get(
 );
 router.get("/user/:userId", AuthMiddleware, userController.getUserInfo);
 router.delete("/user", AuthMiddleware, userController.deleteUser);
-router.get("/user/search", AuthMiddleware, userController.searchUser);
+
 router.post("/user/goal", AuthMiddleware, userController.setGoal);
 router.put("/user/image", AuthMiddleware, userController.changeImage);
 
