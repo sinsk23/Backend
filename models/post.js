@@ -14,6 +14,10 @@ module.exports = class Post extends Sequelize.Model {
           type: Sequelize.TEXT,
           allowNull: false,
         },
+        profile: {
+          type: Sequelize.TEXT,
+          allowNull: true,
+        },
 
         content: {
           type: Sequelize.TEXT,
@@ -46,6 +50,11 @@ module.exports = class Post extends Sequelize.Model {
           allowNull: true,
         },
         view: {
+          type: Sequelize.INTEGER,
+          defaultValue: 0,
+          allowNull: true,
+        },
+        commentNum: {
           type: Sequelize.INTEGER,
           defaultValue: 0,
           allowNull: true,

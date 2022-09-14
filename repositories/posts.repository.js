@@ -18,7 +18,8 @@ class PostRepository {
     image,
     hashtag,
     userId,
-    nickname
+    nickname,
+    profile
   ) => {
     const createPost = await Post.create({
       content,
@@ -30,6 +31,7 @@ class PostRepository {
       hashtag,
       userId,
       nickname,
+      profile,
     });
     return createPost;
   };
@@ -78,18 +80,12 @@ class PostRepository {
 
       await Post.update({ view: countView.view + 1 }, { where: { postId } });
     }
-    const comment = await Comment.findAll({ where: { postId } });
-
-    const commentLength = comment.length;
 
     const getPost = await Post.findOne({
       where: { postId },
     });
-    const getImage = await User.findOne({
-      where: { userId: getPost.userId },
-    });
-    const image = getImage.image;
-    return { getPost, commentLength, profile: image };
+
+    return getPost;
   };
   updatePost = async (
     postId,
