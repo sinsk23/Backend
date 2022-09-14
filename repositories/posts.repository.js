@@ -1,6 +1,7 @@
-const { Post } = require("../models");
+const { Post, User } = require("../models");
 const { Like } = require("../models");
 const { Hashtag } = require("../models");
+const { Comment } = require("../models");
 const help = require("korean-regexp");
 const Sequelize = require("sequelize");
 const test = require("../node-mailer");
@@ -77,12 +78,15 @@ class PostRepository {
 
       await Post.update({ view: countView.view + 1 }, { where: { postId } });
     }
+    const comment = await Comment.findAll({ where: { postId } });
+
+    const commentLength = comment.length;
 
     const getPost = await Post.findOne({
       where: { postId },
     });
 
-    return getPost;
+    return { getPost, commentLength };
   };
   updatePost = async (
     postId,
