@@ -85,8 +85,11 @@ class PostRepository {
     const getPost = await Post.findOne({
       where: { postId },
     });
-
-    return { getPost, commentLength };
+    const getImage = await User.findOne({
+      where: { userId: getPost.userId },
+    });
+    const image = getImage.image;
+    return { getPost, commentLength, profile: image };
   };
   updatePost = async (
     postId,
