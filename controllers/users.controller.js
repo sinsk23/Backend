@@ -51,9 +51,9 @@ class UserController {
   searchUser = async (req, res, next) => {
     try {
       const { nickname } = req.query;
-
+      console.log("유저", nickname);
       const searchUser = await this.userService.searchUser(nickname);
-      res.status(200).json(searchUser);
+      return res.status(200).json(searchUser);
     } catch (error) {
       next(error);
     }
