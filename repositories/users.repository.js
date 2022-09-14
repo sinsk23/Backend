@@ -133,7 +133,7 @@ class UserRepositiory {
     console.log("유저아이디", userId);
     const getUserInfo = await Record.findOne(
       { where: { userId } },
-      { attributes: ["distance", "goal", "percent"] }
+      { attributes: ["distance", "goal", "percent", "array"] }
     );
     console.log("테스트", getUserInfo);
     return getUserInfo;
