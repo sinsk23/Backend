@@ -91,6 +91,20 @@ class UserRepositiory {
 
   changeImage = async (image, userId) => {
     const changeImage = await User.update({ image }, { where: { userId } });
+    const findId = await Post.findAll({ where: { userId } });
+    let postIdArr = [];
+    for (let i = 0; i < findId.length; i++) {
+      postIdArr.push(findId[i].postId);
+    }
+
+    await Post.update(
+      { profile: image },
+      {
+        where: {
+          postId: { [Op.in]: postIdArr },
+        },
+      }
+    );
     return changeImage;
   };
   checkNick = async (nickname) => {
