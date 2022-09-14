@@ -20,6 +20,24 @@ const combined =
 const morganFormat = process.env.NODE_ENV !== "production" ? "dev" : combined; // morgan의 출력 형태 .env에서 NODE_ENV 설정 production : 배포환경 dev : 개발환경
 console.log(morganFormat); //dev인지 production인지 확인
 
+//const schedules = require("./node-scheduler");
+const scheduleData1 = {
+  dayOfweek: [0, 1, 2, 3, 4, 5, 6],
+  hour: 0,
+  minute: 0,
+};
+const scheduleData2 = {
+  dayOfweek: [1],
+  hour: 0,
+  minute: 0,
+};
+//let scheduleService = new schedules();
+const schdule = require("./node-scheduler");
+
+schdule.set1(scheduleData1);
+schdule.set2(scheduleData2);
+//emailService.realSend("rmadbstjd@naver.com");
+
 class BadRequestError extends Error {}
 
 sequelize

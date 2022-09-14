@@ -1,28 +1,31 @@
 const { Record, Post, Like, User } = require("../models");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-
+//const schedules = require("../node-scheduler");
+//const scheduleService = new schedules();
 const help = require("korean-regexp");
-
+const day = require("../node-scheduler");
+console.log("테스트123", day);
 class UserRepositiory {
   addDistance = async (userId, distance) => {
     const getUserRecord = await Record.findOne({ where: { userId } });
-    console.log("추가distance", distance);
-    console.log("현재distance", getUserRecord.distance);
-    console.log("goal", getUserRecord.goal);
     let percent = 0;
-    console.log(typeof percent);
     let getDistance = Number(getUserRecord.distance + distance);
     percent = getDistance / 100;
 
-    console.log("퍼센트", percent);
+    let array = getUserRecord.array;
+    array[day.day] += distance;
     if (!getUserRecord) {
       const createdRecord = await Record.create({ userId, distance });
       return createdRecord;
     } else {
       const userDistance = getUserRecord.distance;
       const updatedRecord = await Record.update(
-        { distance: distance + userDistance, percent: percent * 100 },
+        {
+          distance: distance + userDistance,
+          percent: percent * 100,
+          array: array,
+        },
         { where: { userId } }
       );
       return updatedRecord;
