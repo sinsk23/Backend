@@ -23,10 +23,10 @@ router
 // router.route("/?").get(CommentController.getCommentT);
 
 router
-  .route("/:commentId/:recommentId")
+  .route("/recomment/:commentId")
   .post(authMiddleware,CommentController.insertRecomment)
 router
-  .route("/:commentId/:recommentId/:pagenum")  
+  .route("/recomment/:commentId/:pagenum")  
   .get(authMiddleware,CommentController.getRecomment);
 router
   .route("/:commentId/:recommentId")
