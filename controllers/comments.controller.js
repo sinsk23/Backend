@@ -49,9 +49,9 @@ class CommentController {
 
       );
       if(result){
-      return res.status(201).json({ result : true ,message});
+      return res.status(201).json({ result, message });
     } else{
-      return res.status(400).json({ message });
+      return res.status(400).json({ result, message });
     }
     } catch (error) {
       next(error);
@@ -93,9 +93,9 @@ class CommentController {
         comment,
         );
       if(result){
-      return res.status(201).json({ result: true, message });
+      return res.status(201).json({ result, message });
     } else{
-      return res.status(400).json({ message });
+      return res.status(400).json({ result, message });
     }
     } catch (error) {
       next(error);
@@ -109,9 +109,9 @@ class CommentController {
 
       const { result, message } = await this.commentService.deleteComment(user.userId, commentId);
       if(result){
-        return res.status(200).json({ result: true, message });
+        return res.status(200).json({ result, message });
       } else{
-        return res.status(400).json({message})
+        return res.status(400).json({ result, message });
       }   
     } catch (error) {
       next(error);
@@ -135,9 +135,9 @@ class CommentController {
         user.image
       );
       if(result){
-      return res.status(201).json({ result : true });
+      return res.status(201).json({ result, message });
     } else{
-      return res.status(400).json({message});
+      return res.status(400).json({ result, message });
     }
     } catch (error) {
       next(error);
@@ -181,9 +181,9 @@ class CommentController {
         comment
       );
       if(result){
-        return res.status(201).json({ result: true, message });
+        return res.status(201).json({ result, message });
       } else{
-        return res.status(400).json({ message });
+        return res.status(400).json({ result, message });
       }
     } catch (error) {
       next(error);
@@ -200,9 +200,9 @@ class CommentController {
         recommentId
       );
       if(result){
-        return res.status(200).json({ result: true, message});
+        return res.status(200).json({ result, message });
       } else{
-        return res.status(400).json({ message })
+        return res.status(400).json({ result, message });
       }
     } catch (error) {
       next(error);
