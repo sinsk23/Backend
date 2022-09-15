@@ -7,24 +7,29 @@ const help = require("korean-regexp");
 const day = require("../node-scheduler");
 console.log("테스트123", day);
 class UserRepositiory {
-  addDistance = async (userId, distance) => {
+  addDistance = async (userId, distance, time) => {
     const getUserRecord = await Record.findOne({ where: { userId } });
     let percent = 0;
     let getDistance = Number(getUserRecord.distance + distance);
     percent = getDistance / 100;
 
-    let array = getUserRecord.array;
-    array[day.day] += distance;
+    let weekOfDistance = getUserRecord.weekOfDistance;
+    let weekOfTime = getUserRecord.weekOfTime;
+    weekOfDistance[day.day] += distance;
+    weekOfTime[day.day] += time;
     if (!getUserRecord) {
-      const createdRecord = await Record.create({ userId, distance });
+      const createdRecord = await Record.create({ userId, distance, time });
       return createdRecord;
     } else {
       const userDistance = getUserRecord.distance;
+      const userTime = getUserRecord.time;
       const updatedRecord = await Record.update(
         {
           distance: distance + userDistance,
           percent: percent * 100,
-          array: array,
+          weekOfDistance: weekOfDistance,
+          weekOfTime: weekOfTime,
+          time: time + userTime,
         },
         { where: { userId } }
       );
@@ -91,6 +96,20 @@ class UserRepositiory {
 
   changeImage = async (image, userId) => {
     const changeImage = await User.update({ image }, { where: { userId } });
+    const findId = await Post.findAll({ where: { userId } });
+    let postIdArr = [];
+    for (let i = 0; i < findId.length; i++) {
+      postIdArr.push(findId[i].postId);
+    }
+
+    await Post.update(
+      { profile: image },
+      {
+        where: {
+          postId: { [Op.in]: postIdArr },
+        },
+      }
+    );
     return changeImage;
   };
   checkNick = async (nickname) => {
@@ -99,7 +118,6 @@ class UserRepositiory {
     return checkNick;
   };
   signUp = async (email, nickname, image, provider, consonant) => {
-    console.log("테스트", email, nickname, image, provider, consonant);
     const signUp = await User.create({
       email,
       nickname,
@@ -107,22 +125,62 @@ class UserRepositiory {
       provider,
       image,
     });
-    console.log("왜안돼", signUp);
+
     return signUp;
   };
   deleteUser = async (userId) => {
-    console.log("유저아디", userId);
     const deleteUser = await User.destroy({ where: { userId } });
     return deleteUser;
   };
   getUserInfo = async (userId) => {
-    console.log("유저아이디", userId);
-    const getUserInfo = await Record.findOne(
-      { where: { userId } },
-      { attributes: ["distance", "goal", "percent"] }
-    );
-    console.log("테스트", getUserInfo);
-    return getUserInfo;
+    console.log("ZzzzzzzzZZzzz");
+    const getUserInfo = await Record.findOne({
+      where: { userId },
+    });
+    const userInfo = await User.findOne({
+      where: {
+        userId,
+      },
+      attributes: ["nickname", "image"],
+    });
+    return {
+      goal: getUserInfo.goal,
+      distance: getUserInfo.distance,
+      time: getUserInfo.time,
+      percent: getUserInfo.percent,
+      weekOfDistance: getUserInfo.weekOfDistance,
+      weekOfTime: getUserInfo.weekOfTime,
+      profile: userInfo.image,
+    };
+  };
+  getRank = async () => {
+    const getRank = await Record.findAll({
+      limit: 5,
+      order: [["distance", "DESC"]],
+    });
+    const userArr = [];
+    for (let i = 0; i < getRank.length; i++) {
+      userArr.push(getRank[i].userId);
+    }
+
+    const userInfo = await User.findAll({
+      where: {
+        userId: { [Op.in]: userArr },
+      },
+      attributes: ["nickname", "image"],
+    });
+
+    let i = -1;
+    return getRank.map((test) => {
+      i++;
+      return {
+        distance: test.distance,
+        time: test.time,
+        userId: test.userId,
+        nickname: userInfo[i].nickname,
+        profile: userInfo[i].image,
+      };
+    });
   };
 }
 

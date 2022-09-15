@@ -11,7 +11,7 @@ class UserController {
 
   addDistance = async (req, res, next) => {
     try {
-      const { distance } = req.body;
+      const { distance, time } = req.body;
       const { user } = res.locals;
       if (!distance) {
         log.error("UserController.addDistance : distance is required");
@@ -22,7 +22,8 @@ class UserController {
 
       const addDistance = await this.userService.addDistance(
         user.userId,
-        distance
+        distance,
+        time
       );
       res.status(200).json({ result: true, message: "거리를 등록하였습니다." });
     } catch (error) {
@@ -51,7 +52,7 @@ class UserController {
   searchUser = async (req, res, next) => {
     try {
       const { nickname } = req.query;
-      console.log("유저", nickname);
+
       const searchUser = await this.userService.searchUser(nickname);
       return res.status(200).json(searchUser);
     } catch (error) {
@@ -140,6 +141,7 @@ class UserController {
   };
   getUserInfo = async (req, res, next) => {
     try {
+      console.log("@@@@@@@@@@@@");
       const { userId } = req.params;
 
       const getUserInfo = await this.userService.getUserInfo(userId);
@@ -147,6 +149,14 @@ class UserController {
         res.status(200).json({ result: false });
       }
       res.status(200).json({ getUserInfo, result: true });
+    } catch (error) {
+      next(error);
+    }
+  };
+  getRank = async (req, res, next) => {
+    try {
+      const getRank = await this.userService.getRank();
+      res.status(200).json(getRank);
     } catch (error) {
       next(error);
     }

@@ -8,6 +8,7 @@ const userController = new UserController();
 router.get("/user/search", AuthMiddleware, userController.searchUser);
 router.post("/user/signup", userController.signUp);
 router.post("/user/check", userController.checkNick);
+router.get("/user/rank", userController.getRank);
 router.post("/user/distance", AuthMiddleware, userController.addDistance);
 router.get(
   "/user/post/:nickname/:pagenum",
