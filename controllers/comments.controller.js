@@ -1,7 +1,6 @@
 const CommentService = require("../services/comments.service");
-const { Comment ,ReComment ,Post} = require("../models");
+const { Comment, ReComment, Post } = require("../models");
 const { Op } = require("sequelize");
-let count = 0;
 
 class CommentController {
   commentService = new CommentService();
@@ -39,20 +38,19 @@ class CommentController {
       // console.log(user.userId);
       const { postId } = req.params;
       const { comment } = req.body;
-      
+
       const { result, message } = await this.commentService.createComment(
         comment,
         postId,
         user.userId,
         user.nickname,
         user.image
-
       );
-      if(result){
-      return res.status(201).json({ result, message });
-    } else{
-      return res.status(400).json({ result, message });
-    }
+      if (result) {
+        return res.status(201).json({ result, message });
+      } else {
+        return res.status(400).json({ result, message });
+      }
     } catch (error) {
       next(error);
     }
@@ -64,17 +62,16 @@ class CommentController {
       const { user } = res.locals;
       const { postId, pagenum } = req.params;
       const getPostid = await this.commentService.findPostid(postId);
-      const count = await Comment.count({where : {postId}});
+      const count = await Comment.count({ where: { postId } });
       const inPostid = await this.commentService.findinPostid(
-        postId, 
-        pagenum, 
+        postId,
+        pagenum,
         user.userId,
         user.nickname,
-        user.image,
-        
+        user.image
       );
 
-      return res.status(200).json({ Comment : inPostid ,count});
+      return res.status(200).json({ Comment: inPostid, count });
     } catch (error) {
       next(error);
     }
@@ -87,16 +84,16 @@ class CommentController {
       const { commentId } = req.params;
       const { comment } = req.body;
 
-     const { result, message } = await this.commentService.editComment(
+      const { result, message } = await this.commentService.editComment(
         user.userId,
         commentId,
-        comment,
-        );
-      if(result){
-      return res.status(201).json({ result, message });
-    } else{
-      return res.status(400).json({ result, message });
-    }
+        comment
+      );
+      if (result) {
+        return res.status(201).json({ result, message });
+      } else {
+        return res.status(400).json({ result, message });
+      }
     } catch (error) {
       next(error);
     }
@@ -107,12 +104,15 @@ class CommentController {
       const { user } = res.locals;
       const { commentId } = req.params;
 
-      const { result, message } = await this.commentService.deleteComment(user.userId, commentId);
-      if(result){
+      const { result, message } = await this.commentService.deleteComment(
+        user.userId,
+        commentId
+      );
+      if (result) {
         return res.status(200).json({ result, message });
-      } else{
+      } else {
         return res.status(400).json({ result, message });
-      }   
+      }
     } catch (error) {
       next(error);
     }
@@ -134,11 +134,11 @@ class CommentController {
         user.nickname,
         user.image
       );
-      if(result){
-      return res.status(201).json({ result, message });
-    } else{
-      return res.status(400).json({ result, message });
-    }
+      if (result) {
+        return res.status(201).json({ result, message });
+      } else {
+        return res.status(400).json({ result, message });
+      }
     } catch (error) {
       next(error);
     }
@@ -148,20 +148,17 @@ class CommentController {
     try {
       const { user } = res.locals;
       const { commentId, pagenum } = req.params;
-      
+
       const inRecommentid = await this.commentService.findinCommentid(
-        
         commentId,
         pagenum,
         user.userId,
         user.nickname,
         user.image
       );
-      const count = await ReComment.count({where : { commentId }});
+      const count = await ReComment.count({ where: { commentId } });
 
-      return res
-        .status(200)
-        .json({ Recomment : inRecommentid,count });
+      return res.status(200).json({ Recomment: inRecommentid, count });
     } catch (error) {
       next(error);
     }
@@ -180,9 +177,9 @@ class CommentController {
         recommentId,
         comment
       );
-      if(result){
+      if (result) {
         return res.status(201).json({ result, message });
-      } else{
+      } else {
         return res.status(400).json({ result, message });
       }
     } catch (error) {
@@ -199,9 +196,9 @@ class CommentController {
         commentId,
         recommentId
       );
-      if(result){
+      if (result) {
         return res.status(200).json({ result, message });
-      } else{
+      } else {
         return res.status(400).json({ result, message });
       }
     } catch (error) {

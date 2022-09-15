@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 
 const log = require("../winston");
 
-let BadRequestError = require("./http-errors").BadRequestError;
+const BadRequestError = require("./http-errors").BadRequestError;
 
 class UserController {
   userService = new UserService();
@@ -20,11 +20,7 @@ class UserController {
         );
       }
 
-      const addDistance = await this.userService.addDistance(
-        user.userId,
-        distance,
-        time
-      );
+      await this.userService.addDistance(user.userId, distance, time);
       res.status(200).json({ result: true, message: "거리를 등록하였습니다." });
     } catch (error) {
       next(error);
