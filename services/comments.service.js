@@ -27,10 +27,7 @@ class CommentService {
   //Serv 특정 게시글의 전체댓글 postId조회
   findinPostid = async (postId,pagenum) => {
     const findinPostid = await this.commentRepository.findinPostid(postId,pagenum);
-    //게시글에 댓글이 없으면
-    if (!findinPostid) {
-      return { result: false, message: "게시글에 댓글이 없습니다." };
-    }
+    
     return findinPostid;
   };
   //Serv 특정 게시글에 댓글 수정
@@ -39,24 +36,29 @@ class CommentService {
     if (comment === "" || null) {
       return { result: false, message: "댓글을 입력해주세요" };
     }
-    const editComment = await this.commentRepository.editComment(
+    const findCommentid = await this.commentRepository.findCommentid(commentId);
+    
+    //수정할 댓글이 없으면~
+    if (!findCommentid) {
+      return { result: false, message: "수정 할 댓글이 존재하지 않습니다." };
+    }
+    await this.commentRepository.editComment(
       userId,
       commentId,
       comment
     );
-    //수정할 댓글이 없으면~
-    if (!editComment) {
-      return { result: false, message: "수정 할 댓글이 존재하지 않습니다." };
-    }
-    return editComment;
+
+    return { result : true, message: "댓글 수정 완료"};
   };
   //Serv 특정 게시글에 댓글 삭제
   deleteComment = async (userId, commentId) => {
-    const deleteComment = await this.commentRepository.deleteComment(userId, commentId);
-    if (!deleteComment) {
+    const findCommentid = await this.commentRepository.findCommentid(commentId);
+    if (!findCommentid) {
       return { result: false, message: "삭제 할 댓글이 존재하지 않습니다." };
     }
-    return deleteComment;
+
+    await this.commentRepository.deleteComment(userId, commentId);
+    return { result: true , message: "댓글 삭제 완료"};
   };
   //Serv 특정 댓글 조회
   findCommentid = async (commentId) => {
@@ -96,43 +98,56 @@ class CommentService {
     const findinCommentid = await this.commentRepository.findinCommentid(
       commentId,pagenum
     );
-    //대댓글이 없으면~
-    if (!findinCommentid) {
-      return { result: false, message: "댓글을 입력해주세요" };
-    }
+    
     return findinCommentid;
   };
   //Serv 특정 대댓글 수정
   editRecomment = async (userId, commentId, recommentId, comment) => {
-    const editRecomment = await this.commentRepository.editRecomment(
+    const findCommentid = await this.commentRepository.findCommentid(commentId);
+    const findRecomment = await this.commentRepository.findRecomment(recommentId);
+    
+    if (!findCommentid) {
+      return {
+        result: false,
+        message: "댓글이 존재하지 않습니다",
+      };
+    }
+    if(!findRecomment){
+      return {
+        result: false,
+        message: "대댓글이 존재하지 않습니다.",
+      };
+    }
+    await this.commentRepository.editRecomment(
       userId,
       commentId,
       recommentId,
       comment
     );
-    //특정 대댓글이 없으면
-    if (!editRecomment) {
-      return {
-        result: false,
-        message: "대댓글이 존재하지 않아 수정 할 수 없습니다.",
-      };
-    }
-    return editRecomment;
+    return { result : true, message: "대댓글 수정 완료"};
   };
   //Serv 특정 대댓글 삭제
   deleteRecomment = async (userId, commentId, recommentId) => {
-    const deleteRecomment = await this.commentRepository.deleteRecomment(
+    const findCommentid = await this.commentRepository.findCommentid(commentId);
+    const findRecomment = await this.commentRepository.findRecomment(recommentId);
+    if (!findCommentid) {
+      return {
+        result: false,
+        message: "댓글이 존재하지 않습니다.",
+      };
+    }
+    if(!findRecomment){
+      return {
+        result: false,
+        message: "대댓글이 존재하지 않습니다.",
+      };
+    }
+    await this.commentRepository.deleteRecomment(
       userId,
       commentId,
       recommentId
     );
-    if (!deleteRecomment) {
-      return {
-        result: false,
-        message: "대댓글이 존재하지 않아 삭제 할 수 없습니다.",
-      };
-    }
-    return deleteRecomment;
+    return { result : true, message: "대댓글 삭제 완료"};
   };
 }
 
