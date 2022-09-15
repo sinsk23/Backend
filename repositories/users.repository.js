@@ -134,12 +134,11 @@ class UserRepositiory {
     return deleteUser;
   };
   getUserInfo = async (userId) => {
-    console.log("유저아이디", userId);
     const getUserInfo = await Record.findOne({
       where: { userId },
     });
     const userInfo = await User.findOne({ where: { userId } });
-    console.log("뭐지", userInfo);
+
     return {
       goal: getUserInfo.goal,
       distance: getUserInfo.distance,

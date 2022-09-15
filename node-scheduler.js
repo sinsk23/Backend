@@ -10,11 +10,7 @@ const set1 = (s) => {
   rule.hour = s.hour;
   rule.minute = s.minute;
 
-  const job = schedule.scheduleJob(rule, function () {
-    console.log("함수실행중1분마다", day);
-    //const deleteRecord = async () => await Record.destroy({ where: {} });
-    //deleteRecord();
-
+  schedule.scheduleJob(rule, function () {
     day++;
     if (day === 7) {
       day = 0;
@@ -28,8 +24,7 @@ const set2 = (s) => {
   rule.hour = s.hour;
   rule.minute = s.minute;
 
-  const job = schedule.scheduleJob(rule, function () {
-    console.log("실행됐나?");
+  schedule.scheduleJob(rule, function () {
     const deleteRecord = async () => await Record.destroy({ where: {} });
     deleteRecord();
   });
