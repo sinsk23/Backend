@@ -1,6 +1,5 @@
 const { Post } = require("../models");
 const { Like } = require("../models");
-const Sequelize = require("sequelize");
 
 class LikeRepository {
   pushLike = async (postId, userId) => {
