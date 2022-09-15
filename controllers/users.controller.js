@@ -1,10 +1,10 @@
 require("dotenv").config();
 const UserService = require("../services/users.service");
 const jwt = require("jsonwebtoken");
-const { User } = require("../models");
+
 const log = require("../winston");
 
-let BadRequestError = require("./http-errors").BadRequestError;
+const BadRequestError = require("./http-errors").BadRequestError;
 
 class UserController {
   userService = new UserService();
@@ -20,11 +20,7 @@ class UserController {
         );
       }
 
-      const addDistance = await this.userService.addDistance(
-        user.userId,
-        distance,
-        time
-      );
+      await this.userService.addDistance(user.userId, distance, time);
       res.status(200).json({ result: true, message: "거리를 등록하였습니다." });
     } catch (error) {
       next(error);
@@ -141,7 +137,6 @@ class UserController {
   };
   getUserInfo = async (req, res, next) => {
     try {
-      console.log("@@@@@@@@@@@@");
       const { userId } = req.params;
 
       const getUserInfo = await this.userService.getUserInfo(userId);
