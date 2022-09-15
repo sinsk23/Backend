@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const { User } = require("../models");
 const axios = require("axios");
+let accessToken1;
 class SocialController {
   kakaologin = (req, res, next) => {
     passport.authenticate(
@@ -13,6 +14,7 @@ class SocialController {
 
         const { email, nickname, accessToken, refreshToken, image, provider } =
           user;
+        accessToken1 = accessToken;
         console.log(
           "악세스토큰",
           email,
@@ -66,8 +68,8 @@ class SocialController {
     )(req, res, next);
   };
   kakaologout = async (req, res, next) => {
-    const access_token =
-      "QpPQh_KPFb6Bgb26FcoRs6K6Z2bGy4iv7ZFkyGApCinJYAAAAYNCCg9f";
+    const access_token = accessToken1;
+    console.log("테스트", access_token);
     try {
       const unlink = await axios({
         //Promise 객체를 unlink에 넘겨주고
@@ -77,6 +79,7 @@ class SocialController {
           Authorization: `Bearer ${access_token}`,
         },
       });
+      return unlink;
     } catch (error) {
       next(error);
     }
