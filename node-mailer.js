@@ -1,7 +1,7 @@
 require("dotenv").config();
 const env = process.env;
 const nodemailer = require("nodemailer");
-class test {
+class mailer {
   email = {
     /*host: "smtp.mailtrap.io",
   port: 2525,
@@ -43,7 +43,7 @@ class test {
     text: "런블런블에 오신걸 환영합니다~1123",
     html: "<h2>런블런블에 오신걸 환영합니다~112233</h2>",
   };*/
-  realSend = (email) => {
+  welcomeSend = (email) => {
     this.send({
       from: env.MAIL_ID,
       to: email,
@@ -53,5 +53,13 @@ class test {
             <a href ="https://www.naver.com"> + <img src ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpNvnS39N1DWWaYPfsAOF_6FPoohK1XLxTrg&usqp=CAU"/>`,
     });
   };
+  errorAlertSend = (content) => {
+    this.send({
+      from: env.MAIL_ID,
+      to: "dbsdud0033@gmail.com",
+      subject: "서비스에 관하여 에러가 발생했습니다.",
+      text: content,
+    });
+  };
 }
-module.exports = test;
+module.exports = mailer;

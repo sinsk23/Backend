@@ -1,7 +1,7 @@
 require("dotenv").config();
 const UserService = require("../services/users.service");
 const jwt = require("jsonwebtoken");
-const { User } = require("../models");
+
 const log = require("../winston");
 
 let BadRequestError = require("./http-errors").BadRequestError;
@@ -141,7 +141,6 @@ class UserController {
   };
   getUserInfo = async (req, res, next) => {
     try {
-      console.log("@@@@@@@@@@@@");
       const { userId } = req.params;
 
       const getUserInfo = await this.userService.getUserInfo(userId);

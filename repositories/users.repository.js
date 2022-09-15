@@ -1,17 +1,18 @@
 const { Record, Post, Like, User } = require("../models");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-//const schedules = require("../node-scheduler");
-//const scheduleService = new schedules();
+const mailer = require("../node-mailer");
+
 const help = require("korean-regexp");
 const day = require("../node-scheduler");
-console.log("테스트123", day);
+
 class UserRepositiory {
+  emailService = new mailer();
   addDistance = async (userId, distance, time) => {
     const getUserRecord = await Record.findOne({ where: { userId } });
     let percent = 0;
     let getDistance = Number(getUserRecord.distance + distance);
-    percent = getDistance / 100;
+    percent = getDistance / getUserRecord.goal;
 
     let weekOfDistance = getUserRecord.weekOfDistance;
     let weekOfTime = getUserRecord.weekOfTime;
@@ -125,7 +126,7 @@ class UserRepositiory {
       provider,
       image,
     });
-
+    this.emailService.welcomeSend(email);
     return signUp;
   };
   deleteUser = async (userId) => {
@@ -133,16 +134,12 @@ class UserRepositiory {
     return deleteUser;
   };
   getUserInfo = async (userId) => {
-    console.log("ZzzzzzzzZZzzz");
+    console.log("유저아이디", userId);
     const getUserInfo = await Record.findOne({
       where: { userId },
     });
-    const userInfo = await User.findOne({
-      where: {
-        userId,
-      },
-      attributes: ["nickname", "image"],
-    });
+    const userInfo = await User.findOne({ where: { userId } });
+    console.log("뭐지", userInfo);
     return {
       goal: getUserInfo.goal,
       distance: getUserInfo.distance,
