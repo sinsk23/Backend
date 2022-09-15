@@ -121,18 +121,27 @@ class CommentRepository {
     return inRecommentid;
     // return {recommentData,count};
   };
+  //Repo 특정 대댓글 조회
+  findRecomment = async( recommentId )=>{
+    return await ReComment.findByPk(recommentId);
+  }
   //Repo 특정 대댓글 수정
-  editRecomment = async (userId, commentId, recommentId, comment) => {
+  editRecomment = async ( userId, commentId, recommentId, comment) => {
     return await ReComment.update(
       { comment },
       { where: { userId, commentId, recommentId } }
     );
   };
   //Repo 특정 대댓글 삭제
-  deleteRecomment = async (userId, commentId, recommentId) => {
+  deleteRecomment = async ( userId, commentId, recommentId) => {
     return await ReComment.destroy({
       where: { userId, commentId, recommentId },
     });
   };
+
+
+  /**
+   * @todo 수정, 삭제 할 때 유저가 다르면 수정 삭제 할수 없는 로직 필요
+   */
 }
 module.exports = CommentRepository;

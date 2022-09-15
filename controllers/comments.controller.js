@@ -49,7 +49,7 @@ class CommentController {
 
       );
       if(result){
-      return res.status(201).json({ result : true });//message는 일단 안보냄
+      return res.status(201).json({ result : true ,message});
     } else{
       return res.status(400).json({ message });
     }
@@ -87,13 +87,16 @@ class CommentController {
       const { commentId } = req.params;
       const { comment } = req.body;
 
-      await this.commentService.editComment(
+     const { result, message } = await this.commentService.editComment(
         user.userId,
         commentId,
         comment,
         );
-
-      return res.status(201).json({ result: true });
+      if(result){
+      return res.status(201).json({ result: true, message });
+    } else{
+      return res.status(400).json({ message });
+    }
     } catch (error) {
       next(error);
     }
@@ -104,9 +107,12 @@ class CommentController {
       const { user } = res.locals;
       const { commentId } = req.params;
 
-      await this.commentService.deleteComment(user.userId, commentId);
-
-      return res.status(200).json({ result: true });
+      const { result, message } = await this.commentService.deleteComment(user.userId, commentId);
+      if(result){
+        return res.status(200).json({ result: true, message });
+      } else{
+        return res.status(400).json({message})
+      }   
     } catch (error) {
       next(error);
     }
@@ -142,7 +148,7 @@ class CommentController {
     try {
       const { user } = res.locals;
       const { commentId, pagenum } = req.params;
-      const getCommentid = await this.commentService.findCommentid(commentId);
+      
       const inRecommentid = await this.commentService.findinCommentid(
         
         commentId,
@@ -151,7 +157,7 @@ class CommentController {
         user.nickname,
         user.image
       );
-      const count = await ReComment.count({where : {commentId}});
+      const count = await ReComment.count({where : { commentId }});
 
       return res
         .status(200)
@@ -164,18 +170,21 @@ class CommentController {
   editRecomment = async (req, res, next) => {
     try {
       const { user } = res.locals;
-      console.log("대댓글 수정쪽 :", user);
+
       const { commentId, recommentId } = req.params;
       const { comment } = req.body;
 
-      await this.commentService.editRecomment(
+      const { result, message } = await this.commentService.editRecomment(
         user.userId,
         commentId,
         recommentId,
         comment
       );
-
-      return res.status(201).json({ result: true });
+      if(result){
+        return res.status(201).json({ result: true, message });
+      } else{
+        return res.status(400).json({ message });
+      }
     } catch (error) {
       next(error);
     }
@@ -185,12 +194,16 @@ class CommentController {
     try {
       const { user } = res.locals;
       const { commentId, recommentId } = req.params;
-      await this.commentService.deleteRecomment(
+      const { result, message } = await this.commentService.deleteRecomment(
         user.userId,
         commentId,
         recommentId
       );
-      return res.status(200).json({ result: true });
+      if(result){
+        return res.status(200).json({ result: true, message});
+      } else{
+        return res.status(400).json({ message })
+      }
     } catch (error) {
       next(error);
     }
