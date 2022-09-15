@@ -10,7 +10,6 @@ class LikeController {
       const pushLike = await this.likeService.pushLike(postId, user.userId);
       res.status(200).json(pushLike);
     } catch (error) {
-      console.log(error);
       next(error);
     }
   };
