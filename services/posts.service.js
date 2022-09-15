@@ -173,15 +173,17 @@ class PostService {
     );
     return searchLikePost;
   };
-  autoSearchPost = async (hashtag) => {
+  autoCompletePost = async (hashtag) => {
     if (!hashtag) {
       log.error("PostController.autoSearchPost : hashtag is required");
       throw new BadRequestError(
         "PostController.autoSearchPost : hashtag is required"
       );
     }
-    const autoSearchPost = await this.postRepository.autoSearchPost(hashtag);
-    return autoSearchPost;
+    const autoCompletePost = await this.postRepository.autoCompletePost(
+      hashtag
+    );
+    return autoCompletePost;
   };
 }
 module.exports = PostService;

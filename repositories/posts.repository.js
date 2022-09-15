@@ -179,16 +179,16 @@ class PostRepository {
     });
     return searchPost;
   };
-  autoSearchPost = async (hashtag) => {
+  autoCompletePost = async (hashtag) => {
     hashtag = help.explode(hashtag).join("");
 
-    const autoSearchPost = await Hashtag.findAll({
+    const autoCompletePost = await Hashtag.findAll({
       where: {
         consonant: { [Op.like]: hashtag + "%" },
       },
     });
 
-    const returnData = autoSearchPost.map((el) => el.hashtag);
+    const returnData = autoCompletePost.map((el) => el.hashtag);
     const Data = [...new Set(returnData)];
     return Data;
   };

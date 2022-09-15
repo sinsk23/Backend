@@ -153,13 +153,13 @@ class PostController {
       next(error);
     }
   };
-  autoSearchPost = async (req, res, next) => {
+  autoCompletePost = async (req, res, next) => {
     try {
       const { hashtag } = req.query;
 
-      const autoSearchPost = await this.postService.autoSearchPost(hashtag);
+      const autoCompletePost = await this.postService.autoCompletePost(hashtag);
 
-      res.status(200).json(autoSearchPost);
+      res.status(200).json(autoCompletePost);
     } catch (error) {
       next(error);
     }
