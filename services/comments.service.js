@@ -11,25 +11,25 @@ class CommentService {
   createComment = async (comment, postId, userId, nickname, image) => {
     //댓글 내용이 없으면~
     if (comment === "" || null) {
-      return { success: false, message: "댓글을 입력해주세요" };
+      return { result: false, message: "댓글을 입력해주세요" };
     }
     //게시글을 찾아 없으면~
     const findPostid = await this.commentRepository.findPostid(postId);
     if (!findPostid) {
       return {
-        success: false,
+        result: false,
         message: "댓글을 작성할 게시글이 존재하지 않습니다.",
       };
     }
-
-    return await this.commentRepository.createComment(comment, postId, userId, nickname, image);
+    await this.commentRepository.createComment(comment, postId, userId, nickname, image);
+    return { result: true, message: "댓글 작성 완료"}
   };
   //Serv 특정 게시글의 전체댓글 postId조회
   findinPostid = async (postId,pagenum) => {
     const findinPostid = await this.commentRepository.findinPostid(postId,pagenum);
     //게시글에 댓글이 없으면
     if (!findinPostid) {
-      return { success: false, message: "게시글에 댓글이 없습니다." };
+      return { result: false, message: "게시글에 댓글이 없습니다." };
     }
     return findinPostid;
   };
@@ -37,7 +37,7 @@ class CommentService {
   editComment = async (userId, commentId, comment) => {
     //댓글 내용이 없으면~
     if (comment === "" || null) {
-      return { success: false, message: "댓글을 입력해주세요" };
+      return { result: false, message: "댓글을 입력해주세요" };
     }
     const editComment = await this.commentRepository.editComment(
       userId,
@@ -46,7 +46,7 @@ class CommentService {
     );
     //수정할 댓글이 없으면~
     if (!editComment) {
-      return { success: false, message: "수정 할 댓글이 존재하지 않습니다." };
+      return { result: false, message: "수정 할 댓글이 존재하지 않습니다." };
     }
     return editComment;
   };
@@ -54,7 +54,7 @@ class CommentService {
   deleteComment = async (userId, commentId) => {
     const deleteComment = await this.commentRepository.deleteComment(userId, commentId);
     if (!deleteComment) {
-      return { success: false, message: "삭제 할 댓글이 존재하지 않습니다." };
+      return { result: false, message: "삭제 할 댓글이 존재하지 않습니다." };
     }
     return deleteComment;
   };
@@ -63,7 +63,7 @@ class CommentService {
     const findCommentid = await this.commentRepository.findCommentid(commentId);
     //댓글이 없으면~
     if (!findCommentid) {
-      return { success: false, message: "댓글이 존재하지 않습니다" };
+      return { result: false, message: "댓글이 존재하지 않습니다" };
     }
     return findCommentid;
   };
@@ -71,18 +71,17 @@ class CommentService {
   createRecomment = async (comment, commentId, recommentId,userId,nickname,image) => {
     //댓글 내용이 없으면~
     if (comment === "" || null) {
-      return { success: false, message: "댓글을 입력해주세요" };
+      return { result: false, message: "댓글을 입력해주세요" };
     }
     //댓글이 없으면~
     const findCommentid = await this.commentRepository.findCommentid(commentId);
     if (!findCommentid) {
       return {
-        success: false,
+        result: false,
         message: "댓글이 존재하지 않습니다",
       };
     }
-
-    return await this.commentRepository.createRecomment(
+    await this.commentRepository.createRecomment(
       comment,
       commentId,
       recommentId,
@@ -90,15 +89,16 @@ class CommentService {
       nickname,
       image
     );
+    return { result: true, message: "댓글 작성 완료" }
   };
   //Serv 특정 댓글의 전체 대댓글 조회
-  findinCommentid = async (recommentId,commentId,pagenum) => {
+  findinCommentid = async (commentId,pagenum) => {
     const findinCommentid = await this.commentRepository.findinCommentid(
-      recommentId,commentId,pagenum
+      commentId,pagenum
     );
     //대댓글이 없으면~
     if (!findinCommentid) {
-      return { success: false, message: "댓글을 입력해주세요" };
+      return { result: false, message: "댓글을 입력해주세요" };
     }
     return findinCommentid;
   };
@@ -113,7 +113,7 @@ class CommentService {
     //특정 대댓글이 없으면
     if (!editRecomment) {
       return {
-        success: false,
+        result: false,
         message: "대댓글이 존재하지 않아 수정 할 수 없습니다.",
       };
     }
@@ -128,7 +128,7 @@ class CommentService {
     );
     if (!deleteRecomment) {
       return {
-        success: false,
+        result: false,
         message: "대댓글이 존재하지 않아 삭제 할 수 없습니다.",
       };
     }

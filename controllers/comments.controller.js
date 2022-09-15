@@ -40,7 +40,7 @@ class CommentController {
       const { postId } = req.params;
       const { comment } = req.body;
       
-      await this.commentService.createComment(
+      const { result, message } = await this.commentService.createComment(
         comment,
         postId,
         user.userId,
@@ -48,8 +48,11 @@ class CommentController {
         user.image
 
       );
-
-      return res.status(201).json({ result : true });
+      if(result){
+      return res.status(201).json({ result : true });//message는 일단 안보냄
+    } else{
+      return res.status(400).json({ message });
+    }
     } catch (error) {
       next(error);
     }
@@ -110,14 +113,14 @@ class CommentController {
   };
 
   //대 ~ 댓글 ~~~
-  //대댓글 작성 /api/comment/:commentId/:recommentId
+  //대댓글 작성 /api/comment/recomment/:commentId
   insertRecomment = async (req, res, next) => {
     try {
       const { user } = res.locals;
       const { commentId, recommentId } = req.params;
       const { comment } = req.body;
 
-      await this.commentService.createRecomment(
+      const { result, message } = await this.commentService.createRecomment(
         comment,
         commentId,
         recommentId,
@@ -125,19 +128,23 @@ class CommentController {
         user.nickname,
         user.image
       );
+      if(result){
       return res.status(201).json({ result : true });
+    } else{
+      return res.status(400).json({message});
+    }
     } catch (error) {
       next(error);
     }
   };
-  //대댓글 조회 /api/comment/:commentId/:recommentId
+  //대댓글 조회 /api/comment/recomment/:commentId/:pagenum
   getRecomment = async (req, res, next) => {
     try {
       const { user } = res.locals;
-      const { commentId, recommentId, pagenum } = req.params;
+      const { commentId, pagenum } = req.params;
       const getCommentid = await this.commentService.findCommentid(commentId);
       const inRecommentid = await this.commentService.findinCommentid(
-        recommentId,
+        
         commentId,
         pagenum,
         user.userId,
