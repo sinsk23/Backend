@@ -91,7 +91,7 @@ class CommentRepository {
     });
   };
   //Repo 특정 댓글의 전체 대댓글 조회
-  findinCommentid = async (recommentId, commentId, pagenum) => {
+  findinCommentid = async ( commentId, pagenum) => {
     let offset = 0;
     if (pagenum > 1) {
       offset = 5 * (pagenum - 1);
