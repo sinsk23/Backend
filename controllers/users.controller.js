@@ -52,7 +52,7 @@ class UserController {
   searchUser = async (req, res, next) => {
     try {
       const { nickname } = req.query;
-      console.log("유저", nickname);
+
       const searchUser = await this.userService.searchUser(nickname);
       return res.status(200).json(searchUser);
     } catch (error) {
@@ -141,6 +141,7 @@ class UserController {
   };
   getUserInfo = async (req, res, next) => {
     try {
+      console.log("@@@@@@@@@@@@");
       const { userId } = req.params;
 
       const getUserInfo = await this.userService.getUserInfo(userId);

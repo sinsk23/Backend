@@ -118,7 +118,6 @@ class UserRepositiory {
     return checkNick;
   };
   signUp = async (email, nickname, image, provider, consonant) => {
-    console.log("테스트", email, nickname, image, provider, consonant);
     const signUp = await User.create({
       email,
       nickname,
@@ -126,22 +125,33 @@ class UserRepositiory {
       provider,
       image,
     });
-    console.log("왜안돼", signUp);
+
     return signUp;
   };
   deleteUser = async (userId) => {
-    console.log("유저아디", userId);
     const deleteUser = await User.destroy({ where: { userId } });
     return deleteUser;
   };
   getUserInfo = async (userId) => {
-    console.log("유저아이디", userId);
-    const getUserInfo = await Record.findOne(
-      { where: { userId } },
-      { attributes: ["distance", "goal", "percent", "array"] }
-    );
-    console.log("테스트", getUserInfo);
-    return getUserInfo;
+    console.log("ZzzzzzzzZZzzz");
+    const getUserInfo = await Record.findOne({
+      where: { userId },
+    });
+    const userInfo = await User.findOne({
+      where: {
+        userId,
+      },
+      attributes: ["nickname", "image"],
+    });
+    return {
+      goal: getUserInfo.goal,
+      distance: getUserInfo.distance,
+      time: getUserInfo.time,
+      percent: getUserInfo.percent,
+      weekOfDistance: getUserInfo.weekOfDistance,
+      weekOfTime: getUserInfo.weekOfTime,
+      profile: userInfo.image,
+    };
   };
   getRank = async () => {
     const getRank = await Record.findAll({

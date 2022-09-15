@@ -7,6 +7,18 @@ class UserService {
   userRepository = new UserRepositiory();
 
   addDistance = async (userId, distance, time) => {
+    if (!distance) {
+      log.error("UserController.addDistance : distance is required");
+      throw new BadRequestError(
+        "UserController.addDistance : distance is required"
+      );
+    }
+    if (!time) {
+      log.error("UserController.addDistance : time is required");
+      throw new BadRequestError(
+        "UserController.addDistance : time is required"
+      );
+    }
     const addDistance = await this.userRepository.addDistance(
       userId,
       distance,
@@ -55,10 +67,22 @@ class UserService {
     return setGoal;
   };
   changeImage = async (image, userId) => {
+    if (!image) {
+      log.error("UserController.changeImage : image is required");
+      throw new BadRequestError(
+        "UserController.changeImage : image is required"
+      );
+    }
     const changeImage = await this.userRepository.changeImage(image, userId);
     return changeImage;
   };
   checkNick = async (nickname) => {
+    if (!nickname) {
+      log.error("UserController.checkNick : nickname is required");
+      throw new BadRequestError(
+        "UserController.checkNick: nickname is required"
+      );
+    }
     const checkNick = await this.userRepository.checkNick(nickname);
     return checkNick;
   };
@@ -88,7 +112,6 @@ class UserService {
       return { nickCheck: false };
     }
 
-    console.log("333");
     let consonant = [];
     consonant = help.explode(nickname).join("");
     const signUp = await this.userRepository.signUp(
@@ -98,7 +121,7 @@ class UserService {
       provider,
       consonant
     );
-    console.log("444");
+
     return signUp;
   };
   deleteUser = async (userId) => {
