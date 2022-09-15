@@ -67,12 +67,6 @@ class UserService {
     return setGoal;
   };
   changeImage = async (image, userId) => {
-    if (!image) {
-      log.error("UserController.changeImage : image is required");
-      throw new BadRequestError(
-        "UserController.changeImage : image is required"
-      );
-    }
     const changeImage = await this.userRepository.changeImage(image, userId);
     return changeImage;
   };
