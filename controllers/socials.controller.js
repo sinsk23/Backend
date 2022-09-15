@@ -56,6 +56,7 @@ class SocialController {
               email,
               provider,
               nickname,
+              accessToken,
               member: false,
             });
           }
