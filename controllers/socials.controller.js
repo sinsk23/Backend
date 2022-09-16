@@ -79,7 +79,7 @@ class SocialController {
           Authorization: `Bearer ${access_token}`,
         },
       });
-      return unlink;
+      return res.status(200).json("로그아웃이 되었습니다");
     } catch (error) {
       next(error);
     }
