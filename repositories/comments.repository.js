@@ -86,6 +86,10 @@ class CommentRepository {
     nickname,
     image
   ) => {
+    const test = await Comment.findOne({ where: { commentId } });
+    const recommentNum = test.recommentNum + 1;
+    await Comment.update({ recommentNum }, { where: { commentId } });
+
     return await ReComment.create({
       comment,
       commentId,

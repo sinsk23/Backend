@@ -9,28 +9,26 @@ const CommentController = new Comment();
 // /comment 루트로들어와
 
 // query로 받을때 주소는 "/?"
+router.route("/:postId").post(authMiddleware, CommentController.insertComment);
 router
-  .route("/:postId")
-  .post(authMiddleware,CommentController.insertComment)
-router
-  .route("/:postId/:pagenum/:commentId")
-  .get(authMiddleware,CommentController.getComment);
+  .route("/:postId/:pagenum")
+  .get(authMiddleware, CommentController.getComment);
 router
   .route("/:commentId")
-  .put(authMiddleware,CommentController.editComment)
-  .delete(authMiddleware,CommentController.deleteComment);
+  .put(authMiddleware, CommentController.editComment)
+  .delete(authMiddleware, CommentController.deleteComment);
 
 // router.route("/?").get(CommentController.getCommentT);
 
 router
   .route("/recomment/:commentId")
-  .post(authMiddleware,CommentController.insertRecomment)
+  .post(authMiddleware, CommentController.insertRecomment);
 router
-  .route("/recomment/:commentId/:pagenum")  
-  .get(authMiddleware,CommentController.getRecomment);
+  .route("/recomment/:commentId/:pagenum")
+  .get(authMiddleware, CommentController.getRecomment);
 router
   .route("/:commentId/:recommentId")
-  .put(authMiddleware,CommentController.editRecomment)
-  .delete(authMiddleware,CommentController.deleteRecomment);
+  .put(authMiddleware, CommentController.editRecomment)
+  .delete(authMiddleware, CommentController.deleteRecomment);
 
 module.exports = router;
