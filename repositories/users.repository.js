@@ -94,7 +94,12 @@ class UserRepositiory {
     const setGoal = await Record.create({ goal, userId });
     return setGoal;
   };
+  checkGoal = async (userId) => {
+    console.log("유저아이디", userId);
+    const checkGoal = await Record.findOne({ where: { userId } });
 
+    return checkGoal;
+  };
   changeImage = async (image, userId) => {
     const changeImage = await User.update({ image }, { where: { userId } });
     const findId = await Post.findAll({ where: { userId } });
@@ -118,6 +123,7 @@ class UserRepositiory {
 
     return checkNick;
   };
+
   signUp = async (email, nickname, image, provider, consonant) => {
     const signUp = await User.create({
       email,

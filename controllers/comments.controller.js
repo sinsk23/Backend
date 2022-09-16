@@ -61,6 +61,11 @@ class CommentController {
     try {
       const { user } = res.locals;
       const { postId, pagenum } = req.params;
+
+      const getPostid = await this.commentService.findPostid(postId);
+      // const count = await Comment.count({ where: { postId } });
+      //댓글에 대댓글 개수 프론트에서 요청으로 바꿈
+
       // const getPostid = await this.commentService.findPostid(postId);
       // const count = await Comment.count({ where: { postId } });
       //댓글에 대댓글 개수 프론트에서 요청으로 바꿈
@@ -68,12 +73,12 @@ class CommentController {
       // 댓글 commentId와 대댓글 commentId 를 비교해서 댓글 개수 length 사용
       // const data = await Comment.findAll({
       //   include:[
-          
+
       //     {
       //       model: ReComment,
       //       attributes: ["commentId"],
       //     },
-          
+
       //   ]
       // })
       // console.log("data 개수 ",data);
@@ -140,7 +145,7 @@ class CommentController {
       const { user } = res.locals;
       const { commentId, recommentId } = req.params;
       const { comment } = req.body;
-      
+
       const { result, message } = await this.commentService.createRecomment(
         comment,
         commentId,
@@ -171,8 +176,6 @@ class CommentController {
         user.nickname,
         user.image
       );
-      
-      
 
       return res.status(200).json({ Recomment: inRecommentid });
     } catch (error) {
