@@ -176,9 +176,8 @@ class CommentController {
         user.nickname,
         user.image
       );
-      const count = await ReComment.count({ where: { commentId } });
 
-      return res.status(200).json({ Recomment: inRecommentid, count });
+      return res.status(200).json({ Recomment: inRecommentid });
     } catch (error) {
       next(error);
     }
