@@ -94,9 +94,9 @@ class CommentService {
     return { result: true, message: "댓글 작성 완료" }
   };
   //Serv 특정 댓글의 전체 대댓글 조회
-  findinCommentid = async (commentId,pagenum) => {
+  findinCommentid = async (commentId,pagenum,userId,nickname,image) => {
     const findinCommentid = await this.commentRepository.findinCommentid(
-      commentId,pagenum
+      commentId,pagenum,userId,nickname,image
     );
     
     return findinCommentid;

@@ -9,10 +9,12 @@ const CommentController = new Comment();
 // /comment 루트로들어와
 
 // query로 받을때 주소는 "/?"
+
 router.route("/:postId").post(authMiddleware, CommentController.insertComment);
 router
   .route("/:postId/:pagenum")
   .get(authMiddleware, CommentController.getComment);
+
 router
   .route("/:commentId")
   .put(authMiddleware, CommentController.editComment)
