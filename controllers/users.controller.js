@@ -117,6 +117,21 @@ class UserController {
       next(error);
     }
   };
+  checkGoal = async (req, res, next) => {
+    console.log("실행되나");
+    try {
+      const { user } = res.locals;
+      console.log("유저아뒤", user.userId);
+      const checkGoal = await this.userService.checkGoal(user.userId);
+      if (checkGoal) {
+        res.status(200).json({ goal: true });
+      } else {
+        res.status(200).json({ goal: false });
+      }
+    } catch (error) {
+      next(error);
+    }
+  };
   changeImage = async (req, res, next) => {
     try {
       const { image } = req.body;
