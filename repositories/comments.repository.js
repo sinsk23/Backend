@@ -66,6 +66,8 @@ class CommentRepository {
   };
   //Repo 특정 게시글에 댓글 삭제
   deleteComment = async (userId, commentId) => {
+    
+
     return await Comment.destroy({ where: { userId, commentId } });
   };
   //Repo 특정 댓글 조회
@@ -81,6 +83,9 @@ class CommentRepository {
     nickname,
     image
   ) => {
+    const test = await Comment.findOne({where : {commentId}});
+    const recommentNum = test.recommentNum +1;
+    await Comment.update({recommentNum},{where:{commentId}})
     return await ReComment.create({
       comment,
       commentId,
@@ -134,6 +139,11 @@ class CommentRepository {
   };
   //Repo 특정 대댓글 삭제
   deleteRecomment = async (userId, commentId, recommentId) => {
+
+    const test = await Comment.findOne({where : {commentId}});
+    const recommentNum = test.recommentNum -1;
+    await Comment.update({recommentNum},{where:{commentId}})
+    
     return await ReComment.destroy({
       where: { userId, commentId, recommentId },
     });

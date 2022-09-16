@@ -13,7 +13,7 @@ router
   .route("/:postId")
   .post(authMiddleware,CommentController.insertComment)
 router
-  .route("/:postId/:pagenum/:commentId")
+  .route("/:postId/:pagenum")
   .get(authMiddleware,CommentController.getComment);
 router
   .route("/:commentId")
