@@ -66,6 +66,11 @@ class CommentRepository {
   };
   //Repo 특정 게시글에 댓글 삭제
   deleteComment = async (userId, commentId) => {
+    const getComment = await Comment.findOne({ where: { commentId } });
+    const getPostId = getComment.postId;
+    const getPost = await Post.findOne({ where: { postId: getPostId } });
+    const commentNum = getPost.commentNum - 1;
+    await Post.update({ commentNum }, { where: { postId: getPostId } });
     return await Comment.destroy({ where: { userId, commentId } });
   };
   //Repo 특정 댓글 조회
