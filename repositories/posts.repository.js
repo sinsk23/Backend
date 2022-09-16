@@ -1,7 +1,7 @@
-const { Post, User } = require("../models");
+const { Post } = require("../models");
 const { Like } = require("../models");
 const { Hashtag } = require("../models");
-const { Comment } = require("../models");
+
 const help = require("korean-regexp");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;

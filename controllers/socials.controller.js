@@ -2,6 +2,8 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const { User } = require("../models");
+const axios = require("axios");
+let accessToken1;
 class SocialController {
   kakaologin = (req, res, next) => {
     passport.authenticate(
@@ -10,8 +12,18 @@ class SocialController {
       (err, user, info) => {
         if (err) return next(err);
 
-        const { email, nickname, accessToken, image, provider } = user;
-
+        const { email, nickname, accessToken, refreshToken, image, provider } =
+          user;
+        accessToken1 = accessToken;
+        console.log(
+          "악세스토큰",
+          email,
+          nickname,
+          accessToken,
+          refreshToken,
+          image,
+          provider
+        );
         const emailCheck = async (email) => {
           const emailCheck = await User.findOne({ where: { email } });
 
@@ -46,6 +58,7 @@ class SocialController {
               email,
               provider,
               nickname,
+              accessToken,
               member: false,
             });
           }
@@ -53,6 +66,23 @@ class SocialController {
         emailCheck(email);
       }
     )(req, res, next);
+  };
+  kakaologout = async (req, res, next) => {
+    const access_token = accessToken1;
+    console.log("테스트", access_token);
+    try {
+      const unlink = await axios({
+        //Promise 객체를 unlink에 넘겨주고
+        method: "POST",
+        url: "https://kapi.kakao.com/v1/user/unlink",
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      return res.status(200).json("로그아웃이 되었습니다");
+    } catch (error) {
+      next(error);
+    }
   };
   naverlogin = (req, res, next) => {
     passport.authenticate(
