@@ -60,9 +60,11 @@ class CommentController {
   getComment = async (req, res, next) => {
     try {
       const { user } = res.locals;
-      const { postId, pagenum } = req.params;
+      const { postId, pagenum ,commentId} = req.params;
       const getPostid = await this.commentService.findPostid(postId);
-      const count = await Comment.count({ where: { postId } });
+      // const count = await Comment.count({ where: { postId } });
+      //댓글에 대댓글 개수 프론트에서 요청으로 바꿈
+      const count = await ReComment.count({ where: { commentId } });
       const inPostid = await this.commentService.findinPostid(
         postId,
         pagenum,
@@ -156,9 +158,9 @@ class CommentController {
         user.nickname,
         user.image
       );
-      const count = await ReComment.count({ where: { commentId } });
+      // const count = await ReComment.count({ where: { commentId } });
 
-      return res.status(200).json({ Recomment: inRecommentid, count });
+      return res.status(200).json({ Recomment: inRecommentid });
     } catch (error) {
       next(error);
     }
