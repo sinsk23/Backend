@@ -82,7 +82,7 @@ class CommentController {
       //   ]
       // })
       // console.log("data 개수 ",data);
-
+      let type = false;
       const inPostid = await this.commentService.findinPostid(
         postId,
         pagenum,
@@ -90,8 +90,11 @@ class CommentController {
         user.nickname,
         user.image
       );
+      if(!inPostid.length){
+        type = true;
+      }
 
-      return res.status(200).json({ Comment: inPostid });
+      return res.status(200).json({ Comment: inPostid ,isLast:type});
     } catch (error) {
       next(error);
     }
@@ -168,7 +171,7 @@ class CommentController {
     try {
       const { user } = res.locals;
       const { commentId, pagenum } = req.params;
-
+      let type = false;
       const inRecommentid = await this.commentService.findinCommentid(
         commentId,
         pagenum,
@@ -177,7 +180,12 @@ class CommentController {
         user.image
       );
 
-      return res.status(200).json({ Recomment: inRecommentid });
+      if(!inRecommentid.length){
+        type = true;
+      }
+      
+
+      return res.status(200).json({ Recomment: inRecommentid, isLast: type });
     } catch (error) {
       next(error);
     }
