@@ -21,12 +21,11 @@ module.exports = class Comment extends Sequelize.Model {
           type: Sequelize.STRING,
           allowNull: false,
         },
-        recommentNum:{
+        recommentNum: {
           type: Sequelize.INTEGER,
+          defaultValue: 0,
           allowNull: true,
-          defaultValue: 0 ,
-        }
-        
+        },
       },
       {
         sequelize,

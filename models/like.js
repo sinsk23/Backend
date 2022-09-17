@@ -29,7 +29,7 @@ module.exports = class Like extends Sequelize.Model {
       targetKey: "postId",
       onDelete: "CASCADE",
     });
-    db.Like.belongsTo(db.Post, {
+    db.Like.belongsTo(db.User, {
       foreignKey: "userId",
       targetKey: "userId",
       onDelete: "CASCADE",
