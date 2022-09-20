@@ -66,6 +66,10 @@ class UserService {
     const setGoal = await this.userRepository.setGoal(goal, userId);
     return setGoal;
   };
+  changeGoal = async (goal, userId) => {
+    const changeGoal = await this.userRepository.changeGoal(goal, userId);
+    return changeGoal;
+  };
   checkGoal = async (userId) => {
     if (!userId) {
       log.error("UserService.checkGoal : userId is required");

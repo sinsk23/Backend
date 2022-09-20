@@ -117,6 +117,17 @@ class UserController {
       next(error);
     }
   };
+  changeGoal = async (req, res, next) => {
+    try {
+      const { goal } = req.body;
+      const { user } = res.locals;
+
+      const changeGoal = await this.userService.changeGoal(goal, user.userId);
+      res.status(200).json(changeGoal);
+    } catch (error) {
+      next(error);
+    }
+  };
   checkGoal = async (req, res, next) => {
     console.log("실행되나");
     try {

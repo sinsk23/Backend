@@ -113,6 +113,19 @@ class UserRepositiory {
     const setGoal = await Record.create({ goal, userId });
     return setGoal;
   };
+  changeGoal = async (goal, userId) => {
+    const getUserRecord = await Record.findOne({ where: { userId } });
+    let percent = 0;
+    let getDistance = Number(getUserRecord.distance);
+    percent = (getDistance / goal) * 100;
+
+    const changeGoal = await Record.update(
+      { goal, percent },
+      { where: { userId } }
+    );
+
+    return changeGoal;
+  };
   checkGoal = async (userId) => {
     console.log("유저아이디", userId);
     const checkGoal = await Record.findOne({ where: { userId } });
@@ -121,7 +134,7 @@ class UserRepositiory {
   };
   changeImage = async (image, userId) => {
     const changeImage = await User.update({ image }, { where: { userId } });
-    const findId = await Post.findAll({ where: { userId } });
+    const findId = await Post.findAll({ wherne: { userId } });
     let postIdArr = [];
     for (let i = 0; i < findId.length; i++) {
       postIdArr.push(findId[i].postId);
