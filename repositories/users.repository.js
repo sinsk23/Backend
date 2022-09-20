@@ -24,7 +24,6 @@ redisClient.connect();
 class UserRepositiory {
   emailService = new mailer();
   addDistance = async (userId, distance, time) => {
-    console.log("디스턴스", typeof distance);
     const getUserRecord = await Record.findOne({ where: { userId } });
     let percent = 0;
     let getDistance = Number(getUserRecord.distance + distance);
