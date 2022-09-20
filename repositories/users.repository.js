@@ -213,9 +213,36 @@ class UserRepositiory {
       };
     });
   };
-  sendLocation = async () => {
-    const sendLocation = "test";
-    return sendLocation;
+  sendLocation = async (userId, lat, lng) => {
+    let arrLat = [];
+    let arrLng = [];
+    await redisClient.v4.lPush(`${userId}LatTest`, `${lat}`);
+    await redisClient.v4.lPush(`${userId}LngTest`, `${lng}`);
+    arrLat = await redisClient.v4.lRange(`${userId}LatTest`, 0, 1);
+    arrLng = await redisClient.v4.lRange(`${userId}LngTest`, 0, 1);
+    if (arrLat.length < 2) {
+      return 0;
+    } else if (arrLat.length >= 2) {
+      let radLat1 = (Math.PI * arrLat[0]) / 180;
+      let radLat2 = (Math.PI * arrLat[1]) / 180;
+      let theta = arrLng[0] - arrLng[1];
+      let radTheta = (Math.PI * theta) / 180;
+      let dist =
+        Math.sin(radLat1) * Math.sin(radLat2) +
+        Math.cos(radLat1) * Math.cos(radLat2) * Math.cos(radTheta);
+      if (dist > 1) {
+        dist = 1;
+      }
+      dist = Math.acos(dist);
+      dist = (dist * 180) / Math.PI;
+      dist = dist * 60 * 1.1515 * 1.609344 * 1000;
+      if (dist < 100) dist = Math.round(dist / 10) * 10;
+      else dist = Math.round(dist / 100) * 100;
+
+      console.log("배열1", arrLat);
+      console.log("배열2", arrLng);
+      return dist;
+    }
   };
   getResearch = async (userId) => {
     let arrayId = [];

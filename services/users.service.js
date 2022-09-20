@@ -142,8 +142,12 @@ class UserService {
     const getRank = await this.userRepository.getRank();
     return getRank;
   };
-  sendLocation = async () => {
-    const sendLocation = await this.userRepository.sendLocation();
+  sendLocation = async (userId, lat, lng) => {
+    const sendLocation = await this.userRepository.sendLocation(
+      userId,
+      lat,
+      lng
+    );
     return sendLocation;
   };
   getResearch = async (userId) => {

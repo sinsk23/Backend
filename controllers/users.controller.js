@@ -189,7 +189,12 @@ class UserController {
   sendLocation = async (req, res, next) => {
     try {
       const { user } = res.locals;
-      const sendLocation = await this.userService.sendLocation();
+      const { lat, lng } = req.body;
+      const sendLocation = await this.userService.sendLocation(
+        user.userId,
+        lat,
+        lng
+      );
       res.status(200).json(sendLocation);
     } catch (error) {
       next(error);
