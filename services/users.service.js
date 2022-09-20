@@ -142,6 +142,10 @@ class UserService {
     const sendLocation = await this.userRepository.sendLocation();
     return sendLocation;
   };
+  getResearch = async (userId) => {
+    const getResearch = await this.userRepository.getResearch(userId);
+    return getResearch;
+  };
 }
 
 module.exports = UserService;

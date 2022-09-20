@@ -177,8 +177,18 @@ class UserController {
   };
   sendLocation = async (req, res, next) => {
     try {
+      const { user } = res.locals;
       const sendLocation = await this.userService.sendLocation();
       res.status(200).json(sendLocation);
+    } catch (error) {
+      next(error);
+    }
+  };
+  getResearch = async (req, res, next) => {
+    try {
+      const { user } = res.locals;
+      const getResearch = await this.userService.getResearch(user.userId);
+      res.status(200).json(getResearch);
     } catch (error) {
       next(error);
     }

@@ -9,6 +9,7 @@ router.get("/user/search", AuthMiddleware, userController.searchUser);
 router.post("/user/signup", userController.signUp);
 router.post("/user/check", userController.checkNick);
 router.get("/user/rank", userController.getRank);
+router.get("/user/research", AuthMiddleware, userController.getResearch);
 router.get("/user/goal", AuthMiddleware, userController.checkGoal);
 router.post("/user/distance", AuthMiddleware, userController.addDistance);
 router.get(
