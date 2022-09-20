@@ -68,6 +68,7 @@ class PostRepository {
   };
   getPost = async (postId, userId) => {
     let isLike;
+    console.log("유저아이디", userId);
     if (userId) {
       isLike = await Like.findOne({ where: { userId, postId } });
       if (isLike) {
