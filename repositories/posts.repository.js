@@ -75,11 +75,10 @@ class PostRepository {
       } else {
         await Post.update({ likeDone: false }, { where: { postId } });
       }
-    } else {
-      const countView = await Post.findOne({ where: { postId } });
-
-      await Post.update({ view: countView.view + 1 }, { where: { postId } });
     }
+    const countView = await Post.findOne({ where: { postId } });
+
+    await Post.update({ view: countView.view + 1 }, { where: { postId } });
 
     const getPost = await Post.findOne({
       where: { postId },

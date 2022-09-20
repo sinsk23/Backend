@@ -71,7 +71,7 @@ class SocialController {
     const access_token = accessToken1;
     console.log("테스트", access_token);
     try {
-      const unlink = await axios({
+      await axios({
         //Promise 객체를 unlink에 넘겨주고
         method: "POST",
         url: "https://kapi.kakao.com/v1/user/unlink",

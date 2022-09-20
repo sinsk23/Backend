@@ -21,5 +21,6 @@ router.delete("/user", AuthMiddleware, userController.deleteUser);
 
 router.post("/user/goal", AuthMiddleware, userController.setGoal);
 router.put("/user/image", AuthMiddleware, userController.changeImage);
+router.post("/user/location", AuthMiddleware, userController.sendLocation);
 
 module.exports = router;

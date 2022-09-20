@@ -138,6 +138,10 @@ class UserService {
     const getRank = await this.userRepository.getRank();
     return getRank;
   };
+  sendLocation = async () => {
+    const sendLocation = await this.userRepository.sendLocation();
+    return sendLocation;
+  };
 }
 
 module.exports = UserService;

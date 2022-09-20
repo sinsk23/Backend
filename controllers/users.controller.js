@@ -175,6 +175,14 @@ class UserController {
       next(error);
     }
   };
+  sendLocation = async (req, res, next) => {
+    try {
+      const sendLocation = await this.userService.sendLocation();
+      res.status(200).json(sendLocation);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 module.exports = UserController;

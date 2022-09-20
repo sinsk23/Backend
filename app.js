@@ -1,10 +1,8 @@
 const express = require("express");
 require("dotenv").config;
 const cors = require("cors");
-
 const passport = require("passport");
 const { sequelize } = require("./models");
-
 const rotuer = require("./routes");
 const port = 3000;
 const app = express();
