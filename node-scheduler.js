@@ -29,6 +29,7 @@ const set2 = (s) => {
     deleteRecord();
   });
 };
+
 exports.day = day;
 exports.set1 = set1;
 exports.set2 = set2;

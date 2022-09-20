@@ -204,6 +204,15 @@ class UserController {
       next(error);
     }
   };
+  changeResearch = async (req, res, next) => {
+    try {
+      const { user } = res.locals;
+      const changeResearch = await this.userService.changeResearch(user.userId);
+      res.status(200).json(changeResearch);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 module.exports = UserController;

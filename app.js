@@ -5,9 +5,10 @@ const passport = require("passport");
 const { sequelize } = require("./models");
 const rotuer = require("./routes");
 const port = 3000;
-const app = express();
+
 const passportConfig = require("./passport");
-passportConfig(passport, app);
+const redis = require("redis");
+
 const swaggerUi = require("swagger-ui-express");
 // const swaggerFile = require("./swagger-output");
 const logger = require("./winston");
@@ -30,13 +31,15 @@ const scheduleData2 = {
 };
 
 const schdule = require("./node-scheduler");
-
 schdule.set1(scheduleData1);
 schdule.set2(scheduleData2);
 const mailer = require("./node-mailer");
 const emailService = new mailer();
+exports.emailService = emailService;
 class BadRequestError extends Error {}
 
+const app = express();
+passportConfig(passport, app);
 sequelize
   .sync({ force: false })
   .then(() => {
@@ -64,7 +67,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 app.use((err, req, res, next) => {
-  emailService.errorAlertSend(err.message);
+  //emailService.errorAlertSend(err.message);
   if (BadRequestError) {
     res.status(400);
     res.json({
@@ -82,4 +85,5 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
   console.log(port, "포트로 서버가 열렸어요!");
 });
+
 module.exports = app;

@@ -150,6 +150,10 @@ class UserService {
     const getResearch = await this.userRepository.getResearch(userId);
     return getResearch;
   };
+  changeResearch = async (userId) => {
+    const changeResearch = await this.userRepository.changeResearch(userId);
+    return changeResearch;
+  };
 }
 
 module.exports = UserService;
