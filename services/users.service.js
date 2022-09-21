@@ -165,6 +165,9 @@ class UserService {
     );
     return sendBugReport;
   };
+  startBtn = async (userId) => {
+    await this.userRepository.startBtn(userId);
+  };
 }
 
 module.exports = UserService;

@@ -231,6 +231,11 @@ class UserController {
       next(error);
     }
   };
+  startBtn = async (req, res, next) => {
+    const { user } = res.locals;
+    await this.UserService.startBtn(user.userId);
+    res.status(200).json("테스트");
+  };
 }
 
 module.exports = UserController;
