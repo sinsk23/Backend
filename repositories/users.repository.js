@@ -277,6 +277,10 @@ class UserRepositiory {
     emailService.bugReportSend(nickname, content);
     return "감사합니다. 관리자에게 메일을 성공적으로 보냈습니다.";
   };
+  sendPostReport = async (nickname, postId, check) => {
+    emailService.postReportSend(nickname, postId, check);
+    return "감사합니다. 성공적으로 게시글을 신고하였습니다.";
+  };
   startBtn = async (userId) => {
     await redisClient.v4.DEL(`${userId}Lat`);
     await redisClient.v4.DEL(`${userId}Lng`);

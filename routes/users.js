@@ -10,7 +10,12 @@ router.post("/user/signup", userController.signUp);
 router.post("/user/check", userController.checkNick);
 router.get("/user/rank", userController.getRank);
 router.get("/user/startbtn", AuthMiddleware, userController.startBtn);
-router.post("/user/bugreport", AuthMiddleware, userController.sendBugReport);
+router.post(
+  "/user/report/post/:postId",
+  AuthMiddleware,
+  userController.sendPostReport
+);
+router.post("/user/report/bug", AuthMiddleware, userController.sendBugReport);
 router.get("/user/research", AuthMiddleware, userController.getResearch);
 router.put("/user/research", AuthMiddleware, userController.changeResearch);
 router.get("/user/goal", AuthMiddleware, userController.checkGoal);

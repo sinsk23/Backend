@@ -69,5 +69,32 @@ class mailer {
       text: content,
     });
   };
+
+  postReportSend = (nickname, postId, check) => {
+    let content = "";
+    switch (check) {
+      case 0:
+        content = "게시글이 음란해용";
+        break;
+      case 1:
+        content = "";
+        break;
+      case 2:
+        content = "";
+        break;
+      case 3:
+        content = "";
+        break;
+      case 4:
+        content = "";
+        break;
+    }
+    this.send({
+      from: env.MAIL_ID,
+      to: "dbsdud0033@gmail.com",
+      subject: `${nickname}님께서 ${postId}번째 게시글을 신고하였습니다.`,
+      text: content,
+    });
+  };
 }
 module.exports = mailer;

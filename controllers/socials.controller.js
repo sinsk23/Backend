@@ -15,15 +15,7 @@ class SocialController {
         const { email, nickname, accessToken, refreshToken, image, provider } =
           user;
         accessToken1 = accessToken;
-        console.log(
-          "악세스토큰",
-          email,
-          nickname,
-          accessToken,
-          refreshToken,
-          image,
-          provider
-        );
+
         const emailCheck = async (email) => {
           const emailCheck = await User.findOne({ where: { email } });
 

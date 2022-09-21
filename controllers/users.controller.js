@@ -231,6 +231,17 @@ class UserController {
       next(error);
     }
   };
+  sendPostReport = async (req, res, next) => {
+    try {
+      const { user } = res.locals;
+      const { postId } = req.params;
+      const { check } = req.body;
+      await this.userService.sendPostReport(user.nickname, postId, check);
+      res.status(200).json("성공적으로 게시글을 신고하였습니다.");
+    } catch (error) {
+      next(error);
+    }
+  };
   startBtn = async (req, res, next) => {
     try {
       const { user } = res.locals;
