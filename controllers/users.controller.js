@@ -232,9 +232,13 @@ class UserController {
     }
   };
   startBtn = async (req, res, next) => {
-    const { user } = res.locals;
-    await this.UserService.startBtn(user.userId);
-    res.status(200).json("테스트");
+    try {
+      const { user } = res.locals;
+      const startBtn = await this.userService.startBtn(user.userId);
+      res.status(200).json(startBtn);
+    } catch (error) {
+      next(error);
+    }
   };
 }
 

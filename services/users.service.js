@@ -166,7 +166,8 @@ class UserService {
     return sendBugReport;
   };
   startBtn = async (userId) => {
-    await this.userRepository.startBtn(userId);
+    const startBtn = await this.userRepository.startBtn(userId);
+    return startBtn;
   };
 }
 
