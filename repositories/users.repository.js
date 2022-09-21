@@ -270,6 +270,7 @@ class UserRepositiory {
   };
   changeResearch = async (userId) => {
     await redisClient.v4.sAdd("Id", `${userId}`);
+    await redisClient.v4.expire("Id", 604800);
     return "동의하기를 눌렀습니다.";
   };
   sendBugReport = async (nickname, content) => {
