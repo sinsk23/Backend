@@ -1,8 +1,8 @@
 const schedule = require("node-schedule");
 const { Record } = require("./models");
-
-let day = new Date();
-day = day.getDay();
+let day = 0;
+//let day = new Date();
+//day = day.getDay();
 const set1 = (s) => {
   console.log(s);
   const rule = new schedule.RecurrenceRule();

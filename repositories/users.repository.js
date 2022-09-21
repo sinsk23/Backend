@@ -245,7 +245,7 @@ class UserRepositiory {
       console.log("배열1", arrLat);
       console.log("배열2", arrLng);
 
-      return dist;
+      return Number((dist / 1000).toFixed(1));
     }
   };
   getResearch = async (userId) => {
