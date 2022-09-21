@@ -35,7 +35,7 @@ schdule.set1(scheduleData1);
 schdule.set2(scheduleData2);
 const mailer = require("./node-mailer");
 const emailService = new mailer();
-exports.emailService = emailService;
+
 class BadRequestError extends Error {}
 
 const app = express();
@@ -67,7 +67,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 app.use((err, req, res, next) => {
-  //emailService.errorAlertSend(err.message);
+  emailService.errorAlertSend(err.message);
   if (BadRequestError) {
     res.status(400);
     res.json({

@@ -61,5 +61,13 @@ class mailer {
       text: content,
     });
   };
+  bugReportSend = (nickname, content) => {
+    this.send({
+      from: env.MAIL_ID,
+      to: "dbsdud0033@gmail.com",
+      subject: `${nickname}님께서 버그 리포트를 제출하였습니다.`,
+      text: content,
+    });
+  };
 }
 module.exports = mailer;

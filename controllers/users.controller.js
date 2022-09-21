@@ -218,6 +218,19 @@ class UserController {
       next(error);
     }
   };
+  sendBugReport = async (req, res, next) => {
+    try {
+      const { user } = res.locals;
+      const { content } = req.body;
+      const sendBugReport = await this.userService.sendBugReport(
+        user.nickname,
+        content
+      );
+      res.status(200).json(sendBugReport);
+    } catch (error) {
+      next(error);
+    }
+  };
 }
 
 module.exports = UserController;

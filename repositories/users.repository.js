@@ -8,6 +8,7 @@ const help = require("korean-regexp");
 const day = require("../node-scheduler");
 const redis = require("redis");
 
+const emailService = new mailer();
 // redis 연결
 const redisClient = redis.createClient({
   url: `redis://${process.env.REDIS_USERNAME}:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}/0`,
@@ -263,6 +264,10 @@ class UserRepositiory {
   changeResearch = async (userId) => {
     await redisClient.v4.sAdd("Id", `${userId}`);
     return "동의하기를 눌렀습니다.";
+  };
+  sendBugReport = async (nickname, content) => {
+    emailService.bugReportSend(nickname, content);
+    return "감사합니다. 관리자에게 메일을 성공적으로 보냈습니다.";
   };
 }
 

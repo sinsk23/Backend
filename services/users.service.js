@@ -158,6 +158,13 @@ class UserService {
     const changeResearch = await this.userRepository.changeResearch(userId);
     return changeResearch;
   };
+  sendBugReport = async (nickname, content) => {
+    const sendBugReport = await this.userRepository.sendBugReport(
+      nickname,
+      content
+    );
+    return sendBugReport;
+  };
 }
 
 module.exports = UserService;
