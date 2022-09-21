@@ -24,6 +24,8 @@ redisClient.connect();
 class UserRepositiory {
   emailService = new mailer();
   addDistance = async (userId, distance, time) => {
+    await redisClient.v4.DEL(`${userId}Lat`);
+    await redisClient.v4.DEL(`${userId}Lng`);
     const getUserRecord = await Record.findOne({ where: { userId } });
     let percent = 0;
     let getDistance = Number(getUserRecord.distance + distance);
@@ -215,10 +217,11 @@ class UserRepositiory {
   sendLocation = async (userId, lat, lng) => {
     let arrLat = [];
     let arrLng = [];
-    await redisClient.v4.lPush(`${userId}LatTest`, `${lat}`);
-    await redisClient.v4.lPush(`${userId}LngTest`, `${lng}`);
-    arrLat = await redisClient.v4.lRange(`${userId}LatTest`, 0, 1);
-    arrLng = await redisClient.v4.lRange(`${userId}LngTest`, 0, 1);
+
+    await redisClient.v4.lPush(`${userId}Lat`, `${lat}`);
+    await redisClient.v4.lPush(`${userId}Lng`, `${lng}`);
+    arrLat = await redisClient.v4.lRange(`${userId}Lat`, 0, 1);
+    arrLng = await redisClient.v4.lRange(`${userId}Lng`, 0, 1);
     if (arrLat.length < 2) {
       return 0;
     } else if (arrLat.length >= 2) {
@@ -240,6 +243,7 @@ class UserRepositiory {
 
       console.log("배열1", arrLat);
       console.log("배열2", arrLng);
+
       return dist;
     }
   };
