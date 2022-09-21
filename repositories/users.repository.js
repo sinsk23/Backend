@@ -34,8 +34,15 @@ class UserRepositiory {
 
     let weekOfDistance = getUserRecord.weekOfDistance;
     let weekOfTime = getUserRecord.weekOfTime;
-    weekOfDistance[day.day] += distance;
-    weekOfTime[day.day] += time;
+    if (day.day === 0) {
+      console.log("테스트");
+      day.day = 6;
+      weekOfDistance[day.day] += distance;
+      weekOfTime[day.day] += time;
+    } else if (day.day !== 0) {
+      weekOfDistance[day.day - 1] += distance;
+      weekOfTime[day.day - 1] += time;
+    }
     if (!getUserRecord) {
       const createdRecord = await Record.create({ userId, distance, time });
       return createdRecord;
@@ -245,7 +252,7 @@ class UserRepositiory {
       console.log("배열1", arrLat);
       console.log("배열2", arrLng);
 
-      return Number((dist / 1000).toFixed(1));
+      return dist;
     }
   };
   getResearch = async (userId) => {

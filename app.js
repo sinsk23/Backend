@@ -7,7 +7,6 @@ const rotuer = require("./routes");
 const port = 3000;
 
 const passportConfig = require("./passport");
-const redis = require("redis");
 
 const swaggerUi = require("swagger-ui-express");
 // const swaggerFile = require("./swagger-output");
