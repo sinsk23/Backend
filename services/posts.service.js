@@ -10,7 +10,7 @@ class PostService {
     time,
     distance,
     path,
-    speed,
+
     image,
     hashtag,
     userId,
@@ -29,7 +29,7 @@ class PostService {
       time,
       distance,
       path,
-      speed,
+
       image,
       hashtag,
       userId,
@@ -100,7 +100,6 @@ class PostService {
     time,
     distance,
     path,
-    speed,
     image,
     hashtag
   ) => {
@@ -133,7 +132,6 @@ class PostService {
       time,
       distance,
       path,
-      speed,
       image,
       hashtag,
       checkHash

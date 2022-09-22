@@ -6,14 +6,13 @@ class PostController {
   createPost = async (req, res, next) => {
     try {
       const { user } = res.locals;
-      const { content, time, distance, path, speed, image, hashtag } = req.body;
+      const { content, time, distance, path, image, hashtag } = req.body;
 
       const createPost = await this.postService.createPost(
         content,
         time,
         distance,
         path,
-        speed,
         image,
         hashtag,
         user.userId,
@@ -69,7 +68,7 @@ class PostController {
   updatePost = async (req, res, next) => {
     try {
       const { postId } = req.params;
-      const { content, time, distance, path, speed, image, hashtag } = req.body;
+      const { content, time, distance, path, image, hashtag } = req.body;
 
       const updatePost = await this.postService.updatePost(
         postId,
@@ -77,7 +76,6 @@ class PostController {
         time,
         distance,
         path,
-        speed,
         image,
         hashtag
       );

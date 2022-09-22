@@ -15,7 +15,7 @@ class PostRepository {
     time,
     distance,
     path,
-    speed,
+
     image,
     hashtag,
     userId,
@@ -27,7 +27,7 @@ class PostRepository {
       time,
       distance,
       path,
-      speed,
+
       image,
       hashtag,
       userId,
@@ -93,7 +93,6 @@ class PostRepository {
     time,
     distance,
     path,
-    speed,
     image,
     hashtag,
     checkHash
@@ -111,7 +110,7 @@ class PostRepository {
       }
     }
     const updatePost = await Post.update(
-      { content, time, distance, path, speed, image, hashtag },
+      { content, time, distance, path, image, hashtag },
       { where: { postId } }
     );
 
