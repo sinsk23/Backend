@@ -15,7 +15,7 @@ const redisClient = redis.createClient({
   legacyMode: true,
 });
 
-redisClient.on("connect", () => console.info("🟢 Redis 연결 성공!"));
+redisClient.on("connect", () => console.info("Redis 연결 성공!"));
 redisClient.on("error", (err) =>
   console.error("Redis Client Error", err.message)
 );
@@ -248,9 +248,6 @@ class UserRepositiory {
       dist = dist * 60 * 1.1515 * 1.609344 * 1000;
       if (dist < 100) dist = Math.round(dist / 10) * 10;
       else dist = Math.round(dist / 100) * 100;
-
-      console.log("배열1", arrLat);
-      console.log("배열2", arrLng);
 
       return dist;
     }

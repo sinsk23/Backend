@@ -131,10 +131,18 @@ class UserService {
     return signUp;
   };
   deleteUser = async (userId) => {
+    if (!userId) {
+      log.error("UserService.deleteUser : userId is required");
+      throw new BadRequestError("UserService.deleteUser: userId is required");
+    }
     const deleteUser = await this.userRepository.deleteUser(userId);
     return deleteUser;
   };
   getUserInfo = async (userId) => {
+    if (!userId) {
+      log.error("UserService.getUserInfo : userId is required");
+      throw new BadRequestError("UserService.getUserInfo: userId is required");
+    }
     const getUserInfo = await this.userRepository.getUserInfo(userId);
     return getUserInfo;
   };
@@ -143,6 +151,18 @@ class UserService {
     return getRank;
   };
   sendLocation = async (userId, lat, lng) => {
+    if (!userId) {
+      log.error("UserService.sendLocation : userId is required");
+      throw new BadRequestError("UserService.sendLocation: userId is required");
+    }
+    if (!lat) {
+      log.error("UserService.sendLocation : lat is required");
+      throw new BadRequestError("UserService.sendLocation: lat is required");
+    }
+    if (!lng) {
+      log.error("UserService.sendLocation : lng is required");
+      throw new BadRequestError("UserService.sendLocation: lng is required");
+    }
     const sendLocation = await this.userRepository.sendLocation(
       userId,
       lat,
@@ -151,14 +171,36 @@ class UserService {
     return sendLocation;
   };
   getResearch = async (userId) => {
+    if (!userId) {
+      log.error("UserService.getResearch : userId is required");
+      throw new BadRequestError("UserService.getResearch: userId is required");
+    }
     const getResearch = await this.userRepository.getResearch(userId);
     return getResearch;
   };
   changeResearch = async (userId) => {
+    if (!userId) {
+      log.error("UserService.changeResearch : userId is required");
+      throw new BadRequestError(
+        "UserService.changeResearch: userId is required"
+      );
+    }
     const changeResearch = await this.userRepository.changeResearch(userId);
     return changeResearch;
   };
   sendBugReport = async (nickname, content) => {
+    if (!nickname) {
+      log.error("UserService.sendBugReport : nickname is required");
+      throw new BadRequestError(
+        "UserService.sendBugReport: nickname is required"
+      );
+    }
+    if (!content) {
+      log.error("UserService.sendBugReport : content is required");
+      throw new BadRequestError(
+        "UserService.sendBugReport: content is required"
+      );
+    }
     const sendBugReport = await this.userRepository.sendBugReport(
       nickname,
       content
@@ -166,6 +208,24 @@ class UserService {
     return sendBugReport;
   };
   sendPostReport = async (nickname, postId, check) => {
+    if (!nickname) {
+      log.error("UserService.sendPostReport : nickname is required");
+      throw new BadRequestError(
+        "UserService.sendPostReport: nickname is required"
+      );
+    }
+    if (!postId) {
+      log.error("UserService.sendPostReport : postId is required");
+      throw new BadRequestError(
+        "UserService.sendPostReport: postId is required"
+      );
+    }
+    if (!check) {
+      log.error("UserService.sendPostReport : check is required");
+      throw new BadRequestError(
+        "UserService.sendPostReport: check is required"
+      );
+    }
     const sendPostReport = await this.userRepository.sendPostReport(
       nickname,
       postId,
@@ -174,6 +234,10 @@ class UserService {
     return sendPostReport;
   };
   startBtn = async (userId) => {
+    if (!userId) {
+      log.error("UserService.startBtn : userId is required");
+      throw new BadRequestError("UserService.startBtn: userId is required");
+    }
     const startBtn = await this.userRepository.startBtn(userId);
     return startBtn;
   };
