@@ -9,6 +9,7 @@ const BadRequestError = require("./http-errors").BadRequestError;
 class UserController {
   userService = new UserService();
 
+  //클라이언트로부터 유저아이디, 거리, 시간을 받아 userService.addDistance()으로 유저아이디, 거리, 시간을 넘기는 함수
   addDistance = async (req, res, next) => {
     try {
       const { distance, time } = req.body;
@@ -26,6 +27,7 @@ class UserController {
       next(error);
     }
   };
+  //클라이언트로부터 닉네임, pagenum을 받아 userService.getUserPost()으로 닉네임, pagenum을 넘기는 함수
   getUserPost = async (req, res, next) => {
     try {
       const { nickname, pagenum } = req.params;
@@ -45,6 +47,7 @@ class UserController {
       next(error);
     }
   };
+  //클라이언트로부터 닉네임을 받아 userService.serchUser()으로 닉네임을 넘기는 함수
   searchUser = async (req, res, next) => {
     try {
       const { nickname } = req.query;
@@ -55,6 +58,7 @@ class UserController {
       next(error);
     }
   };
+  //클라이언트로부터 이메일, 닉네임, 프로필이미지, provider를 받아 userService.signUp()으로 이메일, 닉네임, 프로필이미지, provider를 넘기는 함수
   signUp = async (req, res, next) => {
     try {
       const { email, nickname, image, provider } = req.body;
@@ -65,6 +69,7 @@ class UserController {
         image,
         provider
       );
+
       if (signUp) {
         const token = jwt.sign(
           {
@@ -94,6 +99,7 @@ class UserController {
       next(error);
     }
   };
+  //클라이언트로부터 닉네임을 받아 userService.checkNick()으로 닉네임을 넘기는 함수
   checkNick = async (req, res, next) => {
     try {
       const { nickname } = req.query;
@@ -106,6 +112,7 @@ class UserController {
       next(error);
     }
   };
+  //클라이언트로부터 유저아이디, 목표를 받아 userService.setGoal()으로 유저아이디, 목표를 넘기는 함수
   setGoal = async (req, res, next) => {
     try {
       const { goal } = req.body;
@@ -117,6 +124,7 @@ class UserController {
       next(error);
     }
   };
+  //클라이언트로부터 유저아이디, 목표를 받아 userService.changeGoal()으로 유저아이디, 목표를 넘기는 함수
   changeGoal = async (req, res, next) => {
     try {
       const { goal } = req.body;
@@ -128,11 +136,11 @@ class UserController {
       next(error);
     }
   };
+  //클라이언트로부터 유저아이디를 userService.checkGoal()으로 유저아이디를 넘기는 함수
   checkGoal = async (req, res, next) => {
-    console.log("실행되나");
     try {
       const { user } = res.locals;
-      console.log("유저아뒤", user.userId);
+
       const checkGoal = await this.userService.checkGoal(user.userId);
       if (checkGoal) {
         res.status(200).json({ goal: true });
@@ -143,6 +151,7 @@ class UserController {
       next(error);
     }
   };
+  //클라이언트로부터 유저아이디, 프로필 이미지를 받아 userService.changeImage()으로 유저아이디, 프로필을 넘기는 함수
   changeImage = async (req, res, next) => {
     try {
       const { image } = req.body;
@@ -156,6 +165,7 @@ class UserController {
       next(error);
     }
   };
+  //클라이언트로부터 유저아이디를 받아 userService.deleteUser()으로 유저아이디를 넘기는 함수
   deleteUser = async (req, res, next) => {
     try {
       const { user } = res.locals;
@@ -165,6 +175,7 @@ class UserController {
       next(error);
     }
   };
+  //클라이언트로부터 유저아이디를 받아 userService.getUserInfo()로 유저아이디를 넘기는 함수
   getUserInfo = async (req, res, next) => {
     try {
       const { userId } = req.params;
@@ -178,6 +189,7 @@ class UserController {
       next(error);
     }
   };
+  //userService.getRank()를 호출하는 함수
   getRank = async (req, res, next) => {
     try {
       const getRank = await this.userService.getRank();
@@ -186,6 +198,7 @@ class UserController {
       next(error);
     }
   };
+  //클라인터르로부터 유저아이디, 위도와 경도를 받아 userService.sendLocation()로 유저아이디, 위도, 경도를 넘기는 함수
   sendLocation = async (req, res, next) => {
     try {
       const { user } = res.locals;
@@ -200,6 +213,7 @@ class UserController {
       next(error);
     }
   };
+  //클라이언트로부터 유저아이디를 받아 userService.getResearch()로 유저아이디를 넘기는 함수
   getResearch = async (req, res, next) => {
     try {
       const { user } = res.locals;
@@ -209,6 +223,7 @@ class UserController {
       next(error);
     }
   };
+  //클라이언트로부터 유저아이디를 받아 userService.changeResearch()로 유저아이디를 넘기는 함수
   changeResearch = async (req, res, next) => {
     try {
       const { user } = res.locals;
@@ -218,6 +233,7 @@ class UserController {
       next(error);
     }
   };
+  //클라이언트로부터 유저닉네임과 작성 내용을 받아 userService.sendBugReport()로 유저닉네임, 작성 내용을 넘기는 함수
   sendBugReport = async (req, res, next) => {
     try {
       const { user } = res.locals;
@@ -231,6 +247,7 @@ class UserController {
       next(error);
     }
   };
+  //클라이언트로부터 유저닉네임과 게시글 아이디, 체크를 받아 userService.sendPostReport()로 유저닉네임, 게시글 아이디, 체크를 넘기는 함수
   sendPostReport = async (req, res, next) => {
     try {
       const { user } = res.locals;
@@ -242,6 +259,7 @@ class UserController {
       next(error);
     }
   };
+  //클라이언트로부터 유저아이디를 받아 userService.startBtn()으로 유저아이디를 넘기는 함수
   startBtn = async (req, res, next) => {
     try {
       const { user } = res.locals;

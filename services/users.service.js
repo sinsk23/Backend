@@ -26,11 +26,24 @@ class UserService {
     );
     return addDistance;
   };
+
   getUserPost = async (nickname, pagenum, userId) => {
     if (!nickname) {
       log.error("UserController.getUserPost : nickname is required");
       throw new BadRequestError(
         "UserController.getUserPost : nickname is required"
+      );
+    }
+    if (!pagenum) {
+      log.error("UserController.getUserPost : pagenum is required");
+      throw new BadRequestError(
+        "UserController.getUserPost : pagenum is required"
+      );
+    }
+    if (!userId) {
+      log.error("UserController.getUserPost : userId is required");
+      throw new BadRequestError(
+        "UserController.getUserPost : userId is required"
       );
     }
     const getUserPost = await this.userRepository.getUserPost(
