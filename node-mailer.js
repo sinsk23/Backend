@@ -74,19 +74,26 @@ class mailer {
     let content = "";
     switch (check) {
       case 0:
-        content = "게시글이 음란해용";
+        content = "욕설, 비방, 차별, 혐오 등이 느껴지는 게시글입니다.";
         break;
       case 1:
-        content = "";
+        content = "홍보, 영리목적으로 작성된 게시글입니다.";
         break;
       case 2:
-        content = "";
+        content = "불법 정보등을 공유한 게시글입니다.";
         break;
       case 3:
-        content = "";
+        content = "음란, 청소년에게 유해한 게시글입니다.";
         break;
       case 4:
-        content = "";
+        content = "개인정보 노출, 유포, 거래에 관련된 게시글입니다.";
+        break;
+      case 5:
+        content = "도배, 스팸등이 발생되고 있는 게시글입니다.";
+        break;
+
+      case 6:
+        content = "기타 등의 이유로 신고된 게시글입니다.";
         break;
     }
     this.send({
