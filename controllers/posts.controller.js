@@ -2,7 +2,7 @@ const PostService = require("../services/posts.service");
 
 class PostController {
   postService = new PostService();
-
+  //클라이언트로부터 유저아이디,닉네임,내용,시간,거리,이미지,해쉬태그 등을 받아 postService.createPost로 넘겨주는 함수
   createPost = async (req, res, next) => {
     try {
       const { user } = res.locals;
@@ -26,6 +26,7 @@ class PostController {
       next(error);
     }
   };
+  //클라이언트로부터 유저아이디와 페이지넘버를 받아 postService.getAllPosts()함수로 유저아이디와 페이지넘버를 넘겨주는 함수
   getAllPosts = async (req, res, next) => {
     try {
       const { user } = res.locals;
@@ -48,6 +49,7 @@ class PostController {
       next(error);
     }
   };
+  //클라이언트로부터 유저아이디와 포스트아이디를 받아 postService.getPost()함수로 유저아이디와 포스트아이디를 넘겨주는 함수
   getPost = async (req, res, next) => {
     try {
       const { postId } = req.params;
@@ -63,6 +65,7 @@ class PostController {
       next(error);
     }
   };
+  //클라이언트로부터 포스트아이디와 업데이트할 column들을 받아 postService.updatePost()함수로 포스트아이디와 column들을 넘겨주는 함수
   updatePost = async (req, res, next) => {
     try {
       const { postId } = req.params;
@@ -87,6 +90,7 @@ class PostController {
       next(error);
     }
   };
+  //클라이언트로부터 포스트아이디를 받아 postService.deletePost()함수로 포스트아이디를 넘겨주는 함수
   deletePost = async (req, res, next) => {
     try {
       const { postId } = req.params;
@@ -101,7 +105,7 @@ class PostController {
       next(error);
     }
   };
-
+  //클라이언트로부터 유저아이디와 페이지넘버를 받아 postService.getLikeAllPosts()함수로 유저아이디와 페이지넘버를 넘겨주는 함수
   getLikeAllPosts = async (req, res, next) => {
     try {
       const { pagenum } = req.params;
@@ -120,6 +124,7 @@ class PostController {
       next(error);
     }
   };
+  //클라이언트로부터 해쉬태그와 페이지넘버를 받아 postService.searchPost()함수로 해쉬태그와 페이지넘버를 넘겨주는 함수
   searchPost = async (req, res, next) => {
     try {
       const { hashtag } = req.query;
@@ -135,6 +140,7 @@ class PostController {
       next(error);
     }
   };
+  //클라이언트로부터 해쉬태그와 페이지넘버를 받아 postService.searchLikePost()함수로 해쉬태그와 페이지넘버를 넘겨주는 함수
   searchLikePost = async (req, res, next) => {
     try {
       const { hashtag } = req.query;
@@ -153,6 +159,7 @@ class PostController {
       next(error);
     }
   };
+  //클라이언트로부터 해쉬태그를 받아 postService.autoCompletePost()함수로 해쉬태그를 넘겨주는 함수
   autoCompletePost = async (req, res, next) => {
     try {
       const { hashtag } = req.query;

@@ -9,6 +9,7 @@ const test = require("../node-mailer");
 
 class PostRepository {
   emailService = new test();
+  //content,time,distance,path,image,hashtag,userId,nickname,profile등을 받아 게시글을 생성하는 함수
   createPost = async (
     content,
     time,
@@ -35,6 +36,7 @@ class PostRepository {
     });
     return createPost;
   };
+  //페이지넘버를 받아 오프셋을 기준으로 5개씩 최신순으로 게시글을 리턴하는 함수
   getAllPosts = async (pagenum) => {
     let offset = 0;
     if (pagenum > 1) {
@@ -45,11 +47,10 @@ class PostRepository {
       limit: 5,
       order: [["createdAt", "DESC"]],
     });
-    //this.emailService.realSend("rmadbstjd@naver.com");
 
     return getAllPosts;
   };
-  ////////////////////////////////////////
+  //페이지넘버를 받아 오프셋을 기준으로 5개씩 좋아요순으로 게시글을 리턴하는 함수
   getLikeAllPosts = async (pagenum) => {
     let offset = 0;
     if (pagenum > 1) {
@@ -66,9 +67,10 @@ class PostRepository {
 
     return getLikeAllPosts;
   };
+  //포스트아이디를 받아 게시글을 상세 내용을 리턴하는 함수
   getPost = async (postId, userId) => {
     let isLike;
-    console.log("유저아이디", userId);
+
     if (userId) {
       isLike = await Like.findOne({ where: { userId, postId } });
       if (isLike) {
@@ -84,6 +86,7 @@ class PostRepository {
 
     return getPost;
   };
+  //업데이트할 Column을 받아 수정하는 함수
   updatePost = async (
     postId,
     content,
@@ -114,11 +117,13 @@ class PostRepository {
 
     return updatePost;
   };
+  //포스트아이디를 받아 게시글을 삭제하는 함수
   deletePost = async (postId) => {
     const deletePost = await Post.destroy({ where: { postId } });
 
     return deletePost;
   };
+  //해쉬태그와 페이지넘버를 받아 해당 해쉬태그가 존재하는 게시글을 최신순으로 5개씩 리턴하는 함수
   searchPost = async (hashtag, pagenum) => {
     let offset = 0;
     if (pagenum > 1) {
@@ -146,6 +151,7 @@ class PostRepository {
     });
     return searchPost;
   };
+  //해쉬태그와 페이지넘버를 받아 해당 해쉬태그가 존재하는 게시글을 좋아요순으로 5개씩 리턴하는 함수
   searchLikePost = async (hashtag, pagenum) => {
     let offset = 0;
     if (pagenum > 1) {
@@ -176,6 +182,8 @@ class PostRepository {
     });
     return searchPost;
   };
+  //유저가 검색창에 입력할때마다 존재하는 해쉬태그를 자동완성하여 해쉬태그를 리턴하는 함수
+  //ex) 해쉬태그가 "새벽런닝"이면 유저가 새벽까지만 검색해도 "새벽런닝"이 리턴된다.
   autoCompletePost = async (hashtag) => {
     hashtag = help.explode(hashtag).join("");
 
