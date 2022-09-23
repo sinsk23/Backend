@@ -67,6 +67,34 @@ class PostRepository {
 
     return getLikeAllPosts;
   };
+  //해쉬태그와 페이지넘버를 받아 해당 해쉬태그가 존재하는 게시글을 최신순으로 5개씩 리턴하는 함수
+  searchPost = async (hashtag, pagenum) => {
+    let offset = 0;
+    if (pagenum > 1) {
+      offset = 5 * (pagenum - 1);
+    }
+    let arrayId = [];
+
+    const autoSearchPost = await Hashtag.findAll({
+      where: {
+        hashtag: { [Op.like]: hashtag + "%" },
+      },
+    });
+
+    for (let i = 0; i < autoSearchPost.length; i++) {
+      arrayId.push(autoSearchPost[i].postId);
+    }
+
+    const searchPost = await Post.findAll({
+      offset: offset,
+      limit: 5,
+      order: [["createdAt", "DESC"]],
+      where: {
+        postId: { [Op.in]: arrayId },
+      },
+    });
+    return searchPost;
+  };
   //포스트아이디를 받아 게시글을 상세 내용을 리턴하는 함수
   getPost = async (postId, userId) => {
     let isLike;
@@ -122,34 +150,7 @@ class PostRepository {
 
     return deletePost;
   };
-  //해쉬태그와 페이지넘버를 받아 해당 해쉬태그가 존재하는 게시글을 최신순으로 5개씩 리턴하는 함수
-  searchPost = async (hashtag, pagenum) => {
-    let offset = 0;
-    if (pagenum > 1) {
-      offset = 5 * (pagenum - 1);
-    }
-    let arrayId = [];
 
-    const autoSearchPost = await Hashtag.findAll({
-      where: {
-        hashtag: { [Op.like]: hashtag + "%" },
-      },
-    });
-
-    for (let i = 0; i < autoSearchPost.length; i++) {
-      arrayId.push(autoSearchPost[i].postId);
-    }
-
-    const searchPost = await Post.findAll({
-      offset: offset,
-      limit: 5,
-      order: [["createdAt", "DESC"]],
-      where: {
-        postId: { [Op.in]: arrayId },
-      },
-    });
-    return searchPost;
-  };
   //해쉬태그와 페이지넘버를 받아 해당 해쉬태그가 존재하는 게시글을 좋아요순으로 5개씩 리턴하는 함수
   searchLikePost = async (hashtag, pagenum) => {
     let offset = 0;

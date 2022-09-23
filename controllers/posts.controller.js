@@ -127,9 +127,14 @@ class PostController {
     try {
       const { hashtag } = req.query;
       const { pagenum } = req.params;
+      const { user } = res.locals;
       let type = false;
 
-      const searchPost = await this.postService.searchPost(hashtag, pagenum);
+      const searchPost = await this.postService.searchPost(
+        hashtag,
+        pagenum,
+        user.userId
+      );
       if (!searchPost.length) {
         type = true;
       }
@@ -143,11 +148,13 @@ class PostController {
     try {
       const { hashtag } = req.query;
       const { pagenum } = req.params;
+      const { user } = res.locals;
       let type = false;
 
       const searchLikePost = await this.postService.searchLikePost(
         hashtag,
-        pagenum
+        pagenum,
+        user.userId
       );
       if (!searchLikePost.length) {
         type = true;
