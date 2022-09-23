@@ -50,9 +50,10 @@ class UserService {
       nickname,
       pagenum
     );
+    const Id = await User.findOne({ where: { nickname } });
     return Promise.all(
       getUserPost.map(async (post) => {
-        const getPosts = await this.userRepository.getPost(post.postId, userId);
+        const getPosts = await this.userRepository.getPost(post.postId, Id);
 
         return getPosts;
       })
