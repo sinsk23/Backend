@@ -51,6 +51,7 @@ class UserService {
       pagenum
     );
     const Id = await User.findOne({ where: { nickname } });
+    console.log("아이디", Id.nickname);
     return Promise.all(
       getUserPost.map(async (post) => {
         const getPosts = await this.userRepository.getPost(post.postId, Id);
