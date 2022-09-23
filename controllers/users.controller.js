@@ -189,6 +189,15 @@ class UserController {
       next(error);
     }
   };
+  getUserProfileInfo = async (req, res, next) => {
+    try {
+      const { userId } = req.params;
+      const getInfo = await this.userService.getUserProfileInfo(userId);
+      res.status(200).json(getInfo);
+    } catch (error) {
+      next(error);
+    }
+  };
   //userService.getRank()를 호출하는 함수
   getRank = async (req, res, next) => {
     try {

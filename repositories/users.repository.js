@@ -194,6 +194,10 @@ class UserRepositiory {
       profile: userInfo.image,
     };
   };
+  getUserProfileInfo = async (userId) => {
+    const getInfo = await User.findOne({ where: { userId } });
+    return getInfo;
+  };
   //유저 랭킹을 조회하기 위해 달린 거리를 기준으로 상위 5명의 닉네임과 프로필 이미지를 리턴하는 함수
   getRank = async () => {
     const getRank = await Record.findAll({

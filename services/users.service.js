@@ -159,6 +159,16 @@ class UserService {
     const getUserInfo = await this.userRepository.getUserInfo(userId);
     return getUserInfo;
   };
+  getUserProfileInfo = async (userId) => {
+    if (!userId) {
+      log.error("UserService.getUserProfileInfo : userId is required");
+      throw new BadRequestError(
+        "UserService.getUserProfileInfo: userId is required"
+      );
+    }
+    const getUserInfo = await this.userRepository.getUserProfileInfo(userId);
+    return getUserInfo;
+  };
   getRank = async () => {
     const getRank = await this.userRepository.getRank();
     return getRank;

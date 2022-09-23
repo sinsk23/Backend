@@ -6,6 +6,7 @@ const AuthMiddleware = require("../middlewares/auth-middleware");
 
 const userController = new UserController();
 router.get("/user/search", AuthMiddleware, userController.searchUser);
+router.get("/user/info/:userId", userController.getUserProfileInfo);
 router.post("/user/signup", userController.signUp);
 router.post("/user/check", userController.checkNick);
 router.get("/user/rank", userController.getRank);
