@@ -222,7 +222,7 @@ class UserRepositiory {
       return {
         distance: test.distance,
         time: test.time,
-        userId: test.userId,
+        userId: userInfo[i].userId,
         nickname: userInfo[i].nickname,
         profile: userInfo[i].image,
       };
