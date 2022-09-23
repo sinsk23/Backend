@@ -227,7 +227,7 @@ class UserRepositiory {
         const nick = await User.findOne({ where: { userId: test.userId } });
         const nickName = nick.nickname;
         const prof = await User.findOne({ where: { userId: test.userId } });
-        const proFile = prof.profile;
+        const proFile = prof.image;
 
         return {
           distance: test.distance,
