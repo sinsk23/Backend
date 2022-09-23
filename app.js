@@ -52,7 +52,7 @@ app.use(
   cors({
     credentials: true,
 
-    origin: "https://d1zv4kmpu2mgeb.cloudfront.net",
+    origin: "http://localhost:3000",
   })
 );
 
