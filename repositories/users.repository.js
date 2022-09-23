@@ -204,6 +204,7 @@ class UserRepositiory {
       limit: 5,
       order: [["distance", "DESC"]],
     });
+
     const userArr = [];
     for (let i = 0; i < getRank.length; i++) {
       userArr.push(getRank[i].userId);
@@ -216,17 +217,27 @@ class UserRepositiory {
       attributes: ["nickname", "image"],
     });
 
-    let i = -1;
-    return getRank.map((test) => {
-      i++;
-      return {
-        distance: test.distance,
-        time: test.time,
-        userId: userInfo[i].userId,
-        nickname: userInfo[i].nickname,
-        profile: userInfo[i].image,
-      };
-    });
+    for (let i = 0; i <= 3; i++) {
+      console.log("유저아이디", getRank[i].userId);
+      console.log("유저닉네임", userInfo[i].nickname);
+    }
+
+    return Promise.all(
+      getRank.map(async (test) => {
+        const nick = await User.findOne({ where: { userId: test.userId } });
+        const nickName = nick.nickname;
+        const prof = await User.findOne({ where: { userId: test.userId } });
+        const proFile = prof.profile;
+
+        return {
+          distance: test.distance,
+          time: test.time,
+          userId: test.userId,
+          nickname: nickName,
+          profile: proFile,
+        };
+      })
+    );
   };
   //유저가 런닝을 할 때 실시간 위치를 불러오기 위해 5초마다 위도와 경도를 받아 계산후 이동한 거리를 리턴하는 함수
   sendLocation = async (userId, lat, lng) => {
