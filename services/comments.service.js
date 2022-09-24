@@ -9,11 +9,11 @@ class CommentService {
 
   //Serv 특정 게시글에 댓글 작성
   createComment = async (comment, postId, userId, nickname, image) => {
-    //댓글 내용이 없으면~
+    
     if (comment === "" || null) {
       return { result: false, message: "댓글을 입력해주세요" };
     }
-    //게시글을 찾아 없으면~
+    
     const findPostid = await this.commentRepository.findPostid(postId);
     if (!findPostid) {
       return {
@@ -32,13 +32,13 @@ class CommentService {
   };
   //Serv 특정 게시글에 댓글 수정
   editComment = async (userId, commentId, comment) => {
-    //댓글 내용이 없으면~
+    
     if (comment === "" || null) {
       return { result: false, message: "댓글을 입력해주세요" };
     }
     const findCommentid = await this.commentRepository.findCommentid(commentId);
     
-    //수정할 댓글이 없으면~
+    
     if (!findCommentid) {
       return { result: false, message: "수정 할 댓글이 존재하지 않습니다." };
     }
@@ -63,7 +63,7 @@ class CommentService {
   //Serv 특정 댓글 조회
   findCommentid = async (commentId) => {
     const findCommentid = await this.commentRepository.findCommentid(commentId);
-    //댓글이 없으면~
+    
     if (!findCommentid) {
       return { result: false, message: "댓글이 존재하지 않습니다" };
     }
@@ -71,11 +71,11 @@ class CommentService {
   };
   //Serv 댓글에 대댓글 작성
   createRecomment = async (comment, commentId, recommentId,userId,nickname,image) => {
-    //댓글 내용이 없으면~
+    
     if (comment === "" || null) {
       return { result: false, message: "댓글을 입력해주세요" };
     }
-    //댓글이 없으면~
+    
     const findCommentid = await this.commentRepository.findCommentid(commentId);
     if (!findCommentid) {
       return {

@@ -1,41 +1,15 @@
 const CommentService = require("../services/comments.service");
-const { Comment, ReComment, Post } = require("../models");
-const { Op } = require("sequelize");
+
 
 class CommentController {
   commentService = new CommentService();
-  // router.get('/users/:id', function(req, res) {
-  //   console.log(req.params, req.query);
-  //   });
-  //ex) /users/123?limit=5&skip=10
-  //req.params 의 객체 {id : 123} , req.query 의 객체 {limit:'5', skip:'10'}
-  //쿼리스트링은 문자열 parseInt로 정수만들고,Math.max limit,page가 최소 1인 양수
-  // 쿼리/api/comment/?postId=1
-  // offset : Skip, limit : 값만큼만 보여줌
-  // order :[['title','DESC']] //ASC오름차순 기본 댓글순서//DESC내림차순 최신순
-  //댓글조회 페이지네이션 테스트
-  // getCommentT = async (req, res, next) => {
-  //   const { postId } = req.query;
+  
 
-  //   console.log(count);
-
-  //   const inPostid = await Comment.findAll({
-  //     where: { postId },
-  //     order: [["createdAt", "ASC"]],
-  //     limit: 2,
-  //     offset: count,
-  //   });
-  //   count += 2;
-  //   console.log(count);
-  //   return res.status(200).json({ Comment: inPostid });
-  // };
-
-  //댓글 작성 /api/comment/:postId
+  //댓글 작성
   insertComment = async (req, res, next) => {
     try {
       const { user } = res.locals;
-      // console.log(res.locals);
-      // console.log(user.userId);
+      
       const { postId } = req.params;
       const { comment } = req.body;
 
@@ -56,32 +30,14 @@ class CommentController {
     }
   };
 
-  //댓글 조회 /api/comment/:postId
+  //댓글 조회 
   getComment = async (req, res, next) => {
     try {
       const { user } = res.locals;
       const { postId, pagenum } = req.params;
 
       const getPostid = await this.commentService.findPostid(postId);
-      // const count = await Comment.count({ where: { postId } });
-      //댓글에 대댓글 개수 프론트에서 요청으로 바꿈
-
-      // const getPostid = await this.commentService.findPostid(postId);
-      // const count = await Comment.count({ where: { postId } });
-      //댓글에 대댓글 개수 프론트에서 요청으로 바꿈
-      // const count = await ReComment.count({ where: { commentId } });
-      // 댓글 commentId와 대댓글 commentId 를 비교해서 댓글 개수 length 사용
-      // const data = await Comment.findAll({
-      //   include:[
-
-      //     {
-      //       model: ReComment,
-      //       attributes: ["commentId"],
-      //     },
-
-      //   ]
-      // })
-      // console.log("data 개수 ",data);
+      
       let type = false;
       const inPostid = await this.commentService.findinPostid(
         postId,
@@ -100,7 +56,7 @@ class CommentController {
     }
   };
 
-  //댓글 수정 /api/comment/:commentId
+  //댓글 수정 
   editComment = async (req, res, next) => {
     try {
       const { user } = res.locals;
@@ -121,7 +77,7 @@ class CommentController {
       next(error);
     }
   };
-  //댓글 삭제 /api/comment/:commentId
+  //댓글 삭제
   deleteComment = async (req, res, next) => {
     try {
       const { user } = res.locals;
@@ -141,8 +97,8 @@ class CommentController {
     }
   };
 
-  //대 ~ 댓글 ~~~
-  //대댓글 작성 /api/comment/recomment/:commentId
+  
+  //대댓글 작성 
   insertRecomment = async (req, res, next) => {
     try {
       const { user } = res.locals;
@@ -166,7 +122,7 @@ class CommentController {
       next(error);
     }
   };
-  //대댓글 조회 /api/comment/recomment/:commentId/:pagenum
+  //대댓글 조회 
   getRecomment = async (req, res, next) => {
     try {
       const { user } = res.locals;
@@ -190,7 +146,7 @@ class CommentController {
       next(error);
     }
   };
-  //대댓글 수정 /api/comment/:commentId/:recommentId
+  //대댓글 수정 
   editRecomment = async (req, res, next) => {
     try {
       const { user } = res.locals;
@@ -213,7 +169,7 @@ class CommentController {
       next(error);
     }
   };
-  //대댓글 삭제 /api/comment/:commentId/:recommentId
+  //대댓글 삭제 
   deleteRecomment = async (req, res, next) => {
     try {
       const { user } = res.locals;
