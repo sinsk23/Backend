@@ -137,10 +137,9 @@ class UserRepositiory {
   };
   //유저아이디와 프로필이미지를 받고 해당 유저의 프로필 이미지 변경 및 해당 유저가 작성한 게시글의 프로필 이미지도 변경하는 함수
   changeImage = async (image, userId) => {
-    console.log("유저아이디", userId);
     const changeImage = await User.update({ image }, { where: { userId } });
     const findId = await Post.findAll({ where: { userId } });
-    console.log("게시글아이디", findId);
+
     let postIdArr = [];
     for (let i = 0; i < findId.length; i++) {
       postIdArr.push(findId[i].postId);
@@ -210,18 +209,6 @@ class UserRepositiory {
     const userArr = [];
     for (let i = 0; i < getRank.length; i++) {
       userArr.push(getRank[i].userId);
-    }
-
-    const userInfo = await User.findAll({
-      where: {
-        userId: { [Op.in]: userArr },
-      },
-      attributes: ["nickname", "image"],
-    });
-
-    for (let i = 0; i <= 3; i++) {
-      console.log("유저아이디", getRank[i].userId);
-      console.log("유저닉네임", userInfo[i].nickname);
     }
 
     return Promise.all(
