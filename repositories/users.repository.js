@@ -106,7 +106,7 @@ class UserRepositiory {
       where: {
         nickname: { [Op.in]: returnData },
       },
-      attributes: ["nickname", "image"],
+      attributes: ["nickname", "image", "userId"],
     });
     return test;
   };
