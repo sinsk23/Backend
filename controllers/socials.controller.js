@@ -61,7 +61,7 @@ class SocialController {
   };
   kakaologout = async (req, res, next) => {
     const access_token = accessToken1;
-    console.log("테스트", access_token);
+
     try {
       await axios({
         //Promise 객체를 unlink에 넘겨주고

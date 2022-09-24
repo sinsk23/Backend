@@ -4,7 +4,6 @@ const { Record } = require("./models");
 let day = new Date();
 day = day.getDay();
 const set1 = (s) => {
-  console.log(s);
   const rule = new schedule.RecurrenceRule();
   rule.dayOfWeek = s.dayOfweek;
   rule.hour = s.hour;

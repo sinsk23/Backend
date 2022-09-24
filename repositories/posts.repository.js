@@ -109,7 +109,7 @@ class PostRepository {
     const getPost = await Post.findOne({
       where: { postId },
     });
-    console.log("테스트", getPost.image);
+
     return getPost;
   };
   //업데이트할 Column을 받아 수정하는 함수

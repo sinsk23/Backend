@@ -17,7 +17,6 @@ module.exports = (app) => {
       // accessToken, refreshToken : 로그인 성공 후 카카오가 보내준 토큰
       // profile: 카카오가 보내준 유저 정보. profile의 정보를 바탕으로 회원가입
       async (accessToken, refreshToken, profile, done) => {
-        console.log("토큰", accessToken);
         try {
           // 카카오 플랫폼에서 로그인 했고 & 회원 DB(사용자)에 이미 있는 이메일 경우
           const emailCheck = await User.findOne({
@@ -26,7 +25,7 @@ module.exports = (app) => {
               provider: "kakao",
             },
           });
-          console.log("체크", emailCheck);
+
           // 이미 가입된 카카오 프로필이면 성공
 
           // 가입되어 있지 않으면 로그인 정보만 전달
