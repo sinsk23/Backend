@@ -15,7 +15,6 @@ class PostRepository {
     time,
     distance,
     path,
-
     image,
     hashtag,
     userId,
@@ -27,7 +26,6 @@ class PostRepository {
       time,
       distance,
       path,
-
       image,
       hashtag,
       userId,
