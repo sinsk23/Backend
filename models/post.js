@@ -30,7 +30,7 @@ module.exports = class Post extends Sequelize.Model {
           allowNull: true,
         },
         distance: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.FLOAT,
           defaultValue: 0,
           allowNull: true,
         },
@@ -39,21 +39,13 @@ module.exports = class Post extends Sequelize.Model {
           defaultValue: [],
           allowNull: true,
         },
-        speed: {
-          type: Sequelize.INTEGER,
-          defaultValue: 0,
-          allowNull: true,
-        },
+
         like: {
           type: Sequelize.INTEGER,
           defaultValue: 0,
           allowNull: true,
         },
-        view: {
-          type: Sequelize.INTEGER,
-          defaultValue: 0,
-          allowNull: true,
-        },
+
         commentNum: {
           type: Sequelize.INTEGER,
           defaultValue: 0,

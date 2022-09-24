@@ -1,10 +1,9 @@
 const schedule = require("node-schedule");
 const { Record } = require("./models");
 
-let day = 0;
-
+let day = new Date();
+day = day.getDay();
 const set1 = (s) => {
-  console.log(s);
   const rule = new schedule.RecurrenceRule();
   rule.dayOfWeek = s.dayOfweek;
   rule.hour = s.hour;
@@ -29,6 +28,7 @@ const set2 = (s) => {
     deleteRecord();
   });
 };
+
 exports.day = day;
 exports.set1 = set1;
 exports.set2 = set2;

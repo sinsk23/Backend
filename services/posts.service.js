@@ -10,7 +10,7 @@ class PostService {
     time,
     distance,
     path,
-    speed,
+
     image,
     hashtag,
     userId,
@@ -29,7 +29,7 @@ class PostService {
       time,
       distance,
       path,
-      speed,
+
       image,
       hashtag,
       userId,
@@ -68,23 +68,7 @@ class PostService {
       })
     );
   };
-  geLikeAllPosts = async (pagenum, userId) => {
-    if (!pagenum) {
-      log.error("PostController.getLikeAllPosts : pagenum is required");
-      throw new BadRequestError(
-        "PostController.getLikeAllPosts : pagenum is required"
-      );
-    }
-    const getLikeAllPosts = await this.postRepository.getLikeAllPosts(pagenum);
 
-    return Promise.all(
-      getLikeAllPosts.map(async (post) => {
-        const getPosts = await this.postRepository.getPost(post.postId, userId);
-
-        return getPosts;
-      })
-    );
-  };
   getPost = async (postId, userId) => {
     if (!postId) {
       log.error("PostController.getPost : postId is required");
@@ -100,7 +84,6 @@ class PostService {
     time,
     distance,
     path,
-    speed,
     image,
     hashtag
   ) => {
@@ -133,7 +116,6 @@ class PostService {
       time,
       distance,
       path,
-      speed,
       image,
       hashtag,
       checkHash
@@ -150,17 +132,45 @@ class PostService {
     const deletePost = await this.postRepository.deletePost(postId);
     return deletePost;
   };
-  searchPost = async (hashtag, pagenum) => {
+
+  geLikeAllPosts = async (pagenum, userId) => {
+    if (!pagenum) {
+      log.error("PostController.getLikeAllPosts : pagenum is required");
+      throw new BadRequestError(
+        "PostController.getLikeAllPosts : pagenum is required"
+      );
+    }
+    const getLikeAllPosts = await this.postRepository.getLikeAllPosts(pagenum);
+
+    return Promise.all(
+      getLikeAllPosts.map(async (post) => {
+        const getPosts = await this.postRepository.getPost(post.postId, userId);
+
+        return getPosts;
+      })
+    );
+  };
+  searchPost = async (hashtag, pagenum, userId) => {
     if (!hashtag) {
       log.error("PostController.searchPost : hashtag is required");
       throw new BadRequestError(
         "PostController.searchPost : hashtag is required"
       );
     }
-    const searchPost = await this.postRepository.searchPost(hashtag, pagenum);
-    return searchPost;
+    const searchPost = await this.postRepository.searchLikePost(
+      hashtag,
+      pagenum
+    );
+    return Promise.all(
+      searchPost.map(async (post) => {
+        const getPosts = await this.postRepository.getPost(post.postId, userId);
+
+        return getPosts;
+      })
+    );
   };
-  searchLikePost = async (hashtag, pagenum) => {
+
+  searchLikePost = async (hashtag, pagenum, userId) => {
     if (!hashtag) {
       log.error("PostController.searchLikePost : hashtag is required");
       throw new BadRequestError(
@@ -171,7 +181,13 @@ class PostService {
       hashtag,
       pagenum
     );
-    return searchLikePost;
+    return Promise.all(
+      searchLikePost.map(async (post) => {
+        const getPosts = await this.postRepository.getPost(post.postId, userId);
+
+        return getPosts;
+      })
+    );
   };
   autoCompletePost = async (hashtag) => {
     if (!hashtag) {

@@ -11,22 +11,22 @@ module.exports = class Record extends Sequelize.Model {
         },
 
         goal: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.FLOAT,
           defaultValue: 0,
           allowNull: true,
         },
         distance: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.FLOAT,
           defaultValue: 0,
           allowNull: true,
         },
         time: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.FLOAT,
           defaultValue: 0,
           allowNull: true,
         },
         percent: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.FLOAT,
           defaultValue: 0,
           allowNull: true,
         },

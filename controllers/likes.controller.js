@@ -2,6 +2,7 @@ const LikeService = require("../services/likes.service");
 
 class LikeController {
   likeService = new LikeService();
+  //클라이언트로부터 유저아이디와 포스트아이디를 받아 likeService.pushLike()함수에 유저아이디와 포스트아이디를 리턴하는 함수
   pushLike = async (req, res, next) => {
     try {
       const { user } = res.locals;
@@ -13,6 +14,7 @@ class LikeController {
       next(error);
     }
   };
+  //클라이언트루부터 유저아이디와 포스트아이디를 받아  likeService.isLike()함수에 유저아이디와 포스트아이디를 리턴하는 함수
   isLike = async (req, res, next) => {
     try {
       const { postId } = req.params;
