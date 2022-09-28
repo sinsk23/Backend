@@ -14,19 +14,19 @@ InitializerCommentdata = async () => {
   userId,8
   nickname,9
   */
-  for (let i = 0; i < 2; i++) {
-    PostRepository.createPost("내용" + i, 10, 10, 10, 10, "img", "hashtag", 1,"닉네임"+i);
-    // .then((e) => console.log(e));
-  }
-  //comment 21개 생성
-  for (let i = 0; i < 21; i++) {
-    commentRepository.createComment("댓글내용" + i, 1, 1);
-    //   .then((e) => console.log(e));
-  }
-  for (let i = 0; i < 21; i++) {
+  // for (let i = 0; i < 2; i++) {
+  //   PostRepository.createPost("내용" + i, 10, 10, 10, 10, "img", "hashtag", 1,"닉네임"+i);
+  //   // .then((e) => console.log(e));
+  // }
+  // //comment 21개 생성
+  // for (let i = 0; i < 21; i++) {
+  //   commentRepository.createComment("댓글내용" + i, 1, 1);
+  //   //   .then((e) => console.log(e));
+  // }
+  // for (let i = 0; i < 21; i++) {
 
-    commentRepository.createRecomment("대댓글내용" + i, 1, 1, 1+i);
+  //   commentRepository.createRecomment("대댓글내용" + i, 1, 1, 1+i);
 
-  }
+  // }
 };
 module.exports = InitializerCommentdata;
