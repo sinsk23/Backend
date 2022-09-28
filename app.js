@@ -63,7 +63,7 @@ app.use(express.json()); // body로 들어오는 json 형태의 데이터를 파
 app.use("/api", rotuer);
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Hello World!@");
 });
 app.use((err, req, res, next) => {
   emailService.errorAlertSend(err.message);
